@@ -10,6 +10,7 @@ import {
   BannerLockImage,
   MediaBlockBody,
 } from '@trussworks/react-uswds'
+import { Trans, useTranslation } from 'react-i18next'
 
 import flagImg from '@uswds/uswds/src/img/us_flag_small.png'
 import dotGovIcon from '@uswds/uswds/src/img/icon-dot-gov.svg'
@@ -19,18 +20,32 @@ type BannerProps = {
   children: ReactNode
 }
 
-// TODO: i18n
 export const CustomBanner = (props: BannerProps) => {
+  const { t } = useTranslation('components', { keyPrefix: 'banner' })
+
   const [isOpen, setIsOpen] = useState(false)
 
-  const lock = <BannerLockImage title="Lock" description="A locked padlock" />
+  const dotGovAlt = t('content.dotGov.icon.alt')
+  const httpsAlt = t('content.https.icon.alt')
+  const lock = (
+    <BannerLockImage
+      title={t('content.https.lockIcon.title')}
+      description={t('content.https.lockIcon.description')}
+    />
+  )
+
   return (
     <Banner>
       <BannerHeader
         isOpen={isOpen}
-        flagImg={<BannerFlag src={flagImg} alt="U.S. flag" />}
-        headerText="This is an official website of the state department of something specific"
-        headerActionText="Here's how you know"
+        flagImg={
+          <BannerFlag
+            src={flagImg}
+            alt={t('header.flagImg.alt') || undefined}
+          />
+        }
+        headerText={t('header.text')}
+        headerActionText={t('header.actionText')}
       >
         <BannerButton
           isOpen={isOpen}
@@ -39,30 +54,32 @@ export const CustomBanner = (props: BannerProps) => {
             setIsOpen((previousIsOpen) => !previousIsOpen)
           }}
         >
-          Here&apos;s how you know
+          {t('header.actionText')}
         </BannerButton>
       </BannerHeader>
       <BannerContent id="custom-banner" isOpen={isOpen}>
         <div className="grid-row grid-gap-lg">
           <BannerGuidance className="tablet:grid-col-6">
-            <BannerIcon src={dotGovIcon} alt="" />
+            <BannerIcon src={dotGovIcon} alt={dotGovAlt} />
             <MediaBlockBody>
               <p>
-                <strong>Official websites use .gov</strong>
-                <br />A <strong>.gov</strong> website belongs to an official
-                government organization in the United States.
+                <strong>{t('content.dotGov.explanation.title')}</strong>
+                <br />
+                <Trans t={t} i18nKey="content.dotGov.explanation.text" />
               </p>
             </MediaBlockBody>
           </BannerGuidance>
           <BannerGuidance className="tablet:grid-col-6">
-            <BannerIcon src={httpsIcon} alt="" />
+            <BannerIcon src={httpsIcon} alt={httpsAlt} />
             <MediaBlockBody>
               <p>
-                <strong>Secure .gov websites use HTTPS</strong>
-                <br />A <strong>lock ( {lock} )</strong> or{' '}
-                <strong>https://</strong> means you&apos;ve safely connected to
-                the .gov website. Share sensitive information only on official,
-                secure websites.
+                <strong>{t('content.https.explanation.title')}</strong>
+                <br />
+                <Trans
+                  t={t}
+                  i18nKey="content.https.explanation.text"
+                  components={[lock]}
+                />
               </p>
             </MediaBlockBody>
           </BannerGuidance>
