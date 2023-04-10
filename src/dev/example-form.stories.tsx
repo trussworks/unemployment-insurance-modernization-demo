@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { ChangeEventHandler } from 'react'
 
 const formLibraryPreferenceOptions = ['formik', 'reactHookForm'] as const
@@ -14,7 +14,7 @@ const defaultValues: ExampleFieldValues = {
   whyIsFormikBad: undefined,
 }
 const ExampleForm = () => {
-  const { register, handleSubmit, watch, setValue } =
+  const { register, handleSubmit, watch, setValue, formState } =
     useForm<ExampleFieldValues>({
       defaultValues,
     })
@@ -56,7 +56,9 @@ const ExampleForm = () => {
             value="reactHookForm"
             onChange={handleFormLibraryPreferenceChange}
           />
-          <label htmlFor="formLibraryPreference.Formik">React Hook Form</label>
+          <label htmlFor="formLibraryPreference.reactHookForm">
+            React Hook Form
+          </label>
         </div>
       </fieldset>
 
