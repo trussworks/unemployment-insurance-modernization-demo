@@ -33,7 +33,11 @@ export const CustomHeader = (props: CustomHeaderProps) => {
   ]
 
   return (
-    <>
+    <Header
+      basic={true}
+      basicWithMegaMenu={true}
+      className="border-bottom border-base-lighter"
+    >
       {expanded && (
         <div
           data-testid="overlay"
@@ -41,23 +45,17 @@ export const CustomHeader = (props: CustomHeaderProps) => {
           onClick={toggleMenu}
         />
       )}
-      <Header
-        basic={true}
-        basicWithMegaMenu={true}
-        className="border-bottom border-base-lighter"
-      >
-        <div className="usa-nav-container">
-          <div className="usa-navbar">
-            <Title>{t('title')}</Title>
-            <NavMenuButton onClick={toggleMenu} label={t('navMenu.button')} />
-          </div>
-          <PrimaryNav
-            items={menuItems}
-            mobileExpanded={expanded}
-            onToggleMobileNav={toggleMenu}
-          ></PrimaryNav>
+      <div className="usa-nav-container">
+        <div className="usa-navbar">
+          <Title>{t('title')}</Title>
+          <NavMenuButton onClick={toggleMenu} label={t('navMenu.button')} />
         </div>
-      </Header>
-    </>
+        <PrimaryNav
+          items={menuItems}
+          mobileExpanded={expanded}
+          onToggleMobileNav={toggleMenu}
+        ></PrimaryNav>
+      </div>
+    </Header>
   )
 }
