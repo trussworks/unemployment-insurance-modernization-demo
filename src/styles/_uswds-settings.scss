@@ -1,0 +1,23 @@
+/*
+----------------------------------------
+USWDS with settings overrides
+----------------------------------------
+*/
+
+$asset-path: '~@uswds/uswds';
+
+@use "uswds-core" with (
+  /* GENERAL */
+  $theme-image-path: '#{$asset-path}/img',
+  $theme-show-notifications: false,
+
+  /* TYPOGRAPHY */
+  $theme-respect-user-font-size: false,
+  $theme-root-font-size: 16px,
+  $theme-global-paragraph-styles: true,
+  $theme-global-link-styles: true,
+  $theme-font-path: '#{$asset-path}/fonts',
+  $theme-font-role-heading: 'sans',
+  $theme-font-type-sans: 'public-sans',
+  $theme-style-body-element: true,
+);
