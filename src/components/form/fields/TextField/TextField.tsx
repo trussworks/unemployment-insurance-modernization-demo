@@ -29,20 +29,6 @@ interface ITextFieldProps extends TextInputProps {
   inputSuffix?: ReactNode
 }
 
-// TODO consider from https://github.com/transcom/mymove/tree/master/src/components/Hint
-// import Hint from 'components/Hint';
-
-/**
- * This component renders a ReactUSWDS TextInput component inside of a FormGroup,
- * with a Label and ErrorMessage.
- *
- * It relies on the Formik useField hook to work, so it must ALWAYS be rendered
- * inside of a Formik form context.
- *
- * If you want to use these components outside a Formik form, you can use the
- * ReactUSWDS components directly.
- */
-
 export const TextField = ({
   label,
   labelClassName,
@@ -59,7 +45,7 @@ export const TextField = ({
       onChange: hookFormOnChange,
       onBlur: hookFormOnBlur,
       ref,
-      value: ignored,
+      value: textValue,
       ...hookFormRemainingProps
     },
     fieldState: { invalid, error },
@@ -81,7 +67,7 @@ export const TextField = ({
   const textInput = (
     <TextInput
       data-testid={textInputProps.id}
-      // value={hookFormRemainingProps.value || ''}
+      value={textValue || ''}
       validationStatus={showErrorOutline ? 'error' : undefined}
       onFocus={() => setFocused(true)}
       id={textInputProps.id || textInputProps.name}
