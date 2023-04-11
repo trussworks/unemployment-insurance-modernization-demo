@@ -41,7 +41,6 @@ const ExampleForm = () => {
     resolver: yupResolver(schema),
   })
   const {
-    register,
     handleSubmit,
     watch,
     resetField,
@@ -82,9 +81,9 @@ const ExampleForm = () => {
         {formLibraryPreference && formLibraryPreference !== 'formik' && (
           <>
             <TextField
-              label={'Why is Formik bad?'}
-              name={'whyIsFormikBad'}
-              type={'text'}
+              label="Why is Formik bad?"
+              name="whyIsFormikBad"
+              type="text"
             />
             <br />
           </>
