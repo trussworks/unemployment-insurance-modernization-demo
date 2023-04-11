@@ -29,7 +29,6 @@ type RadioInputProps = Optional<
 interface IRadioFieldProps extends RadioInputProps {
   options: IRadioOption[]
   errorMessage?: string
-  showsErrors?: boolean
   legend?: ReactNode
   fieldsetClassName?: string
   hint?: ReactNode
@@ -43,7 +42,6 @@ export const RadioField = ({
   onBlur,
   legend,
   fieldsetClassName,
-  showsErrors = true,
   hint,
   ...inputProps
 }: IRadioFieldProps & JSX.IntrinsicElements['input']) => {
