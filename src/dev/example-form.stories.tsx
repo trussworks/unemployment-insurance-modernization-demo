@@ -72,7 +72,7 @@ const ExampleForm = () => {
           name="formLibraryPreference"
           legend="Which form Library is better?"
           options={formLibraryPreferenceOptions.map((option) => ({
-            label: option, // TODO i18n
+            label: option,
             value: option,
           }))}
           onChange={handleFormLibraryPreferenceChange}
