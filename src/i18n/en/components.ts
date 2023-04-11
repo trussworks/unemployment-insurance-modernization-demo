@@ -43,4 +43,17 @@ export default {
       },
     },
   },
+  footer: {
+    returnTop: 'Return to top',
+    official: 'An official website of ',
+    identifierAria: 'Agency identifier',
+    state: '{TODO_YOUR_STATE_OR_TERRITORY_HERE}',
+    links: 'Important links',
+    link1: 'Link 1',
+    link2: 'Link 2',
+    link3: 'Link 3',
+    home: 'Home',
+    govAria: 'U.S. government information and services',
+    copyright: 'Copyright © 2023 {TODO_YOUR_STATE_OR_TERRITORY_HERE}',
+  },
 }
