@@ -43,6 +43,23 @@ const config: StorybookConfig = {
       include: path.resolve(__dirname, '../'),
     })
 
+    config.module.rules.push({
+      test: /\.module\.(sa|sc|c)ss$/i,
+      include: path.resolve(__dirname, '../src'),
+      use: [
+        'style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            modules: {
+              localIdentName: '[path][name]__[local]--[hash:base64:5]',
+            },
+          },
+        },
+        'sass-loader',
+      ],
+    })
+
     return config
   },
 }
