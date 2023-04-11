@@ -48,7 +48,6 @@ const ExampleForm = () => {
   } = hookFormMethods
 
   const formLibraryPreference = watch('formLibraryPreference')
-  console.log({ formLibraryPreference })
 
   const onSubmit: SubmitHandler<ExampleFieldValues> = (data) =>
     console.log(data)

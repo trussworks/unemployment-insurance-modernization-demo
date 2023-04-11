@@ -47,8 +47,6 @@ export const RadioField = ({
   hint,
   ...inputProps
 }: IRadioFieldProps & JSX.IntrinsicElements['input']) => {
-  const { register } = useFormContext()
-
   const {
     field: {
       onChange: hookFormOnChange,
