@@ -43,7 +43,7 @@ const ExampleForm = () => {
     register,
     handleSubmit,
     watch,
-    setValue,
+    resetField,
     formState: { errors },
   } = hookFormMethods
 
@@ -59,7 +59,7 @@ const ExampleForm = () => {
     HTMLInputElement
   > = async (e) => {
     if (e.target.value === 'formik') {
-      setValue('whyIsFormikBad', defaultValues.whyIsFormikBad)
+      resetField('whyIsFormikBad')
     }
   }
 
