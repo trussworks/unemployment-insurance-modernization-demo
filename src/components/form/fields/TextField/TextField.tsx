@@ -13,8 +13,6 @@ import {
   InputSuffix,
 } from '@trussworks/react-uswds'
 import classnames from 'classnames'
-
-//   import { useFocusFirstError } from 'hooks/useFocusFirstError'
 import { useController } from 'react-hook-form'
 
 type TextInputProps = Optional<React.ComponentProps<typeof TextInput>, 'id'>
