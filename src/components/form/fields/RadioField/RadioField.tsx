@@ -13,7 +13,7 @@ import {
 
 import styles from './RadioField.module.scss'
 
-import { useController, useFormContext } from 'react-hook-form'
+import { useController } from 'react-hook-form'
 
 interface IRadioOption {
   label: ReactNode
