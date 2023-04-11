@@ -32,4 +32,15 @@ export default {
       },
     },
   },
+  header: {
+    title: 'Unemployment Insurance Benefits',
+    navMenu: {
+      button: 'Menu',
+      items: {
+        home: 'Home',
+        claim: 'My claim',
+        logOut: 'Log out',
+      },
+    },
+  },
 }
