@@ -45,9 +45,9 @@ export default {
   },
   footer: {
     returnTop: 'Return to top',
-    official: 'An official website of ',
     identifierAria: 'Agency identifier',
-    state: '{TODO_YOUR_STATE_OR_TERRITORY_HERE}',
+    official:
+      'An official website of <0>{TODO_YOUR_STATE_OR_TERRITORY_HERE}</0>',
     links: 'Important links',
     link1: 'Link 1',
     link2: 'Link 2',

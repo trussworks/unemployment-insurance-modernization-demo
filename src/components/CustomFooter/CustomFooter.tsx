@@ -13,7 +13,7 @@ import {
   Icon,
 } from '@trussworks/react-uswds'
 
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 
 export const CustomFooter = () => {
   const { t } = useTranslation('components', { keyPrefix: 'footer' })
@@ -32,8 +32,13 @@ export const CustomFooter = () => {
             </IdentifierLogo>
           </IdentifierLogos>
           <IdentifierIdentity domain="{TO_DO_YOUR_DOMAIN_HERE}">
-            {t('official')}
-            <Link href="/">{t('state')}</Link>
+            <Trans
+              t={t}
+              i18nKey="official"
+              components={[
+                <Link href="/">{'{TO_DO_YOUR_STATE_OR_TERRITORY_HERE}'}</Link>,
+              ]}
+            />
           </IdentifierIdentity>
         </IdentifierMasthead>
         <IdentifierLinks navProps={{ 'aria-label': t('links') }}>
