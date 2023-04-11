@@ -58,7 +58,6 @@ const ExampleForm = () => {
   const handleFormLibraryPreferenceChange: ChangeEventHandler<
     HTMLInputElement
   > = async (e) => {
-    console.log('CALLING CUSTOM ON CHANGE')
     if (e.target.value === 'formik') {
       setValue('whyIsFormikBad', defaultValues.whyIsFormikBad)
     }

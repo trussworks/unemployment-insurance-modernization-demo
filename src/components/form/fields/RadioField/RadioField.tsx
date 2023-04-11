@@ -57,7 +57,6 @@ export const RadioField = ({
   } = useController({ name })
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
-    console.log('CALLING HANDLE CHANGE', e)
     await hookFormOnChange(e)
     if (onChange) {
       onChange(e)
