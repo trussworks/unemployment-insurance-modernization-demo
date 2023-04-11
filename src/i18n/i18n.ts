@@ -3,13 +3,17 @@ import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import en from 'i18n/en'
 
+export const resources = {
+  en,
+}
+
 void i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
-    ns: ['components'],
-    resources: { en },
+    ns: ['components', 'ssn'],
+    resources,
   })
 
 export default i18n
