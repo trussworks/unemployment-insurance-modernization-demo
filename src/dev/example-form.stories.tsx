@@ -9,6 +9,7 @@ import { ChangeEventHandler } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
+import CheckboxField from 'components/form/fields/CheckboxField/CheckboxField'
 
 const formLibraryPreferenceOptions = ['formik', 'reactHookForm'] as const
 type FormLibraryPreferenceOption = (typeof formLibraryPreferenceOptions)[number]
@@ -66,6 +67,10 @@ const ExampleForm = () => {
   return (
     <FormProvider {...hookFormMethods}>
       <form onSubmit={handleSubmit(onSubmit, onSubmitError)}>
+        <CheckboxField
+          name={'exampleCheckbox'}
+          label={'Check me, I am just an example.'}
+        />
         <RadioField
           name="formLibraryPreference"
           legend="Which form Library is better?"
