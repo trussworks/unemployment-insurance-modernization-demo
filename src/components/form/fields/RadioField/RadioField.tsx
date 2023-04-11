@@ -73,11 +73,11 @@ export const RadioField = ({
   const id = idProp || name
 
   return (
-    <FormGroup error={!!error}>
+    <FormGroup error={invalid}>
       <Fieldset
         legend={legend}
         className={`${fieldsetClassName} ${styles.fieldsetLegend} ${
-          error && styles.errorLegend
+          invalid && styles.errorLegend
         }`}
         onInvalid={(e) => e.preventDefault()}
       >
