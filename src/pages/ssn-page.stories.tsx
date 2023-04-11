@@ -15,16 +15,18 @@ const defaultValues: SSNValues = {
 }
 
 const SSNInput = () => {
-  const { t } = useTranslation('ssn')
+  const { t } = useTranslation('pages', { keyPrefix: 'ssn' })
 
   const schema = object().shape({
     ssn: string()
       .matches(/^[0-9]{3}-?[0-9]{2}-?[0-9]{4}$/, t('errors.badFormat'))
       .required(t('errors.required'))
+      // TODO: add validation from ss guidance
+      // https://secure.ssa.gov/poms.nsf/lnx/0110201035
+      // regex: https://uibakery.io/regex-library/ssn
       .test('ssn', t('errors.invalid'), (value) =>
         value
-          ? !/^[0-9]{3}-?[0]{2}-?[0-9]{4}$/.test(value) &&
-            !/^[0-9]{3}-?[0-9]{2}-?[0]{4}$/.test(value)
+          ? /^(?!666|000|9\d{2})\d{3}-(?!00)\d{2}-(?!0{4})\d{4}$/.test(value)
           : false
       ),
   })

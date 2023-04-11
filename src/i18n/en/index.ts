@@ -1,7 +1,7 @@
 import components from 'i18n/en/components'
-import ssn from 'i18n/en/ssn'
+import pages from 'i18n/en/pages'
 
 export default {
   components,
-  ssn,
+  pages,
 }
