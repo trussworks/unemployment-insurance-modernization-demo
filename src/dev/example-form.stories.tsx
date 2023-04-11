@@ -9,6 +9,7 @@ import { ChangeEventHandler } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
+import TextField from 'components/form/fields/TextField/TextField'
 
 const formLibraryPreferenceOptions = ['formik', 'reactHookForm'] as const
 type FormLibraryPreferenceOption = (typeof formLibraryPreferenceOptions)[number]
@@ -80,13 +81,11 @@ const ExampleForm = () => {
 
         {formLibraryPreference && formLibraryPreference !== 'formik' && (
           <>
-            <div>
-              <label htmlFor="whyIsFormikBad">Why is Formik bad?</label>
-              <span className="usa-error-message" role="alert">
-                {errors.whyIsFormikBad?.message}
-              </span>
-              <input {...register('whyIsFormikBad')} />
-            </div>
+            <TextField
+              label={'Why is Formik bad?'}
+              name={'whyIsFormikBad'}
+              type={'text'}
+            />
             <br />
           </>
         )}
