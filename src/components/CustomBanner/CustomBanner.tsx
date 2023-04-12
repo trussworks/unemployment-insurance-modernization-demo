@@ -1,4 +1,3 @@
-import { ReactNode, useState } from 'react'
 import {
   Banner,
   BannerButton,
@@ -10,17 +9,13 @@ import {
   BannerLockImage,
   MediaBlockBody,
 } from '@trussworks/react-uswds'
-import { Trans, useTranslation } from 'react-i18next'
-
-import flagImg from '@uswds/uswds/src/img/us_flag_small.png'
 import dotGovIcon from '@uswds/uswds/src/img/icon-dot-gov.svg'
 import httpsIcon from '@uswds/uswds/src/img/icon-https.svg'
+import flagImg from '@uswds/uswds/src/img/us_flag_small.png'
+import { useState } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
-type BannerProps = {
-  children: ReactNode
-}
-
-export const CustomBanner = (props: BannerProps) => {
+export const CustomBanner = () => {
   const { t } = useTranslation('components', { keyPrefix: 'banner' })
 
   const [isOpen, setIsOpen] = useState(false)

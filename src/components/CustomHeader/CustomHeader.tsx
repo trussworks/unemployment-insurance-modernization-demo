@@ -1,4 +1,3 @@
-import { MouseEventHandler, ReactNode, useState } from 'react'
 import {
   Header,
   Link,
@@ -6,13 +5,10 @@ import {
   PrimaryNav,
   Title,
 } from '@trussworks/react-uswds'
+import { MouseEventHandler, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-type CustomHeaderProps = {
-  children: ReactNode
-}
-
-export const CustomHeader = (props: CustomHeaderProps) => {
+export const CustomHeader = () => {
   const { t } = useTranslation('components', { keyPrefix: 'header' })
 
   const [expanded, setExpanded] = useState(false)
@@ -39,11 +35,7 @@ export const CustomHeader = (props: CustomHeaderProps) => {
       className="border-bottom border-base-lighter"
     >
       {expanded && (
-        <div
-          data-testid="overlay"
-          className={'usa-overlay is-visible'}
-          onClick={toggleMenu}
-        />
+        <div data-testid="overlay" className={'usa-overlay is-visible'} />
       )}
       <div className="usa-nav-container">
         <div className="usa-navbar">

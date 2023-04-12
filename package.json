@@ -52,7 +52,8 @@
   "scripts": {
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx}'"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,md,json}": [
