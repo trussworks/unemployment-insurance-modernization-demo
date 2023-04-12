@@ -1,6 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["react", "jsx-a11y", "@typescript-eslint"],
+  "plugins": ["react", "jsx-a11y", "@typescript-eslint", "simple-import-sort"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -11,7 +11,17 @@
     "plugin:security/recommended"
   ],
   "rules": {
-    "sort-imports": "error"
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ],
+    "no-undef": "off"
   },
   "env": {
     "browser": true,
