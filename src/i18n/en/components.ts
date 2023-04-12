@@ -57,7 +57,7 @@ export default {
     copyright: 'Copyright © 2023 {TODO_YOUR_STATE_OR_TERRITORY_HERE}',
   },
   yesNoQuestion: {
-    yes: 'yes',
-    no: 'no',
+    yes: 'Yes',
+    no: 'No',
   },
 }
