@@ -56,4 +56,8 @@ export default {
     govAria: 'U.S. government information and services',
     copyright: 'Copyright © 2023 {TODO_YOUR_STATE_OR_TERRITORY_HERE}',
   },
+  yesNoQuestion: {
+    yes: 'yes',
+    no: 'no',
+  },
 }
