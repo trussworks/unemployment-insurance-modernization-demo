@@ -58,7 +58,6 @@ const SSNInput = () => {
               <button
                 className="usa-button usa-button--unstyled text-right"
                 type="button"
-                data-testid="toggleShowNumber"
                 onClick={handleToggleSsn}
               >
                 {showSsn ? t('hideSsn') : t('showSsn')}
