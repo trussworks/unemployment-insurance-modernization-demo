@@ -46,5 +46,8 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,css,md,json}": "prettier --write"
+  },
+  "dependencies": {
+    "classnames": "^2.3.2"
   }
 }

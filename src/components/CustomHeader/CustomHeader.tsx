@@ -8,11 +8,7 @@ import {
 } from '@trussworks/react-uswds'
 import { useTranslation } from 'react-i18next'
 
-type CustomHeaderProps = {
-  children: ReactNode
-}
-
-export const CustomHeader = (props: CustomHeaderProps) => {
+export const CustomHeader = () => {
   const { t } = useTranslation('components', { keyPrefix: 'header' })
 
   const [expanded, setExpanded] = useState(false)

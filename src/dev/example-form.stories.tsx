@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react'
+import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
 import {
   FormProvider,
   SubmitErrorHandler,
@@ -13,6 +14,7 @@ import CheckboxField from 'components/form/fields/CheckboxField/CheckboxField'
 import { CheckboxGroupField } from 'components/form/fields/CheckboxGroupField/CheckboxGroupField'
 import { Label } from '@trussworks/react-uswds'
 import { mixed } from 'yup'
+import TextField from 'components/form/fields/TextField/TextField'
 
 const formLibraryPreferenceOptions = ['formik', 'reactHookForm'] as const
 type FormLibraryPreferenceOption = (typeof formLibraryPreferenceOptions)[number]
@@ -22,6 +24,7 @@ const tempMapping = ['making coffee', 'clearing data', 'not using formik'] //pul
 type CheckboxFieldGroupOption = (typeof checkboxFieldGroupOptions)[number]
 const schema = yup
   .object({
+    doYouLikeForms: yup.boolean().required(),
     formLibraryPreference: yup
       .string()
       .oneOf([...formLibraryPreferenceOptions])
@@ -39,10 +42,12 @@ const schema = yup
   .required()
 
 type ExampleFieldValues = {
+  doYouLikeForms?: boolean
   formLibraryPreference?: FormLibraryPreferenceOption
   whyIsFormikBad?: string
 }
 const defaultValues: ExampleFieldValues = {
+  doYouLikeForms: undefined,
   formLibraryPreference: undefined,
   whyIsFormikBad: undefined,
 }
@@ -52,7 +57,6 @@ const ExampleForm = () => {
     resolver: yupResolver(schema),
   })
   const {
-    register,
     handleSubmit,
     watch,
     resetField,
@@ -78,6 +82,7 @@ const ExampleForm = () => {
   return (
     <FormProvider {...hookFormMethods}>
       <form onSubmit={handleSubmit(onSubmit, onSubmitError)}>
+        <YesNoQuestion name="doYouLikeForms" question="Do you like forms?" />
         <RadioField
           name="formLibraryPreference"
           legend="Which form Library is better?"
@@ -92,13 +97,11 @@ const ExampleForm = () => {
 
         {formLibraryPreference && formLibraryPreference !== 'formik' && (
           <>
-            <div>
-              <label htmlFor="whyIsFormikBad">Why is Formik bad?</label>
-              <span className="usa-error-message" role="alert">
-                {errors.whyIsFormikBad?.message}
-              </span>
-              <input {...register('whyIsFormikBad')} />
-            </div>
+            <TextField
+              label="Why is Formik bad?"
+              name="whyIsFormikBad"
+              type="text"
+            />
             <br />
           </>
         )}
