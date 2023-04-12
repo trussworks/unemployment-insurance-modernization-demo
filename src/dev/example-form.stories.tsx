@@ -40,12 +40,7 @@ const ExampleForm = () => {
     defaultValues,
     resolver: yupResolver(schema),
   })
-  const {
-    handleSubmit,
-    watch,
-    resetField,
-    formState: { errors },
-  } = hookFormMethods
+  const { handleSubmit, watch, resetField } = hookFormMethods
 
   const formLibraryPreference = watch('formLibraryPreference')
 
