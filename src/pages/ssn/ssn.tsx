@@ -1,13 +1,12 @@
-import { Meta, StoryObj } from '@storybook/react'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Button } from '@trussworks/react-uswds'
 import { PageLayout } from 'components/PageLayout/PageLayout'
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { object, string } from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import TextField from 'components/form/fields/TextField/TextField'
+import { useState } from 'react'
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { getFormattedSsn } from 'utils/format'
+import { object, string } from 'yup'
 
 type SSNValues = {
   ssn: string
@@ -16,7 +15,7 @@ const defaultValues: SSNValues = {
   ssn: '',
 }
 
-const SSNInput = () => {
+export const SSN = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'ssn' })
 
   const schema = object().shape({
@@ -55,13 +54,14 @@ const SSNInput = () => {
               type={showSsn ? 'text' : 'password'}
             />
             <div className="text-right maxw-mobile-lg">
-              <button
-                className="usa-button usa-button--unstyled text-right"
+              <Button
+                unstyled
+                className="text-right"
                 type="button"
                 onClick={handleToggleSsn}
               >
                 {showSsn ? t('hideSsn') : t('showSsn')}
-              </button>
+              </Button>
             </div>
           </div>
           <Button type="submit">{t('continue')}</Button>
@@ -70,13 +70,3 @@ const SSNInput = () => {
     </PageLayout>
   )
 }
-
-const meta = {
-  title: 'Pages/SSN',
-  component: SSNInput,
-} satisfies Meta<typeof SSNInput>
-
-export default meta
-type Story = StoryObj<typeof SSNInput>
-
-export const SSN: Story = {}
