@@ -1,4 +1,5 @@
 import { CustomBanner } from 'components/CustomBanner/CustomBanner'
+import { CustomFooter } from 'components/CustomFooter/CustomFooter'
 import { CustomHeader } from 'components/CustomHeader/CustomHeader'
 import { ReactNode } from 'react'
 
@@ -17,7 +18,7 @@ export const PageLayout = ({ heading, children }: PageLayoutProps) => {
           <h1>{heading}</h1>
           {children}
         </div>
-        {/* TODO: add footer here */}
+        <CustomFooter />
       </main>
     </div>
   )
