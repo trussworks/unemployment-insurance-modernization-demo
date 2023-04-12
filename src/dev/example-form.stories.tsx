@@ -10,10 +10,16 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import CheckboxField from 'components/form/fields/CheckboxField/CheckboxField'
+import { CheckboxGroupField } from 'components/form/fields/CheckboxGroupField/CheckboxGroupField'
+import { Label } from '@trussworks/react-uswds'
+import { mixed } from 'yup'
 
 const formLibraryPreferenceOptions = ['formik', 'reactHookForm'] as const
 type FormLibraryPreferenceOption = (typeof formLibraryPreferenceOptions)[number]
 
+const checkboxFieldGroupOptions = ['option1', 'option2', 'option3'] as const
+const tempMapping = ['making coffee', 'clearing data', 'not using formik'] //pull from i18 file instead
+type CheckboxFieldGroupOption = (typeof checkboxFieldGroupOptions)[number]
 const schema = yup
   .object({
     formLibraryPreference: yup
@@ -24,6 +30,11 @@ const schema = yup
       is: 'reactHookForm',
       then: (schema) => schema.required(),
     }),
+    exampleSingleCheckbox: yup.boolean().required(),
+    rhfIsEasy: yup
+      .array()
+      .of(mixed().oneOf([...checkboxFieldGroupOptions]))
+      .required(),
   })
   .required()
 
@@ -67,10 +78,6 @@ const ExampleForm = () => {
   return (
     <FormProvider {...hookFormMethods}>
       <form onSubmit={handleSubmit(onSubmit, onSubmitError)}>
-        <CheckboxField
-          name={'exampleCheckbox'}
-          label={'Check me, I am just an example.'}
-        />
         <RadioField
           name="formLibraryPreference"
           legend="Which form Library is better?"
@@ -95,7 +102,28 @@ const ExampleForm = () => {
             <br />
           </>
         )}
-
+        <CheckboxGroupField
+          legend="React hook makes which of the following easier"
+          name="rhfIsEasy"
+          options={checkboxFieldGroupOptions.map((option, index) => ({
+            label: tempMapping[index],
+            value: option,
+            checkboxProps: {
+              tile: true,
+              onChange: (e) => {
+                console.log('I am an example of adding an onchange')
+                if (e.target.checked) {
+                  console.log(option + ' is checked')
+                }
+              },
+            },
+          }))}
+        />
+        <CheckboxField
+          name="exampleSingleCheckbox"
+          label="I have reached the end of this example form."
+        />
+        <br></br>
         <button type="submit">Submit</button>
       </form>
     </FormProvider>
