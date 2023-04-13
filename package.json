@@ -60,7 +60,7 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "src/**/*.{md}": [
+    "src/**/*.md": [
       "prettier --write"
     ],
     "src/**/*.{css,scss}": [
