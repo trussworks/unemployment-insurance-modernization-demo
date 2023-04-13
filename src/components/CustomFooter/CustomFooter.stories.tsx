@@ -1,6 +1,6 @@
-import { CustomFooter } from 'components/CustomFooter/CustomFooter'
 import { Meta, StoryObj } from '@storybook/react'
 import { CustomBanner } from 'components/CustomBanner/CustomBanner'
+import { CustomFooter } from 'components/CustomFooter/CustomFooter'
 
 const meta = {
   title: 'Components/Footer',

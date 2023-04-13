@@ -62,7 +62,7 @@ Unemployment Insurance (UI) intake storybook project built to demonstrate what T
 yarn install
 ```
 
-#### Usage
+## Usage
 
 - in your Terminal navigate to this directory and run
 
@@ -71,3 +71,26 @@ yarn storybook
 ```
 
 - Storybook should open automatically in your local browser at http://localhost:6006/
+
+## Supporting tools
+
+This projects uses several tools/automations to improve the developer experience.
+
+### [Husky](https://typicode.github.io/husky/#/)
+
+Husky is used for pre-commit hooks, e.g. running lint-staged as a pre-commit hook.
+
+### [lint-staged](https://github.com/okonet/lint-staged)
+
+lint-staged helps us automatically run automations against files staged for commit, working in tandem with husky.
+
+### [Prettier](https://prettier.io/)
+
+Prettier automatically formats code as a lint-staged pre-commit hook.
+We also recommend setting up your IDE to integrate with Prettier and format code automatically, or based on a keybinding of your choosing.
+
+### [ESLint](https://eslint.org/)
+
+ESLint identifies code smells, potential bugs, accessibility anti-patterns, etc. through the plugins installed.
+ESLint runs on a lint-staged pre-commit hook, but it is recommended to set up IDE integration for an even tighter feedback loop.
+You can also manually run eslint at any time with the `yarn lint` or `yarn lint --fix` commands.

@@ -1,18 +1,18 @@
+import {
+  ErrorMessage,
+  FormGroup,
+  InputPrefix,
+  InputSuffix,
+  Label,
+  TextInput,
+} from '@trussworks/react-uswds'
+import classnames from 'classnames'
 import React, {
   ChangeEventHandler,
   FocusEventHandler,
   ReactNode,
   useState,
 } from 'react'
-import {
-  FormGroup,
-  Label,
-  TextInput,
-  ErrorMessage,
-  InputPrefix,
-  InputSuffix,
-} from '@trussworks/react-uswds'
-import classnames from 'classnames'
 import { useController } from 'react-hook-form'
 
 type TextInputProps = Optional<React.ComponentProps<typeof TextInput>, 'id'>
@@ -36,6 +36,7 @@ export const TextField = ({
   inputPrefix,
   inputSuffix,
   onChange,
+  onBlur,
   ...textInputProps
 }: ITextFieldProps) => {
   const {
@@ -51,15 +52,18 @@ export const TextField = ({
   const [focused, setFocused] = useState(false)
   const showErrorOutline = invalid && !focused
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
-    await hookFormOnChange(e)
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    hookFormOnChange(e)
     if (onChange) {
       onChange(e)
     }
   }
   const handleBlur: FocusEventHandler<HTMLInputElement> = (e) => {
-    setFocused(false)
     hookFormOnBlur()
+    setFocused(false)
+    if (onBlur) {
+      onBlur(e)
+    }
   }
 
   const textInput = (
@@ -91,7 +95,9 @@ export const TextField = ({
       <div className="usa-hint" id={`${textInputProps.name}-hint`}>
         {hint}
       </div>
-      {invalid && <ErrorMessage>{error?.message}</ErrorMessage>}
+      {invalid && (
+        <ErrorMessage className={errorClassName}>{error?.message}</ErrorMessage>
+      )}
       {inputSuffix || inputPrefix ? (
         <div
           className={classnames('usa-input-group', {

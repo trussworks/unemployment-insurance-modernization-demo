@@ -1,6 +1,6 @@
-import { CustomHeader } from 'components/CustomHeader/CustomHeader'
 import { Meta, StoryObj } from '@storybook/react'
 import { CustomBanner } from 'components/CustomBanner/CustomBanner'
+import { CustomHeader } from 'components/CustomHeader/CustomHeader'
 
 const meta = {
   title: 'Components/Header',
