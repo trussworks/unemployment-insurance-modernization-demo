@@ -12,7 +12,6 @@ import * as yup from 'yup'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import CheckboxField from 'components/form/fields/CheckboxField/CheckboxField'
 import { CheckboxGroupField } from 'components/form/fields/CheckboxGroupField/CheckboxGroupField'
-import { Label } from '@trussworks/react-uswds'
 import { mixed } from 'yup'
 import TextField from 'components/form/fields/TextField/TextField'
 
@@ -37,6 +36,7 @@ const schema = yup
     rhfIsEasy: yup
       .array()
       .of(mixed().oneOf([...checkboxFieldGroupOptions]))
+      .min(1, 'Select at least one')
       .required(),
   })
   .required()
@@ -106,19 +106,13 @@ const ExampleForm = () => {
           </>
         )}
         <CheckboxGroupField
-          legend="React hook makes which of the following easier"
+          legend="react-hook-form makes which of the following easier"
           name="rhfIsEasy"
           options={checkboxFieldGroupOptions.map((option, index) => ({
             label: tempMapping[index],
             value: option,
             checkboxProps: {
               tile: true,
-              onChange: (e) => {
-                console.log('I am an example of adding an onchange')
-                if (e.target.checked) {
-                  console.log(option + ' is checked')
-                }
-              },
             },
           }))}
         />

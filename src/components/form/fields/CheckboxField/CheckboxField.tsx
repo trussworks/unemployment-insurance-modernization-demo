@@ -35,17 +35,14 @@ export const CheckboxField = ({
     },
     fieldState: { invalid, error },
   } = useController({ name })
-  console.log('CheckboxField input props', inputProps)
-  console.log('CheckboxField ignored value ', ignored)
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
     if (onChange) {
       onChange(e)
     } else {
-      await hookFormOnChange(e)
+      hookFormOnChange(e)
     }
   }
-  console.log('remaing props are ' + JSON.stringify({ ...inputProps }))
 
   /* eslint-disable-next-line react/jsx-props-no-spreading */
   return (
