@@ -1,0 +1,20 @@
+.field + .field {
+  margin-top: 16px;
+}
+
+.withChildren div:not(:nth-child(2)) {
+  margin-left: 1.424rem;
+}
+.withChildren div:nth-child(2) {
+  display: inline-block;
+}
+
+.icon {
+  margin-right: 0.424rem;
+}
+
+.fieldValue .icon,
+.text {
+  display: inline-block;
+  vertical-align: middle;
+}
