@@ -2,10 +2,10 @@
   margin-top: 16px;
 }
 
-.withChildren div:not(:nth-child(2)) {
+.content div:not(:nth-child(2)) {
   margin-left: 1.424rem;
 }
-.withChildren div:nth-child(2) {
+.content div:nth-child(2) {
   display: inline-block;
 }
 

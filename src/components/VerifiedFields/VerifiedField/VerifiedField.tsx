@@ -12,11 +12,7 @@ type VerifiedFieldProps = {
 export const VerifiedField = ({ label, children }: VerifiedFieldProps) => (
   <li className={styles.field}>
     <div>{label}</div>
-    <div
-      className={classNames(styles.fieldValue, {
-        [styles.withChildren]: children,
-      })}
-    >
+    <div className={classNames(styles.fieldValue, styles.content)}>
       <Icon.Check
         className={classNames(`text-info-dark ${styles.icon}`)}
         aria-hidden="true"
