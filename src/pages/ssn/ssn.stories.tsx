@@ -1,13 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { SSN } from './ssn'
+import { SSN as SsnComponent } from './ssn'
 
 const meta = {
   title: 'Pages/SSN',
-  component: SSN,
-} satisfies Meta<typeof SSN>
+  component: SsnComponent,
+} satisfies Meta<typeof SsnComponent>
 
 export default meta
-type Story = StoryObj<typeof SSN>
+type Story = StoryObj<typeof SsnComponent>
 
-export const SSNPage: Story = {}
+export const SSN: Story = {}

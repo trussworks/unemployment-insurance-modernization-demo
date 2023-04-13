@@ -18,11 +18,15 @@ const defaultValues: SSNValues = {
 export const SSN = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'ssn' })
 
+  // TODO move outside component render function
   const schema = object().shape({
     ssn: string()
-      .required(t('errors.required'))
-      .matches(/^[0-9]{3}-?[0-9]{2}-?[0-9]{4}$/, t('errors.badFormat'))
-      .test('ssn', t('errors.invalid'), (value) =>
+      .required(t('questions.ssn.errors.required'))
+      .matches(
+        /^[0-9]{3}-?[0-9]{2}-?[0-9]{4}$/,
+        t('questions.ssn.errors.badFormat')
+      )
+      .test('ssn', t('questions.ssn.errors.invalid'), (value) =>
         /^(?!666|000|9\d{2})\d{3}-(?!00)\d{2}-(?!0{4})\d{4}$/.test(
           getFormattedSsn(value)
         )
@@ -44,12 +48,12 @@ export const SSN = () => {
   }
 
   return (
-    <PageLayout heading={t('header')}>
+    <PageLayout heading={t('heading')}>
       <FormProvider {...hookFormMethods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="margin-bottom-1">
             <TextField
-              label={t('label')}
+              label={t('questions.ssn.label')}
               name="ssn"
               type={showSsn ? 'text' : 'password'}
             />

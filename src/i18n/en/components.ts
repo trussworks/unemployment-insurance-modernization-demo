@@ -32,17 +32,6 @@ export default {
       },
     },
   },
-  header: {
-    title: 'Unemployment Insurance Benefits',
-    navMenu: {
-      button: 'Menu',
-      items: {
-        home: 'Home',
-        claim: 'My claim',
-        logOut: 'Log out',
-      },
-    },
-  },
   footer: {
     returnTop: 'Return to top',
     identifierAria: 'Agency identifier',
@@ -55,6 +44,17 @@ export default {
     home: 'Home',
     govAria: 'U.S. government information and services',
     copyright: 'Copyright © 2023 {TODO_YOUR_STATE_OR_TERRITORY_HERE}',
+  },
+  header: {
+    title: 'Unemployment Insurance Benefits',
+    navMenu: {
+      button: 'Menu',
+      items: {
+        home: 'Home',
+        claim: 'My claim',
+        logOut: 'Log out',
+      },
+    },
   },
   yesNoQuestion: {
     yes: 'Yes',
