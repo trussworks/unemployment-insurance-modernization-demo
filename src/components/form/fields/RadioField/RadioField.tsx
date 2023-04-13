@@ -1,8 +1,8 @@
 import {
-  Radio,
-  FormGroup,
   ErrorMessage,
   Fieldset,
+  FormGroup,
+  Radio,
 } from '@trussworks/react-uswds'
 import {
   ChangeEventHandler,
@@ -10,10 +10,9 @@ import {
   FocusEventHandler,
   ReactNode,
 } from 'react'
+import { useController } from 'react-hook-form'
 
 import styles from './RadioField.module.scss'
-
-import { useController } from 'react-hook-form'
 
 interface IRadioOption {
   label: ReactNode
@@ -50,14 +49,14 @@ export const RadioField = ({
       onChange: hookFormOnChange,
       onBlur: hookFormOnBlur,
       ref,
-      value: ignored,
+      value: _,
       ...hookFormRemainingProps
     },
     fieldState: { invalid, error },
   } = useController({ name })
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
-    await hookFormOnChange(e)
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    hookFormOnChange(e)
     if (onChange) {
       onChange(e)
     }

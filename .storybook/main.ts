@@ -18,7 +18,7 @@ const config: StorybookConfig = {
   docs: {
     autodocs: 'tag',
   },
-  webpackFinal: async (config, { configType }) => {
+  webpackFinal: async (config) => {
     config.resolve.plugins = [new TsconfigPathsPlugin()]
 
     config.module.rules.push({

@@ -1,26 +1,25 @@
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Meta, StoryObj } from '@storybook/react'
+import CheckboxField from 'components/form/fields/CheckboxField/CheckboxField'
+import { CheckboxGroupField } from 'components/form/fields/CheckboxGroupField/CheckboxGroupField'
+import { RadioField } from 'components/form/fields/RadioField/RadioField'
+import TextField from 'components/form/fields/TextField/TextField'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
+import { ChangeEventHandler } from 'react'
 import {
   FormProvider,
   SubmitErrorHandler,
   SubmitHandler,
   useForm,
 } from 'react-hook-form'
-import { ChangeEventHandler } from 'react'
-import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { RadioField } from 'components/form/fields/RadioField/RadioField'
-import CheckboxField from 'components/form/fields/CheckboxField/CheckboxField'
-import { CheckboxGroupField } from 'components/form/fields/CheckboxGroupField/CheckboxGroupField'
 import { mixed } from 'yup'
-import TextField from 'components/form/fields/TextField/TextField'
 
 const formLibraryPreferenceOptions = ['formik', 'reactHookForm'] as const
 type FormLibraryPreferenceOption = (typeof formLibraryPreferenceOptions)[number]
 
 const checkboxFieldGroupOptions = ['option1', 'option2', 'option3'] as const
 const tempMapping = ['making coffee', 'clearing data', 'not using formik'] //pull from i18 file instead
-type CheckboxFieldGroupOption = (typeof checkboxFieldGroupOptions)[number]
 const schema = yup
   .object({
     doYouLikeForms: yup.boolean().required(),
@@ -56,12 +55,7 @@ const ExampleForm = () => {
     defaultValues,
     resolver: yupResolver(schema),
   })
-  const {
-    handleSubmit,
-    watch,
-    resetField,
-    formState: { errors },
-  } = hookFormMethods
+  const { handleSubmit, watch, resetField } = hookFormMethods
 
   const formLibraryPreference = watch('formLibraryPreference')
 

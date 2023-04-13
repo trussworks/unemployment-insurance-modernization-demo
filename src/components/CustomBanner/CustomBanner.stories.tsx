@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from '@storybook/react'
-
 import { CustomBanner } from 'components/CustomBanner/CustomBanner'
 
 const meta = {

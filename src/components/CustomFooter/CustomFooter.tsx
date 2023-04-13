@@ -1,18 +1,17 @@
 import {
-  Link,
-  Identifier,
-  IdentifierMasthead,
-  IdentifierIdentity,
-  IdentifierGov,
   GridContainer,
+  Icon,
+  Identifier,
+  IdentifierGov,
+  IdentifierIdentity,
+  IdentifierLink,
   IdentifierLinkItem,
   IdentifierLinks,
-  IdentifierLink,
-  IdentifierLogos,
   IdentifierLogo,
-  Icon,
+  IdentifierLogos,
+  IdentifierMasthead,
+  Link,
 } from '@trussworks/react-uswds'
-
 import { Trans, useTranslation } from 'react-i18next'
 
 export const CustomFooter = () => {
@@ -36,7 +35,9 @@ export const CustomFooter = () => {
               t={t}
               i18nKey="official"
               components={[
-                <Link href="/">{'{TO_DO_YOUR_STATE_OR_TERRITORY_HERE}'}</Link>,
+                <Link key="official" href="/">
+                  {'{TO_DO_YOUR_STATE_OR_TERRITORY_HERE}'}
+                </Link>,
               ]}
             />
           </IdentifierIdentity>

@@ -8,6 +8,7 @@ import classnames from 'classnames'
 import { ChangeEventHandler, PropsWithChildren, ReactNode } from 'react'
 import { useController } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+
 import styles from './YesNoQuestion.module.scss'
 
 interface IYesNoQuestionProps {
@@ -28,14 +29,12 @@ export const YesNoQuestion = ({
   noLabel,
   isStacked,
   onChange,
-  onBlur,
   ...inputProps
 }: PropsWithChildren<IYesNoQuestionProps> & JSX.IntrinsicElements['input']) => {
   const { t } = useTranslation('components', { keyPrefix: 'yesNoQuestion' })
   const {
     field: {
       onChange: hookFormOnChange,
-      onBlur: hookFormOnBlur,
       ref,
       value: _,
       ...hookFormRemainingProps
