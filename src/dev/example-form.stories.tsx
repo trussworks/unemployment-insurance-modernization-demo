@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Meta, StoryObj } from '@storybook/react'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import TextField from 'components/form/fields/TextField/TextField'
+import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
 import { ChangeEventHandler } from 'react'
 import {
   FormProvider,
@@ -16,6 +17,7 @@ type FormLibraryPreferenceOption = (typeof formLibraryPreferenceOptions)[number]
 
 const schema = yup
   .object({
+    doYouLikeForms: yup.boolean().required(),
     formLibraryPreference: yup
       .string()
       .oneOf([...formLibraryPreferenceOptions])
@@ -28,10 +30,12 @@ const schema = yup
   .required()
 
 type ExampleFieldValues = {
+  doYouLikeForms?: boolean
   formLibraryPreference?: FormLibraryPreferenceOption
   whyIsFormikBad?: string
 }
 const defaultValues: ExampleFieldValues = {
+  doYouLikeForms: undefined,
   formLibraryPreference: undefined,
   whyIsFormikBad: undefined,
 }
@@ -61,6 +65,7 @@ const ExampleForm = () => {
   return (
     <FormProvider {...hookFormMethods}>
       <form onSubmit={handleSubmit(onSubmit, onSubmitError)}>
+        <YesNoQuestion name="doYouLikeForms" question="Do you like forms?" />
         <RadioField
           name="formLibraryPreference"
           legend="Which form Library is better?"

@@ -1,0 +1,17 @@
+.fieldset legend {
+  margin-top: 0;
+}
+
+.errorLegend > legend {
+  font-weight: 700;
+}
+
+.inline {
+  margin-right: 2em;
+  display: inline-block;
+}
+
+.stacked {
+  display: block;
+  margin-right: 2em;
+}

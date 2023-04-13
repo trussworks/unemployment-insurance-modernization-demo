@@ -93,3 +93,4 @@ We also recommend setting up your IDE to integrate with Prettier and format code
 
 ESLint identifies code smells, potential bugs, accessibility anti-patterns, etc. through the plugins installed.
 ESLint runs on a lint-staged pre-commit hook, but it is recommended to set up IDE integration for an even tighter feedback loop.
+You can also manually run eslint at any time with the `yarn lint` or `yarn lint --fix` commands.
