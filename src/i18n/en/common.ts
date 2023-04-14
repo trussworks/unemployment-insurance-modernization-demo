@@ -55,6 +55,12 @@ const common = {
       },
     },
   },
+  validation: {
+    required: 'This field is required',
+    notEmail: 'This is not a valid email',
+    email_does_not_match: 'Confirmation email does not match',
+    notZipCode: 'This is not a valid zip code',
+  },
 }
 
 export default common
