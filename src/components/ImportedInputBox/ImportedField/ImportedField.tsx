@@ -1,14 +1,15 @@
 import { Icon } from '@trussworks/react-uswds'
 import classNames from 'classnames'
-import styles from 'components/ImportedInputBox/ImportedField/ImportedField.module.scss'
 import { ReactNode } from 'react'
 
-type VerifiedFieldProps = {
+import styles from './ImportedField.module.scss'
+
+type ImportedFieldProps = {
   label: ReactNode
   children: ReactNode
 }
 
-export const ImportedField = ({ label, children }: VerifiedFieldProps) => (
+export const ImportedField = ({ label, children }: ImportedFieldProps) => (
   <li className={styles.field}>
     <div>{label}</div>
     <div className={classNames(styles.fieldValue, styles.content)}>
