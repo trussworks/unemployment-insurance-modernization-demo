@@ -3,16 +3,15 @@ import {
   SummaryBoxContent,
   SummaryBoxHeading,
 } from '@trussworks/react-uswds'
+import styles from 'components/ImportedInputBox/ImportedInputBox.module.scss'
 import { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import styles from './VerifiedFields.module.scss'
 
 type VerifiedFieldsProps = {
   children: ReactNode
 }
 
-export const VerifiedFields = ({ children }: VerifiedFieldsProps) => {
+export const ImportedInputBox = ({ children }: VerifiedFieldsProps) => {
   const { t } = useTranslation('components', { keyPrefix: 'verifiedFields' })
 
   return (
