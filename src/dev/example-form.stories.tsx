@@ -3,6 +3,8 @@ import { Meta, StoryObj } from '@storybook/react'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import TextField from 'components/form/fields/TextField/TextField'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
+import { ImportedField } from 'components/ImportedInputBox/ImportedField/ImportedField'
+import { ImportedInputBox } from 'components/ImportedInputBox/ImportedInputBox'
 import { ChangeEventHandler } from 'react'
 import {
   FormProvider,
@@ -65,6 +67,10 @@ const ExampleForm = () => {
   return (
     <FormProvider {...hookFormMethods}>
       <form onSubmit={handleSubmit(onSubmit, onSubmitError)}>
+        <ImportedInputBox>
+          <ImportedField label="Profession">Software Engineer</ImportedField>
+          <ImportedField label="Hobbies">Entomology</ImportedField>
+        </ImportedInputBox>
         <YesNoQuestion name="doYouLikeForms" question="Do you like forms?" />
         <RadioField
           name="formLibraryPreference"
