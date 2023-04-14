@@ -32,6 +32,9 @@ export default {
       },
     },
   },
+  dropdownField: {
+    select: '- Select -',
+  },
   header: {
     title: 'Unemployment Insurance Benefits',
     navMenu: {
