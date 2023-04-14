@@ -1,8 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Meta, StoryObj } from '@storybook/react'
+import { DateInputField } from 'components/form/fields/DateInputField/DateInputField'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import TextField from 'components/form/fields/TextField/TextField'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
+import i18n from 'i18n/i18n'
 import { ChangeEventHandler } from 'react'
 import {
   FormProvider,
@@ -18,6 +20,21 @@ type FormLibraryPreferenceOption = (typeof formLibraryPreferenceOptions)[number]
 const schema = yup
   .object({
     doYouLikeForms: yup.boolean().required(),
+    whenDidYouStartLikingForms: yup
+      .object({
+        month: yup.number().required(),
+        day: yup.number().required(),
+        year: yup.number().required(),
+      })
+      .test('isDate', i18n.t('components:dateInput.error.invalid'), (value) => {
+        if (!isNaN(value.month) && !isNaN(value.day) && !isNaN(value.year)) {
+          const { month, day, year } = value
+          const date = Date.parse(`${year}-${month}-${day}`)
+          return date ? true : false
+        }
+        return true
+      })
+      .required(),
     formLibraryPreference: yup
       .string()
       .oneOf([...formLibraryPreferenceOptions])
@@ -66,6 +83,10 @@ const ExampleForm = () => {
     <FormProvider {...hookFormMethods}>
       <form onSubmit={handleSubmit(onSubmit, onSubmitError)}>
         <YesNoQuestion name="doYouLikeForms" question="Do you like forms?" />
+        <DateInputField
+          name="whenDidYouStartLikingForms"
+          legend="What exact day you start liking forms?"
+        />
         <RadioField
           name="formLibraryPreference"
           legend="Which form Library is better?"

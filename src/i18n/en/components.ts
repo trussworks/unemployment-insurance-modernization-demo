@@ -60,4 +60,10 @@ export default {
     yes: 'Yes',
     no: 'No',
   },
+  dateInput: {
+    day: 'Day',
+    month: 'Month',
+    year: 'Year',
+    error: { invalid: 'Date is invalid' },
+  },
 }
