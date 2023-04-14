@@ -12,7 +12,7 @@ void i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
-    ns: ['components', 'pages'],
+    ns: ['components', 'pages', 'common'],
     resources,
   })
 
