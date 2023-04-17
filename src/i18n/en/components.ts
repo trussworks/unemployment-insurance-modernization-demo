@@ -32,6 +32,9 @@ export default {
       },
     },
   },
+  dropdownField: {
+    select: '- Select -',
+  },
   footer: {
     returnTop: 'Return to top',
     identifierAria: 'Agency identifier',
@@ -55,6 +58,9 @@ export default {
         logOut: 'Log out',
       },
     },
+  },
+  importedInputBox: {
+    heading: 'The following information has been added to your application:',
   },
   yesNoQuestion: {
     yes: 'Yes',
