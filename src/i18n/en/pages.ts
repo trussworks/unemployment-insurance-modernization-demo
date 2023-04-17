@@ -81,7 +81,7 @@ export default {
         errors: {},
       },
     },
-    immigrationDocumentSectionTitle:
+    immigrationDocumentSectionHeading:
       'Enter the following information as it appears on your immigration documents',
     immigrationHelpModal: {
       heading:

@@ -207,7 +207,7 @@ export const Identity = ({
             workAuthorizationType !== 'usCitizenOrNational' && (
               <>
                 <SectionHeading>
-                  {t('immigrationDocumentSectionTitle')}
+                  {t('immigrationDocumentSectionHeading')}
                 </SectionHeading>
                 <TextField
                   name="immigrationDocumentFirstName"
