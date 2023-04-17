@@ -1,15 +1,6 @@
-import React, { ChangeEventHandler } from 'react'
 import { Checkbox, ErrorMessage, FormGroup } from '@trussworks/react-uswds'
+import React, { ChangeEventHandler } from 'react'
 import { useController } from 'react-hook-form'
-/**
- * This component renders a checkbox
- *
- * It relies on the Formik useField hook to work, so it must ALWAYS be rendered
- * inside of a Formik form context.
- *
- * If you want to use these components outside a Formik form, you can use the
- * ReactUSWDS components directly.
- */
 
 type CheckboxFieldProps = {
   showsErrors?: boolean
@@ -29,22 +20,20 @@ export const CheckboxField = ({
     field: {
       onChange: hookFormOnChange,
       ref,
-      value: ignored,
-      name: ignoredName,
+      value: _value,
+      name: _name,
       ...hookFormRemainingProps
     },
     fieldState: { invalid, error },
   } = useController({ name })
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
+    hookFormOnChange(e)
     if (onChange) {
       onChange(e)
-    } else {
-      hookFormOnChange(e)
     }
   }
 
-  /* eslint-disable-next-line react/jsx-props-no-spreading */
   return (
     <FormGroup className={formGroupClassName} error={invalid && showsErrors}>
       {invalid && showsErrors && <ErrorMessage>{error?.message}</ErrorMessage>}
@@ -53,6 +42,7 @@ export const CheckboxField = ({
         id={id || name}
         onChange={handleChange}
         onInvalid={(e) => e.preventDefault()}
+        inputRef={ref}
         {...inputProps}
         {...hookFormRemainingProps}
       />
