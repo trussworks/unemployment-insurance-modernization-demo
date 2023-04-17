@@ -22,8 +22,8 @@ const schema = yup
     doYouLikeForms: yup.boolean().required(),
     whenDidYouStartLikingForms: yup
       .object({
-        month: yup.number().required(),
-        day: yup.number().required(),
+        month: yup.number().min(1).max(12).required(),
+        day: yup.number().min(1).max(31).required(),
         year: yup.number().required(),
       })
       .test('isDate', i18n.t('components:dateInput.error.invalid'), (value) => {
