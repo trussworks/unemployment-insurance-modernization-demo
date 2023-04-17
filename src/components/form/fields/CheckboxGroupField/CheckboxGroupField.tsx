@@ -1,28 +1,20 @@
 import {
-  ChangeEventHandler,
-  ComponentProps,
-  ReactNode,
-  useRef,
-  useState,
-} from 'react'
-import {
-  FormGroup,
+  Checkbox,
   ErrorMessage,
   Fieldset,
-  Checkbox,
+  FormGroup,
 } from '@trussworks/react-uswds'
-
-import CheckboxField from 'components/form/fields/CheckboxField/CheckboxField'
+import { ChangeEventHandler, ComponentProps, ReactNode } from 'react'
+import { useController } from 'react-hook-form'
 
 import styles from './CheckboxGroupField.module.scss'
-import { useController, useWatch } from 'react-hook-form'
 
 type OptionOmitProps = 'id' | 'name' | 'value' | 'label'
 
 type CheckboxOption = {
   value: string
   label: ReactNode
-  checkboxProps?: Omit<ComponentProps<typeof CheckboxField>, OptionOmitProps>
+  checkboxProps?: Omit<ComponentProps<typeof Checkbox>, OptionOmitProps>
 }
 
 interface ICheckboxGroupFieldProps {
@@ -41,35 +33,27 @@ export const CheckboxGroupField = ({
   const {
     field: {
       onChange: hookFormOnChange,
-      onBlur: hookFormOnBlurIgnored,
       ref,
-      value: checkboxGroupValue,
-      name: ignoredName,
+      value: hookFormValue,
+      name: _name,
       ...hookFormRemainingProps
     },
     fieldState: { invalid, error },
-  } = useController({ name })
-  const valueWatching = useWatch({ name: name })
-
-  const [value, setValue] = useState(checkboxGroupValue || [])
-  const stateRef = useRef()
-  stateRef.current = value
+  } = useController({ name, defaultValue: [] })
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const valueCopy = [...value]
-    const indexOfValue = valueCopy.indexOf(e.target.value)
-    if (e.target.checked && indexOfValue < 0) {
-      {
-        valueCopy.push(e.target.value)
-      }
-    } else if (indexOfValue > -1) {
-      valueCopy.splice(indexOfValue, 1)
+    const newValue = [...hookFormValue]
+    const valueInArray = newValue.includes(e.target)
+
+    if (e.target.checked && !valueInArray) {
+      newValue.push(e.target.value)
     }
 
-    hookFormOnChange([...valueCopy])
+    if (!e.target.checked && valueInArray) {
+      newValue.filter((value) => value !== e.target.value)
+    }
 
-    // update local state
-    setValue(valueCopy)
+    hookFormOnChange(newValue)
   }
   return (
     <FormGroup error={invalid}>
@@ -81,12 +65,10 @@ export const CheckboxGroupField = ({
         {invalid && <ErrorMessage>{error?.message}</ErrorMessage>}
 
         {options.map((option, index) => (
-          <CheckboxField
+          <Checkbox
             key={`${id || name}.${index}.${option.value}`}
             id={`${id || name}.${option.value}`}
             name={name}
-            showsErrors={false}
-            formGroupClassName="margin-top-1"
             label={option.label}
             value={option.value}
             inputRef={ref}
