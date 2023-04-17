@@ -60,7 +60,6 @@ const DropdownField = ({
   } = useController({ name })
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
-    console.log(e)
     hookFormOnChange(e)
     if (onChange) {
       onChange(e)
