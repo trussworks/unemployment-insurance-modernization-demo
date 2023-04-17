@@ -166,12 +166,12 @@ export const Identity = ({
         {[importedDateOfBirth, importedSsn].some((imported) => !!imported) && (
           <ImportedInputBox>
             {importedDateOfBirth && (
-              <ImportedField label={t('questions.dateOfBirth.label')}>
+              <ImportedField label={t('dateOfBirth.label')}>
                 {importedDateOfBirth}
               </ImportedField>
             )}
             {importedSsn && (
-              <ImportedField label={t('questions.ssn.label')}>
+              <ImportedField label={t('ssn.label')}>
                 {importedSsn}
               </ImportedField>
             )}
@@ -181,26 +181,22 @@ export const Identity = ({
           {immigrationHelpModal}
           {/* TODO: DateOfBirth DateInputField, if not imported */}
           {!importedSsn && (
-            <TextField
-              name="ssn"
-              label={t('questions.ssn.label')}
-              type="text"
-            />
+            <TextField name="ssn" label={t('ssn.label')} type="text" />
           )}
           <YesNoQuestion
             name="hasDriversLicenseOrStateId"
-            question={t('questions.hasDriversLicenseOrStateId.label')}
+            question={t('hasDriversLicenseOrStateId.label')}
           />
           {hasDriversLicenseOrStateId && (
             <TextField
               name="driversLicenseOrStateIdNumber"
-              label={t('questions.driversLicenseOrStateIdNumber.label')}
+              label={t('driversLicenseOrStateIdNumber.label')}
               type="text"
             />
           )}
           <RadioField
             name="workAuthorizationType"
-            legend={t('questions.workAuthorizationType.label')}
+            legend={t('workAuthorizationType.label')}
             options={workAuthorizationTypeRadioOptions}
           />
 
@@ -212,28 +208,26 @@ export const Identity = ({
                 </SectionHeading>
                 <TextField
                   name="immigrationDocumentFirstName"
-                  label={t('questions.immigrationDocumentFirstName.label')}
+                  label={t('immigrationDocumentFirstName.label')}
                   type="text"
                 />
                 <TextField
                   name="immigrationDocumentMiddleInitial"
-                  label={t('questions.immigrationDocumentMiddleInitial.label')}
+                  label={t('immigrationDocumentMiddleInitial.label')}
                   type="text"
                 />
                 <TextField
                   name="immigrationDocumentLastName"
-                  label={t('questions.immigrationDocumentLastName.label')}
+                  label={t('immigrationDocumentLastName.label')}
                   type="text"
                 />
                 <YesNoQuestion
                   name="hasUscisOrAlienRegistrationNumber"
-                  question={t(
-                    'questions.hasUscisOrAlienRegistrationNumber.label'
-                  )}
+                  question={t('hasUscisOrAlienRegistrationNumber.label')}
                   hint={
                     <Trans
                       t={t}
-                      i18nKey="questions.hasUscisOrAlienRegistrationNumber.hint"
+                      i18nKey="hasUscisOrAlienRegistrationNumber.hint"
                     >
                       <ModalOpenLink
                         modalRef={modalRef}
@@ -246,19 +240,17 @@ export const Identity = ({
                 />
                 <TextField
                   name="uscisOrAlienRegistrationNumber"
-                  label={t('questions.uscisOrAlienRegistrationNumber.label')}
+                  label={t('uscisOrAlienRegistrationNumber.label')}
                   type="text"
                 />
                 <TextField
                   name="confirmUscisOrAlienRegistrationNumber"
-                  label={t(
-                    'questions.confirmUscisOrAlienRegistrationNumber.label'
-                  )}
+                  label={t('confirmUscisOrAlienRegistrationNumber.label')}
                   type="text"
                 />
                 <DropdownField
                   name="countryOfOrigin"
-                  label={t('questions.countryOfOrigin.label')}
+                  label={t('countryOfOrigin.label')}
                   startEmpty
                   options={countryOfOriginOptions}
                 />
@@ -268,6 +260,7 @@ export const Identity = ({
             )}
 
           {/* TODO: FormPaginationButtons */}
+          <br />
           <Button type="submit">Next</Button>
         </form>
       </FormProvider>
