@@ -11,10 +11,9 @@ import {
   FocusEventHandler,
   KeyboardEventHandler,
   ReactNode,
-  useEffect,
   useState,
 } from 'react'
-import { useController, useFormContext } from 'react-hook-form'
+import { useController } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 type DateInputOmitProps =
@@ -64,7 +63,6 @@ export const DateInputField = ({
 }: DateFieldProps) => {
   const { t } = useTranslation('components', { keyPrefix: 'dateInput' })
   const [focused, setFocused] = useState('')
-  const { setFocus } = useFormContext()
   const {
     fieldState: { invalid, error },
   } = useController({ name })
@@ -103,11 +101,6 @@ export const DateInputField = ({
   } = useController({ name: `${name}.year` })
 
   const id = idProp || name
-
-  useEffect(() => {
-    // If date is invalid, set focus on first DateInput field.
-    if (invalid) setFocus(`${name}.month`)
-  }, [setFocus, invalid])
 
   const showErrorOutlineMonth =
     monthInvalid && focused !== 'month'

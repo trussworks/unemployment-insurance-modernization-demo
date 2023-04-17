@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Meta, StoryObj } from '@storybook/react'
 import { DateInputField } from 'components/form/fields/DateInputField/DateInputField'
-import i18n from 'i18n/i18n'
 import DropdownField, {
   EMPTY_DROPDOWN_OPTION,
 } from 'components/form/fields/DropdownField/DropdownField'
@@ -10,6 +9,7 @@ import TextField from 'components/form/fields/TextField/TextField'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
 import { ImportedField } from 'components/ImportedInputBox/ImportedField/ImportedField'
 import { ImportedInputBox } from 'components/ImportedInputBox/ImportedInputBox'
+import i18n from 'i18n/i18n'
 import { ChangeEventHandler } from 'react'
 import {
   FormProvider,
@@ -17,6 +17,7 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form'
+import { isValidDate } from 'utils/date'
 import * as yup from 'yup'
 
 const formLibraryPreferenceOptions = ['formik', 'reactHookForm'] as const
@@ -25,21 +26,27 @@ type FormLibraryPreferenceOption = (typeof formLibraryPreferenceOptions)[number]
 const schema = yup
   .object({
     doYouLikeForms: yup.boolean().required(),
-    whenDidYouStartLikingForms: yup
-      .object({
-        month: yup.number().min(1).max(12).required(),
-        day: yup.number().min(1).max(31).required(),
-        year: yup.number().required(),
-      })
-      .test('isDate', i18n.t('components:dateInput.error.invalid'), (value) => {
-        if (!isNaN(value.month) && !isNaN(value.day) && !isNaN(value.year)) {
-          const { month, day, year } = value
-          const date = Date.parse(`${year}-${month}-${day}`)
-          return date ? true : false
-        }
-        return true
-      })
-      .required(),
+    whenDidYouStartLikingForms: yup.object({
+      month: yup
+        .number()
+        .test({
+          name: 'isValidDate',
+          message: i18n.t('components:dateInput.error.invalid'),
+          test: (value, context) => {
+            if (value) {
+              return isValidDate({
+                month: value,
+                day: context.parent.day,
+                year: context.parent.year,
+              })
+            }
+            return true
+          },
+        })
+        .required(),
+      day: yup.number().required(),
+      year: yup.number().required(),
+    }),
     formLibraryPreference: yup
       .string()
       .oneOf([...formLibraryPreferenceOptions])
