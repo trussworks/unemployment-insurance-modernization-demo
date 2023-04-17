@@ -50,6 +50,7 @@ const countryOfOriginOptions = Object.entries(countries)
     label: country.name,
     value: code,
   }))
+type CountryOfOriginOption = keyof typeof countries
 
 type IdentityValues = {
   dateOfBirth?: string
@@ -63,7 +64,7 @@ type IdentityValues = {
   hasUscisOrAlienRegistrationNumber?: boolean
   uscisOrAlienRegistrationNumber?: string
   confirmUscisOrAlienRegistrationNumber?: string
-  countryOfOrigin?: string // TODO: enumerate
+  countryOfOrigin?: CountryOfOriginOption
   immigrationDocumentIssueDate?: string
   immigrationDocumentExpirationDate?: string
 }
