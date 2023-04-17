@@ -13,6 +13,8 @@ import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import TextField from 'components/form/fields/TextField/TextField'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
 import { SectionHeading } from 'components/form/SectionHeading/SectionHeading'
+import { ImportedField } from 'components/ImportedInputBox/ImportedField/ImportedField'
+import { ImportedInputBox } from 'components/ImportedInputBox/ImportedInputBox'
 import { PageLayout } from 'components/PageLayout/PageLayout'
 import i18n from 'i18n/i18n'
 import { MouseEventHandler, useRef } from 'react'
@@ -149,9 +151,30 @@ export const Identity = ({
   return (
     <PageLayout heading={t('heading')}>
       <FormProvider {...hookFormMethods}>
-        {/* TODO: VerifiedFields */}
+        {[importedDateOfBirth, importedSsn].some((imported) => !!imported) && (
+          <ImportedInputBox>
+            {importedDateOfBirth && (
+              <ImportedField label={t('questions.dateOfBirth.label')}>
+                {importedDateOfBirth}
+              </ImportedField>
+            )}
+            {importedSsn && (
+              <ImportedField label={t('questions.ssn.label')}>
+                {importedSsn}
+              </ImportedField>
+            )}
+          </ImportedInputBox>
+        )}
         <form onSubmit={handleSubmit(onSubmit)}>
           {immigrationHelpModal}
+          {/* TODO: DateOfBirth DateInputField, if not imported */}
+          {!importedSsn && (
+            <TextField
+              name="ssn"
+              label={t('questions.ssn.label')}
+              type="text"
+            />
+          )}
           <YesNoQuestion
             name="hasDriversLicenseOrStateId"
             question={t('questions.hasDriversLicenseOrStateId.label')}

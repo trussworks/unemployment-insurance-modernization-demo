@@ -20,6 +20,8 @@ export default {
   identity: {
     heading: 'Identity Information',
     questions: {
+      dateOfBirth: { label: 'Date of birth', errors: {} },
+      ssn: { label: 'Social security number', errors: {} },
       hasDriversLicenseOrStateId: {
         label:
           "Do you have a {TODO_YOUR_STATE_OR_TERRITORY_HERE} driver's license or state ID?",
