@@ -103,7 +103,7 @@ const ExampleForm = () => {
           legend="react-hook-form makes which of the following easier"
           name="rhfIsEasy"
           options={checkboxFieldGroupOptions.map((option, index) => ({
-            label: tempMapping[index],
+            label: tempMapping.at(index),
             value: option,
             checkboxProps: {
               tile: true,
