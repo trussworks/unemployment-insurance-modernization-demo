@@ -34,27 +34,47 @@ export const CheckboxGroupField = ({
     field: {
       onChange: hookFormOnChange,
       ref,
-      value: hookFormValue,
+      value: hookFormValue = [],
       name: _name,
       ...hookFormRemainingProps
     },
     fieldState: { invalid, error },
-  } = useController({ name, defaultValue: [] })
+  } = useController({ name }) //defaultValue: []
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    console.log(
+      'onchange hookform value is  ' +
+        hookFormValue +
+        ' u clicked ' +
+        e.target.value
+    )
     const newValue = [...hookFormValue]
-    const valueInArray = newValue.includes(e.target)
+    const valueInArray = newValue.includes(e.target.value)
 
-    if (e.target.checked && !valueInArray) {
+    console.log(valueInArray)
+    if (!valueInArray) {
+      console.log('add item')
       newValue.push(e.target.value)
     }
 
-    if (!e.target.checked && valueInArray) {
+    if (valueInArray) {
+      console.log('remove the value')
       newValue.filter((value) => value !== e.target.value)
+      // console.log
+      // e.target.checked=false
+      console.log(
+        'target is checked' +
+          e.target.checked +
+          '  hookform value is ' +
+          newValue
+      )
     }
 
     hookFormOnChange(newValue)
+    console.log('new value was ' + newValue)
+    console.log('hookformvalue is currently holding ' + hookFormValue)
   }
+
   return (
     <FormGroup error={invalid}>
       <Fieldset
@@ -73,6 +93,9 @@ export const CheckboxGroupField = ({
             value={option.value}
             inputRef={ref}
             onChange={handleChange}
+            checked={
+              hookFormValue ? hookFormValue.includes(option.value) : false
+            }
             {...option.checkboxProps}
             {...hookFormRemainingProps}
           />

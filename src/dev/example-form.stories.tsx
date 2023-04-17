@@ -19,6 +19,7 @@ const formLibraryPreferenceOptions = ['formik', 'reactHookForm'] as const
 type FormLibraryPreferenceOption = (typeof formLibraryPreferenceOptions)[number]
 
 const checkboxFieldGroupOptions = ['option1', 'option2', 'option3'] as const
+type CheckboxFieldGroupOption = (typeof checkboxFieldGroupOptions)[number]
 const tempMapping = ['making coffee', 'clearing data', 'not using formik'] //pull from i18 file instead
 const schema = yup
   .object({
@@ -44,11 +45,13 @@ type ExampleFieldValues = {
   doYouLikeForms?: boolean
   formLibraryPreference?: FormLibraryPreferenceOption
   whyIsFormikBad?: string
+  rhfIsEasy: CheckboxFieldGroupOption[]
 }
 const defaultValues: ExampleFieldValues = {
   doYouLikeForms: undefined,
   formLibraryPreference: undefined,
   whyIsFormikBad: undefined,
+  rhfIsEasy: ['option1'],
 }
 const ExampleForm = () => {
   const hookFormMethods = useForm<ExampleFieldValues>({
