@@ -37,7 +37,7 @@ type WorkAuthorizationTypeOption = (typeof workAuthorizationTypeOptions)[number]
 
 const workAuthorizationTypeRadioOptions = workAuthorizationTypeOptions.map(
   (option) => ({
-    label: tIdentity(`questions.workAuthorizationType.options.${option}`),
+    label: tIdentity(`workAuthorizationType.options.${option}`),
     value: option,
   })
 )

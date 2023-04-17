@@ -20,12 +20,9 @@ const tSsn = i18n.getFixedT(null, 'pages', 'ssn')
 
 const validationSchema = object().shape({
   ssn: string()
-    .required(tSsn('questions.ssn.errors.required'))
-    .matches(
-      /^[0-9]{3}-?[0-9]{2}-?[0-9]{4}$/,
-      tSsn('questions.ssn.errors.badFormat')
-    )
-    .test('ssn', tSsn('questions.ssn.errors.invalid'), (value) =>
+    .required(tSsn('ssn.errors.required'))
+    .matches(/^[0-9]{3}-?[0-9]{2}-?[0-9]{4}$/, tSsn('ssn.errors.badFormat'))
+    .test('ssn', tSsn('ssn.errors.invalid'), (value) =>
       /^(?!666|000|9\d{2})\d{3}-(?!00)\d{2}-(?!0{4})\d{4}$/.test(
         getFormattedSsn(value)
       )
@@ -55,7 +52,7 @@ export const SSN = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="margin-bottom-1">
             <TextField
-              label={t('questions.ssn.label')}
+              label={t('ssn.label')}
               name="ssn"
               type={showSsn ? 'text' : 'password'}
             />
