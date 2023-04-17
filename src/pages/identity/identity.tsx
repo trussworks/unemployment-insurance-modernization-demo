@@ -9,6 +9,7 @@ import {
   ModalRef,
   ModalToggleButton,
 } from '@trussworks/react-uswds'
+import DropdownField from 'components/form/fields/DropdownField/DropdownField'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import TextField from 'components/form/fields/TextField/TextField'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
@@ -16,6 +17,7 @@ import { SectionHeading } from 'components/form/SectionHeading/SectionHeading'
 import { ImportedField } from 'components/ImportedInputBox/ImportedField/ImportedField'
 import { ImportedInputBox } from 'components/ImportedInputBox/ImportedInputBox'
 import { PageLayout } from 'components/PageLayout/PageLayout'
+import { countries } from 'countries-list'
 import i18n from 'i18n/i18n'
 import { MouseEventHandler, useRef } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
@@ -39,6 +41,15 @@ const workAuthorizationTypeRadioOptions = workAuthorizationTypeOptions.map(
     value: option,
   })
 )
+
+const countryOfOriginOptions = Object.entries(countries)
+  .sort(([, countryA], [, countryB]) =>
+    countryA.name.localeCompare(countryB.name)
+  )
+  .map(([code, country]) => ({
+    label: country.name,
+    value: code,
+  }))
 
 type IdentityValues = {
   dateOfBirth?: string
@@ -244,7 +255,12 @@ export const Identity = ({
                   )}
                   type="text"
                 />
-                {/* TODO: DropdownField */}
+                <DropdownField
+                  name="countryOfOrigin"
+                  label={t('questions.countryOfOrigin.label')}
+                  startEmpty
+                  options={countryOfOriginOptions}
+                />
                 {/* TODO Valid from/issued on */}
                 {/* TODO Expiration date */}
               </>
