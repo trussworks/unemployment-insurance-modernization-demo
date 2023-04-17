@@ -1,10 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Meta, StoryObj } from '@storybook/react'
 import { DateInputField } from 'components/form/fields/DateInputField/DateInputField'
+import i18n from 'i18n/i18n'
+import DropdownField, {
+  EMPTY_DROPDOWN_OPTION,
+} from 'components/form/fields/DropdownField/DropdownField'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import TextField from 'components/form/fields/TextField/TextField'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
-import i18n from 'i18n/i18n'
+import { ImportedField } from 'components/ImportedInputBox/ImportedField/ImportedField'
+import { ImportedInputBox } from 'components/ImportedInputBox/ImportedInputBox'
 import { ChangeEventHandler } from 'react'
 import {
   FormProvider,
@@ -43,6 +48,9 @@ const schema = yup
       is: 'reactHookForm',
       then: (schema) => schema.required(),
     }),
+    bestBeverage: yup
+      .string()
+      .required('You must select your beverage of choice'),
   })
   .required()
 
@@ -50,11 +58,13 @@ type ExampleFieldValues = {
   doYouLikeForms?: boolean
   formLibraryPreference?: FormLibraryPreferenceOption
   whyIsFormikBad?: string
+  bestBeverage: string
 }
 const defaultValues: ExampleFieldValues = {
   doYouLikeForms: undefined,
   formLibraryPreference: undefined,
   whyIsFormikBad: undefined,
+  bestBeverage: EMPTY_DROPDOWN_OPTION,
 }
 const ExampleForm = () => {
   const hookFormMethods = useForm<ExampleFieldValues>({
@@ -82,6 +92,10 @@ const ExampleForm = () => {
   return (
     <FormProvider {...hookFormMethods}>
       <form onSubmit={handleSubmit(onSubmit, onSubmitError)}>
+        <ImportedInputBox>
+          <ImportedField label="Profession">Software Engineer</ImportedField>
+          <ImportedField label="Hobbies">Entomology</ImportedField>
+        </ImportedInputBox>
         <YesNoQuestion name="doYouLikeForms" question="Do you like forms?" />
         <DateInputField
           name="whenDidYouStartLikingForms"
@@ -109,6 +123,20 @@ const ExampleForm = () => {
             <br />
           </>
         )}
+
+        <DropdownField
+          name="bestBeverage"
+          label="Which beverage is best while coding?"
+          startEmpty
+          options={[
+            { label: 'Water', value: 'water' },
+            { label: 'Kombucha', value: 'kombucha' },
+            { label: 'Coffee', value: 'coffee' },
+            { label: 'Tea', value: 'tea' },
+            { label: 'Soda', value: 'soda' },
+          ]}
+        />
+        <br />
 
         <button type="submit">Submit</button>
       </form>
