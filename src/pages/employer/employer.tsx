@@ -1,12 +1,21 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button } from '@trussworks/react-uswds'
 import Address from 'components/form/fields/Address/Address'
+import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import TextField from 'components/form/fields/TextField/TextField'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
+import { PhoneNumberField } from 'components/form/PhoneNumberField/PhoneNumberField'
 import { PageLayout } from 'components/PageLayout/PageLayout'
+import {
+  UNTOUCHED_RADIO_VALUE,
+  UntouchedRadioValue,
+} from 'constants/formOptions'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { object, string } from 'yup'
+import { PhoneInput, YesNoInput } from 'types/input'
+import { yupAddress } from 'validations/address'
+import { yupPhone } from 'validations/phone'
+import { boolean, object, string } from 'yup'
 
 export type EmployerAddressInput = {
   address: string
@@ -16,6 +25,18 @@ export type EmployerAddressInput = {
   state: string
   zipcode: string
 }
+
+export const changeInEmploymentOptions = [
+  'laid_off',
+  'fired_discharged_suspended',
+  'unsatisfactory_work_performance',
+  'quit_or_retired',
+  'still_employed',
+  'strike_or_lock_out_by_employer',
+] as const
+export type ChangeInEmploymentOption =
+  (typeof changeInEmploymentOptions)[number]
+
 const EMPLOYER_ADDRESS_SKELETON: EmployerAddressInput = {
   address: '',
   address2: '',
@@ -24,8 +45,28 @@ const EMPLOYER_ADDRESS_SKELETON: EmployerAddressInput = {
   state: '',
   zipcode: '',
 }
-type EmployerValues = {
-  ssn: string
+export const PHONE_SKELETON: PhoneInput = {
+  number: '',
+  sms: UNTOUCHED_RADIO_VALUE,
+}
+
+export type EmployerValues = {
+  employer_address: EmployerAddressInput
+  employer_phone: PhoneInput
+
+  employer_name: string
+  is_full_time: YesNoInput
+  separation_circumstance: ChangeInEmploymentOption | UntouchedRadioValue
+
+  separation_circumstance_details: string
+  employment_start_date: string
+  employment_last_date: string
+
+  is_employer_phone_accurate: YesNoInput
+  work_location_phone: PhoneInput
+
+  self_employed: YesNoInput
+  is_owner: YesNoInput
 }
 const defaultValues: EmployerValues = {
   // Your Employer
@@ -34,8 +75,7 @@ const defaultValues: EmployerValues = {
   employer_phone: { ...PHONE_SKELETON },
   is_full_time: UNTOUCHED_RADIO_VALUE,
   // Work Location
-  worked_at_employer_address: UNTOUCHED_RADIO_VALUE,
-  alternate_physical_work_address: { ...ADDRESS_WITHOUT_STREET_SKELETON },
+
   is_employer_phone_accurate: UNTOUCHED_RADIO_VALUE,
   work_location_phone: { ...PHONE_SKELETON },
 
@@ -48,25 +88,35 @@ const defaultValues: EmployerValues = {
   separation_circumstance_details: '',
   employment_start_date: '',
   employment_last_date: '',
-  reason_still_employed: '',
-  hours_reduced_twenty_percent: UNTOUCHED_RADIO_VALUE,
-  expect_to_be_recalled: UNTOUCHED_RADIO_VALUE,
-  definite_recall: UNTOUCHED_RADIO_VALUE,
-  definite_recall_date: '',
-  is_seasonal_work: UNTOUCHED_RADIO_VALUE,
-  discharge_date: '',
-  // Other pay
-  payments_received: [] as PaymentsReceivedDetailInput[],
-  LOCAL_pay_types: [] as PayTypeOption[],
 }
 
 export const Employer = () => {
   const { t } = useTranslation('pages', { keyPrefix: 'employer' })
-
+  const { t: tCommon } = useTranslation('common', { keyPrefix: 'button_text' })
+  const myLabels = {
+    address: t('your_employer.employer_address.address.label'),
+    address2: t('your_employer.employer_address.address2.label'),
+    address3: t('your_employer.employer_address.address3.label'),
+    city: t('your_employer.employer_address.city.label'),
+    state: t('your_employer.employer_address.state.label'),
+    zipcode: t('your_employer.employer_address.zipcode.label'),
+  }
   const schema = object().shape({
+    employer_name: string()
+      .trim()
+      .min(1, 'Please enter at least one letter or number'),
+
+    employer_address: yupAddress(),
+    employer_phone: yupPhone,
     is_full_time: string().required(
       t('your_employer.is_full_time.errors.required')
     ),
+    self_employed: boolean()
+      .nullable()
+      .required(t('business_interests.self_employed.errors.required')),
+    is_owner: boolean()
+      .nullable()
+      .required(t('business_interests.is_owner.errors.required')),
   })
 
   const hookFormMethods = useForm<EmployerValues>({
@@ -78,19 +128,27 @@ export const Employer = () => {
   const onSubmit: SubmitHandler<EmployerValues> = (data) => {
     console.log(data)
   }
-  const myLabels = {
-    address: t('your_employer.employer_address.address.label'),
-    address2: t('your_employer.employer_address.address2.label'),
-    address3: t('your_employer.employer_address.address3.label'),
-    city: t('your_employer.employer_address.city.label'),
-    state: t('your_employer.employer_address.state.label'),
-    zipcode: t('your_employer.employer_address.zipcode.label'),
-  }
+
+  // const handleEmployerPhoneChange: ChangeEventHandler<
+  //   HTMLInputElement
+  // > = async (e) => {
+  //   if (e.target.value === '') {
+  //     await clearField(
+  //       `is_employer_phone_accurate`,
+  //       EMPLOYER_SKELETON.is_employer_phone_accurate
+  //     )
+  //     await clearField(
+  //       `work_location_phone.number`,
+  //       EMPLOYER_SKELETON.work_location_phone.number
+  //     )
+  //   }
+  // }
   return (
     <PageLayout heading={t('header')}>
       <FormProvider {...hookFormMethods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="margin-bottom-1">
+            <h4>{t('your_employer.section_title')}</h4>
             <TextField
               name={'employer_name'}
               label={t('your_employer.employer_name.label')}
@@ -110,9 +168,38 @@ export const Employer = () => {
               labels={myLabels}
               optAddress2
             />
+            <PhoneNumberField
+              name="employer_phone"
+              label={t('your_employer.employer_phone.label')}
+              showSMS={false}
+            />
+            <h4>{t('business_interests.section_title')}</h4>
+
+            <YesNoQuestion
+              name={`self_employed`}
+              question={t('business_interests.self_employed.label')}
+            />
+            <YesNoQuestion
+              name={`is_owner`}
+              question={t('business_interests.is_owner.label')}
+            />
+            <RadioField
+              name={`separation_circumstance`}
+              legend={t('separation.reason.label')}
+              tile={true}
+              options={changeInEmploymentOptions.map((option) => {
+                return {
+                  label: t(`separation.reasons.${option}.label`),
+                  labelDescription: t(
+                    `separation.reasons.${option}.description`
+                  ),
+                  value: option,
+                }
+              })}
+            />
           </div>
 
-          <Button type="submit">{t('continue')}</Button>
+          <Button type="submit">{tCommon('continue')}</Button>
         </form>
       </FormProvider>
     </PageLayout>

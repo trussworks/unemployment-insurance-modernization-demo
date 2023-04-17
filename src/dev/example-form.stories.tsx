@@ -1,13 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Meta, StoryObj } from '@storybook/react'
-import DropdownField, {
-  EMPTY_DROPDOWN_OPTION,
-} from 'components/form/fields/DropdownField/DropdownField'
+import DropdownField from 'components/form/fields/DropdownField/DropdownField'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import TextField from 'components/form/fields/TextField/TextField'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
 import { ImportedField } from 'components/ImportedInputBox/ImportedField/ImportedField'
 import { ImportedInputBox } from 'components/ImportedInputBox/ImportedInputBox'
+import { EMPTY_DROPDOWN_OPTION } from 'constants/formOptions'
 import { ChangeEventHandler } from 'react'
 import {
   FormProvider,
@@ -15,6 +14,7 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form'
+import { YesNoInput } from 'types/input'
 import * as yup from 'yup'
 
 const formLibraryPreferenceOptions = ['formik', 'reactHookForm'] as const
@@ -38,7 +38,7 @@ const schema = yup
   .required()
 
 type ExampleFieldValues = {
-  doYouLikeForms?: boolean
+  doYouLikeForms?: YesNoInput
   formLibraryPreference?: FormLibraryPreferenceOption
   whyIsFormikBad?: string
   bestBeverage: string

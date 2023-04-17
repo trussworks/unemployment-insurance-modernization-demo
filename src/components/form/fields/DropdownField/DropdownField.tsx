@@ -4,11 +4,10 @@ import {
   FormGroup,
   Label,
 } from '@trussworks/react-uswds'
+import { EMPTY_DROPDOWN_OPTION } from 'constants/formOptions'
 import React, { ChangeEventHandler, FocusEventHandler } from 'react'
 import { useController } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-
-export const EMPTY_DROPDOWN_OPTION = ''
 
 const mapOptions = (options: DropdownOption[]) => {
   return options.map(({ label, value }, index) => (

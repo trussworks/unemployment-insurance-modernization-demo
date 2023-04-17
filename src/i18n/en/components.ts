@@ -4,8 +4,6 @@ export default {
       label: 'Address',
       errors: {
         required: 'Address is required',
-        pobox:
-          'P.O. boxes can only be used as a mailing address, not a residential address. If you do not have another address, then please contact us.',
         maxLength: 'Address must be at most 64 characters',
       },
     },
@@ -100,5 +98,20 @@ export default {
   yesNoQuestion: {
     yes: 'Yes',
     no: 'No',
+  },
+  phoneNumberField: {
+    phone_number: {
+      errors: {
+        matches: 'Please enter a phone number like (555) 555-1234',
+        required: 'Phone number is required',
+      },
+    },
+    sms: {
+      label: 'Can we send text messages to this number?',
+      help_text: 'Your mobile plan’s message and data rates may apply.',
+      errors: {
+        required: 'Please say if we can send text messages to this number',
+      },
+    },
   },
 }

@@ -1,7 +1,8 @@
 const common = {
-  skip_nav: 'Skip to main content',
-  yes: 'Yes',
-  no: 'No',
+  button_text: {
+    continue: 'Continue',
+    submit: 'Submit',
+  },
   date: {
     month: {
       label: 'Month',
@@ -18,8 +19,7 @@ const common = {
       required: '{{ fieldName }} is required',
     },
   },
-  select_one: '-- Select one --',
-  select: '- Select -',
+
   address: {
     address: {
       label: 'Address',
@@ -57,9 +57,6 @@ const common = {
   },
   validation: {
     required: 'This field is required',
-    notEmail: 'This is not a valid email',
-    email_does_not_match: 'Confirmation email does not match',
-    notZipCode: 'This is not a valid zip code',
   },
 }
 
