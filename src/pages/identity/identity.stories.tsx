@@ -10,4 +10,15 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof IdentityComponent>
 
-export const Identity: Story = {}
+export const WithImportedInformation: Story = {
+  args: {
+    importedSsn: '123-45-6789',
+    importedDateOfBirth: '12/28/1969',
+  },
+}
+
+export const WithoutImportedSsn: Story = {
+  args: {
+    importedDateOfBirth: '12/28/1969',
+  },
+}
