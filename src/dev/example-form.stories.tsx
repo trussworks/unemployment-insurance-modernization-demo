@@ -106,7 +106,7 @@ const ExampleForm = () => {
         <YesNoQuestion name="doYouLikeForms" question="Do you like forms?" />
         <DateInputField
           name="whenDidYouStartLikingForms"
-          legend="What exact day you start liking forms?"
+          legend="What exact day did you start liking forms?"
         />
         <RadioField
           name="formLibraryPreference"
