@@ -4,9 +4,19 @@ import {
   FormGroup,
   Label,
 } from '@trussworks/react-uswds'
-import React, { ChangeEventHandler } from 'react'
+import React, { ChangeEventHandler, FocusEventHandler } from 'react'
 import { useController } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+
+export const EMPTY_DROPDOWN_OPTION = ''
+
+const mapOptions = (options: DropdownOption[]) => {
+  return options.map(({ label, value }, index) => (
+    <option key={`${index}_${label}_${value}`} value={value}>
+      {label}
+    </option>
+  ))
+}
 
 export type DropdownOption = {
   label: string
@@ -34,36 +44,37 @@ const DropdownField = ({
   options,
   startEmpty,
   onChange,
+  onBlur,
   ...inputProps
 }: IDropdownFieldProps & JSX.IntrinsicElements['select']) => {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('components', { keyPrefix: 'dropdownField' })
 
   const {
     field: {
       onChange: hookFormOnChange,
+      onBlur: hookFormOnBlur,
       ref,
-      value: _,
       ...hookFormRemainingProps
     },
     fieldState: { invalid, error },
   } = useController({ name })
 
   const handleChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    console.log(e)
     hookFormOnChange(e)
     if (onChange) {
       onChange(e)
     }
   }
 
-  const id = idProp || name
-
-  const mapOptions = (options: DropdownOption[]) => {
-    return options.map(({ label, value }, index) => (
-      <option key={`${index}_${label}_${value}`} value={value}>
-        {label}
-      </option>
-    ))
+  const handleBlur: FocusEventHandler<HTMLSelectElement> = (e) => {
+    hookFormOnBlur()
+    if (onBlur) {
+      onBlur(e)
+    }
   }
+
+  const id = idProp || name
 
   return (
     <FormGroup className={formGroupClassName} error={invalid}>
@@ -76,20 +87,18 @@ const DropdownField = ({
         {label}
       </Label>
       {invalid && <ErrorMessage>{error?.message}</ErrorMessage>}
-
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <Dropdown
         id={id}
         data-testid={id}
         onChange={handleChange}
+        onBlur={handleBlur}
         inputRef={ref}
         onInvalid={(e) => e.preventDefault()}
         {...inputProps}
         {...hookFormRemainingProps}
       >
         {startEmpty && (
-          //this was EMPTY_DROPDOWN_OPTION, do we want to keep that as that was for dealing with formik values
-          <option key="empty" value={''}>
+          <option key="empty" value={EMPTY_DROPDOWN_OPTION}>
             {t('select')}
           </option>
         )}
