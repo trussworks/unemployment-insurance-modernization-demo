@@ -26,7 +26,7 @@ export default {
     },
     hasDriversLicenseOrStateId: {
       label:
-        "Do you have a {TODO_YOUR_STATE_OR_TERRITORY_HERE} driver's license or state ID?",
+        "Do you have a driver's license or government issued ID for {TODO_YOUR_STATE_OR_TERRITORY_HERE}?",
       errors: {
         required:
           "You must answer whether you have a driver's license or state ID",
