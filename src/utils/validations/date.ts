@@ -19,7 +19,7 @@ export const yupDate = () =>
   object({
     month: number().required(),
     day: number().required(),
-    year: number().required(),
+    year: number().min(4).required(),
   }).test({
     name: 'isValidDate',
     message: i18n.t('components:dateInput.error.invalid'),

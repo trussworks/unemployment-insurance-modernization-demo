@@ -67,7 +67,7 @@ export const DateInputField = ({
   const {
     fieldState: { invalid, error },
   } = useController({ name })
-  const { setFocus } = useFormContext()
+  const { setFocus, trigger } = useFormContext()
 
   const {
     field: {
@@ -175,6 +175,11 @@ export const DateInputField = ({
         className={'margin-top-0'}
         legend={legend}
         legendStyle={legendStyle}
+        onInvalid={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          trigger(`${name}`)
+        }}
       >
         {hint && (
           <span className="usa-hint" id={`${id}.hint`}>
