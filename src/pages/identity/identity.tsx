@@ -19,7 +19,7 @@ import { ImportedInputBox } from 'components/ImportedInputBox/ImportedInputBox'
 import { PageLayout } from 'components/PageLayout/PageLayout'
 import { countries } from 'countries-list'
 import i18n from 'i18n/i18n'
-import { MouseEventHandler, useRef } from 'react'
+import { ChangeEventHandler, MouseEventHandler, useRef } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { Trans, useTranslation } from 'react-i18next'
 import { yupSsn } from 'validations/ssn'
@@ -192,7 +192,7 @@ export const Identity = ({
     },
     resolver: yupResolver(validationSchema),
   })
-  const { handleSubmit, watch } = hookFormMethods
+  const { handleSubmit, watch, resetField } = hookFormMethods
 
   const modalRef = useRef<ModalRef>(null)
   const onSubmit: SubmitHandler<IdentityValues> = (data) => {
@@ -210,6 +210,22 @@ export const Identity = ({
         'https://www.immigrationhelp.org/learning-center/what-is-an-alien-registration-number/'
       )
       modalRef.current.toggleModal()
+    }
+  }
+
+  const handleWorkAuthorizationTypeChange: ChangeEventHandler<
+    HTMLInputElement
+  > = (e) => {
+    if (e.target.value === 'usCitizenOrNational') {
+      resetField('immigrationDocumentFirstName')
+      resetField('immigrationDocumentMiddleInitial')
+      resetField('immigrationDocumentLastName')
+      resetField('hasUscisOrAlienRegistrationNumber')
+      resetField('uscisOrAlienRegistrationNumber')
+      resetField('confirmUscisOrAlienRegistrationNumber')
+      resetField('countryOfOrigin')
+      // TODO resetField('immigrationDocumentIssueDate')
+      // TODO resetField('immigrationDocumentExpirationDate')
     }
   }
 
@@ -283,6 +299,7 @@ export const Identity = ({
             name="workAuthorizationType"
             legend={t('workAuthorizationType.label')}
             options={workAuthorizationTypeRadioOptions}
+            onChange={handleWorkAuthorizationTypeChange}
           />
 
           {workAuthorizationType &&
@@ -339,8 +356,8 @@ export const Identity = ({
                   startEmpty
                   options={countryOfOriginOptions}
                 />
-                {/* TODO Valid from/issued on */}
-                {/* TODO Expiration date */}
+                {/* TODO Valid from/issued on immigrationDocumentIssueDate */}
+                {/* TODO Expiration date immigrationDocumentExpirationDate */}
               </>
             )}
 
