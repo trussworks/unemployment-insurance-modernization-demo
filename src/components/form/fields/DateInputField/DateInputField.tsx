@@ -149,17 +149,17 @@ export const DateInputField = ({
 
   const handleBlurMonth: FocusEventHandler<HTMLInputElement> = () => {
     hookFormOnBlurMonth()
-    setFocused('')
+    setFocused(null)
   }
 
   const handleBlurDay: FocusEventHandler<HTMLInputElement> = () => {
     hookFormOnBlurDay()
-    setFocused('')
+    setFocused(null)
   }
 
   const handleBlurYear: FocusEventHandler<HTMLInputElement> = () => {
     hookFormOnBlurYear()
-    setFocused('')
+    setFocused(null)
   }
 
   const handleKeyPress: KeyboardEventHandler<HTMLInputElement> = (e) => {
