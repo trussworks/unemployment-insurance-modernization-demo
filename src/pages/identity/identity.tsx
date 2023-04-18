@@ -22,7 +22,8 @@ import i18n from 'i18n/i18n'
 import { MouseEventHandler, useRef } from 'react'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { Trans, useTranslation } from 'react-i18next'
-import { object } from 'yup'
+import { yupSsn } from 'validations/ssn'
+import { boolean, object, string } from 'yup'
 
 const tIdentity = i18n.getFixedT(null, 'pages', 'identity')
 
@@ -86,7 +87,91 @@ const defaultValues: IdentityValues = {
   immigrationDocumentExpirationDate: undefined,
 }
 
-const validationSchema = object().shape({})
+const validationSchema = object({
+  dateOfBirth: string().required(tIdentity('dateOfBirth.errors.required')), // TODO: date
+  ssn: yupSsn,
+  hasDriversLicenseOrStateId: boolean().required(
+    tIdentity('hasDriversLicenseOrStateId.errors.required')
+  ),
+  driversLicenseOrStateIdNumber: string().required(
+    tIdentity('driversLicenseOrStateIdNumber.errors.required')
+  ),
+  workAuthorizationType: string()
+    .oneOf([...workAuthorizationTypeOptions])
+    .required(tIdentity('workAuthorizationType.errors.required')),
+  immigrationDocumentFirstName: string().when('workAuthorizationType', {
+    is: (workAuthorizationType: string) =>
+      workAuthorizationType && workAuthorizationType !== 'usCitizenOrNational',
+    then: (schema) =>
+      schema.required(
+        tIdentity('immigrationDocumentFirstName.errors.required')
+      ),
+  }),
+  immigrationDocumentMiddleInitial: string().when('workAuthorizationType', {
+    is: (workAuthorizationType: string) =>
+      workAuthorizationType && workAuthorizationType !== 'usCitizenOrNational',
+    then: (schema) =>
+      schema.required(
+        tIdentity('immigrationDocumentMiddleInitial.errors.required')
+      ),
+  }),
+  immigrationDocumentLastName: string().when('workAuthorizationType', {
+    is: (workAuthorizationType: string) =>
+      workAuthorizationType && workAuthorizationType !== 'usCitizenOrNational',
+    then: (schema) =>
+      schema.required(tIdentity('immigrationDocumentLastName.errors.required')),
+  }),
+  hasUscisOrAlienRegistrationNumber: boolean().when('workAuthorizationType', {
+    is: (workAuthorizationType: string) =>
+      workAuthorizationType && workAuthorizationType !== 'usCitizenOrNational',
+    then: (schema) =>
+      schema.required(tIdentity('hasDriversLicenseOrStateId.errors.required')),
+  }),
+  uscisOrAlienRegistrationNumber: string().when('workAuthorizationType', {
+    is: (workAuthorizationType: string) =>
+      workAuthorizationType && workAuthorizationType !== 'usCitizenOrNational',
+    then: (schema) =>
+      schema.required(
+        tIdentity('uscisOrAlienRegistrationNumber.errors.required')
+      ),
+  }),
+  confirmUscisOrAlienRegistrationNumber: string().when(
+    'workAuthorizationType',
+    {
+      is: (workAuthorizationType: string) =>
+        workAuthorizationType &&
+        workAuthorizationType !== 'usCitizenOrNational',
+      then: (schema) =>
+        schema.required(
+          tIdentity('confirmUscisOrAlienRegistrationNumber.errors.required')
+        ),
+    }
+  ),
+  countryOfOrigin: string().when('workAuthorizationType', {
+    is: (workAuthorizationType: string) =>
+      workAuthorizationType && workAuthorizationType !== 'usCitizenOrNational',
+    then: (schema) =>
+      schema
+        .oneOf([...countryOfOriginOptions.map((option) => option.value)])
+        .required(tIdentity('countryOfOrigin.errors.required')),
+  }),
+  immigrationDocumentIssueDate: string().when('workAuthorizationType', {
+    is: (workAuthorizationType: string) =>
+      workAuthorizationType && workAuthorizationType !== 'usCitizenOrNational',
+    then: (schema) =>
+      schema.required(
+        tIdentity('immigrationDocumentIssueDate.errors.required')
+      ),
+  }), // TODO: date
+  immigrationDocumentExpirationDate: string().when('workAuthorizationType', {
+    is: (workAuthorizationType: string) =>
+      workAuthorizationType && workAuthorizationType !== 'usCitizenOrNational',
+    then: (schema) =>
+      schema.required(
+        tIdentity('immigrationDocumentExpirationDate.errors.required')
+      ),
+  }), // TODO: date
+})
 
 type IdentityPageProps = {
   importedDateOfBirth?: string

@@ -23,7 +23,6 @@ export default {
     },
     ssn: {
       label: 'Social security number',
-      errors: { required: 'You must enter your social security number' },
     },
     hasDriversLicenseOrStateId: {
       label:
@@ -78,23 +77,33 @@ export default {
     },
     uscisOrAlienRegistrationNumber: {
       label: 'USCIS / Alien registration number',
-      errors: {},
+      errors: {
+        required: 'You must enter your USCIS / Alien registration number',
+      },
     },
     confirmUscisOrAlienRegistrationNumber: {
       label: 'Re-enter USCIS / Alien registration number',
-      errors: {},
+      errors: {
+        required: 'You must re-enter your USCIS / Alien registration number',
+      },
     },
     countryOfOrigin: {
       label: 'Country of origin',
-      errors: {},
+      errors: {
+        required: 'You must provide your country of origin',
+      },
     },
     immigrationDocumentIssueDate: {
       label: 'Valid from / issued on',
-      errors: {},
+      errors: {
+        required: 'You must enter the date your document was issues on',
+      },
     },
     immigrationDocumentExpirationDate: {
       label: 'Expiration date',
-      errors: {},
+      errors: {
+        required: 'You must enter the date your document expires/expired',
+      },
     },
     immigrationDocumentSectionHeading:
       'Enter the following information as it appears on your immigration documents',
