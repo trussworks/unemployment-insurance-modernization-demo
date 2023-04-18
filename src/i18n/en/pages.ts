@@ -74,6 +74,10 @@ export default {
     hasUscisOrAlienRegistrationNumber: {
       label: 'Do you have a USCIS / Alien registration number?',
       hint: '<0>Need help finding it?</0> This is a 7-9 digit number, sometimes starting with “A”',
+      errors: {
+        required:
+          'You must answer whether you have a USCIS or alien registration number',
+      },
     },
     uscisOrAlienRegistrationNumber: {
       label: 'USCIS / Alien registration number',

@@ -20,7 +20,12 @@ import { PageLayout } from 'components/PageLayout/PageLayout'
 import { countries } from 'countries-list'
 import i18n from 'i18n/i18n'
 import { ChangeEventHandler, MouseEventHandler, useRef } from 'react'
-import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import {
+  FormProvider,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form'
 import { Trans, useTranslation } from 'react-i18next'
 import { yupSsn } from 'validations/ssn'
 import { boolean, object, string } from 'yup'
@@ -93,9 +98,13 @@ const validationSchema = object({
   hasDriversLicenseOrStateId: boolean().required(
     tIdentity('hasDriversLicenseOrStateId.errors.required')
   ),
-  driversLicenseOrStateIdNumber: string().required(
-    tIdentity('driversLicenseOrStateIdNumber.errors.required')
-  ),
+  driversLicenseOrStateIdNumber: string().when('hasDriversLicenseOrStateId', {
+    is: (hasDriversLicenseOrStateId: boolean) => hasDriversLicenseOrStateId,
+    then: (schema) =>
+      schema.required(
+        tIdentity('driversLicenseOrStateIdNumber.errors.required')
+      ),
+  }),
   workAuthorizationType: string()
     .oneOf([...workAuthorizationTypeOptions])
     .required(tIdentity('workAuthorizationType.errors.required')),
@@ -125,22 +134,36 @@ const validationSchema = object({
     is: (workAuthorizationType: string) =>
       workAuthorizationType && workAuthorizationType !== 'usCitizenOrNational',
     then: (schema) =>
-      schema.required(tIdentity('hasDriversLicenseOrStateId.errors.required')),
-  }),
-  uscisOrAlienRegistrationNumber: string().when('workAuthorizationType', {
-    is: (workAuthorizationType: string) =>
-      workAuthorizationType && workAuthorizationType !== 'usCitizenOrNational',
-    then: (schema) =>
       schema.required(
-        tIdentity('uscisOrAlienRegistrationNumber.errors.required')
+        tIdentity('hasUscisOrAlienRegistrationNumber.errors.required')
       ),
   }),
-  confirmUscisOrAlienRegistrationNumber: string().when(
-    'workAuthorizationType',
+  uscisOrAlienRegistrationNumber: string().when(
+    ['workAuthorizationType', 'hasUscisOrAlienRegistrationNumber'],
     {
-      is: (workAuthorizationType: string) =>
+      is: (
+        workAuthorizationType: string,
+        hasUscisOrAlienRegistrationNumber: boolean
+      ) =>
         workAuthorizationType &&
-        workAuthorizationType !== 'usCitizenOrNational',
+        workAuthorizationType !== 'usCitizenOrNational' &&
+        hasUscisOrAlienRegistrationNumber,
+      then: (schema) =>
+        schema.required(
+          tIdentity('uscisOrAlienRegistrationNumber.errors.required')
+        ),
+    }
+  ),
+  confirmUscisOrAlienRegistrationNumber: string().when(
+    ['workAuthorizationType', 'hasUscisOrAlienRegistrationNumber'],
+    {
+      is: (
+        workAuthorizationType: string,
+        hasUscisOrAlienRegistrationNumber: boolean
+      ) =>
+        workAuthorizationType &&
+        workAuthorizationType !== 'usCitizenOrNational' &&
+        hasUscisOrAlienRegistrationNumber,
       then: (schema) =>
         schema.required(
           tIdentity('confirmUscisOrAlienRegistrationNumber.errors.required')
@@ -199,8 +222,23 @@ export const Identity = ({
     console.log(data)
   }
 
+  const onSubmitError: SubmitErrorHandler<IdentityValues> = (errors) => {
+    console.log(errors)
+  }
+
   const hasDriversLicenseOrStateId = watch('hasDriversLicenseOrStateId')
   const workAuthorizationType = watch('workAuthorizationType')
+  const hasUscisOrAlienRegistrationNumber = watch(
+    'hasUscisOrAlienRegistrationNumber'
+  )
+
+  const handleHasDriversLicenseOrStateIdChange: ChangeEventHandler<
+    HTMLInputElement
+  > = (e) => {
+    if (e.target.value === 'no') {
+      resetField('driversLicenseOrStateIdNumber')
+    }
+  }
 
   const handleImmigrationHelpLinkClick: MouseEventHandler<
     HTMLButtonElement
@@ -226,6 +264,15 @@ export const Identity = ({
       resetField('countryOfOrigin')
       // TODO resetField('immigrationDocumentIssueDate')
       // TODO resetField('immigrationDocumentExpirationDate')
+    }
+  }
+
+  const handleHasUscisOrAlienRegistrationNumberChange: ChangeEventHandler<
+    HTMLInputElement
+  > = (e) => {
+    if (e.target.value === 'no') {
+      resetField('uscisOrAlienRegistrationNumber')
+      resetField('confirmUscisOrAlienRegistrationNumber')
     }
   }
 
@@ -278,7 +325,7 @@ export const Identity = ({
             )}
           </ImportedInputBox>
         )}
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit, onSubmitError)}>
           {immigrationHelpModal}
           {/* TODO: DateOfBirth DateInputField, if not imported */}
           {!importedSsn && (
@@ -287,6 +334,7 @@ export const Identity = ({
           <YesNoQuestion
             name="hasDriversLicenseOrStateId"
             question={t('hasDriversLicenseOrStateId.label')}
+            onChange={handleHasDriversLicenseOrStateIdChange}
           />
           {hasDriversLicenseOrStateId && (
             <TextField
@@ -339,17 +387,22 @@ export const Identity = ({
                       </ModalOpenLink>
                     </Trans>
                   }
+                  onChange={handleHasUscisOrAlienRegistrationNumberChange}
                 />
-                <TextField
-                  name="uscisOrAlienRegistrationNumber"
-                  label={t('uscisOrAlienRegistrationNumber.label')}
-                  type="text"
-                />
-                <TextField
-                  name="confirmUscisOrAlienRegistrationNumber"
-                  label={t('confirmUscisOrAlienRegistrationNumber.label')}
-                  type="text"
-                />
+                {hasUscisOrAlienRegistrationNumber && (
+                  <>
+                    <TextField
+                      name="uscisOrAlienRegistrationNumber"
+                      label={t('uscisOrAlienRegistrationNumber.label')}
+                      type="text"
+                    />
+                    <TextField
+                      name="confirmUscisOrAlienRegistrationNumber"
+                      label={t('confirmUscisOrAlienRegistrationNumber.label')}
+                      type="text"
+                    />
+                  </>
+                )}
                 <DropdownField
                   name="countryOfOrigin"
                   label={t('countryOfOrigin.label')}
