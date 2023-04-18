@@ -11,9 +11,10 @@ import {
   FocusEventHandler,
   KeyboardEventHandler,
   ReactNode,
+  useEffect,
   useState,
 } from 'react'
-import { useController } from 'react-hook-form'
+import { useController, useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 type DateInputOmitProps =
@@ -62,10 +63,11 @@ export const DateInputField = ({
   legendStyle,
 }: DateFieldProps) => {
   const { t } = useTranslation('components', { keyPrefix: 'dateInput' })
-  const [focused, setFocused] = useState('')
+  const [focused, setFocused] = useState<null | 'month' | 'day' | 'year'>(null)
   const {
     fieldState: { invalid, error },
   } = useController({ name })
+  const { setFocus } = useFormContext()
 
   const {
     field: {
@@ -102,19 +104,25 @@ export const DateInputField = ({
 
   const id = idProp || name
 
-  const showErrorOutlineMonth =
+  useEffect(() => {
+    if (invalid) {
+      setFocus(`${name}.month`)
+    }
+  }, [setFocus, invalid])
+
+  const errorOutlineMonth =
     monthInvalid && focused !== 'month'
       ? 'error'
       : invalid && focused !== 'month'
       ? 'error'
       : undefined
-  const showErrorOutlineDay =
+  const errorOutlineDay =
     dayInvalid && focused !== 'day'
       ? 'error'
       : invalid && focused !== 'day'
       ? 'error'
       : undefined
-  const showErrorOutlineYear =
+  const errorOutlineYear =
     yearInvalid && focused !== 'year'
       ? 'error'
       : invalid && focused !== 'year'
@@ -188,7 +196,7 @@ export const DateInputField = ({
           <DateInput
             id={`${id}.month`}
             onFocus={() => setFocused('month')}
-            validationStatus={showErrorOutlineMonth}
+            validationStatus={errorOutlineMonth}
             onBlur={handleBlurMonth}
             onChange={handleChangeMonth}
             value={monthValue || ''}
@@ -199,9 +207,9 @@ export const DateInputField = ({
             readOnly={readOnly}
             disabled={disabled}
             onKeyPress={handleKeyPress}
-            {...monthProps}
             inputRef={monthRef}
             {...hookFormRemainingPropsMonth}
+            {...monthProps}
           />
           <DateInput
             id={`${id}.day`}
@@ -213,13 +221,13 @@ export const DateInputField = ({
             unit={'day'}
             minLength={1}
             maxLength={DAY_MAX_LENGTH}
-            validationStatus={showErrorOutlineDay}
+            validationStatus={errorOutlineDay}
             readOnly={readOnly}
             disabled={disabled}
             onKeyPress={handleKeyPress}
-            {...dayProps}
             inputRef={dayRef}
             {...hookFormRemainingPropsDay}
+            {...dayProps}
           />
           <DateInput
             id={`${id}.year`}
@@ -231,13 +239,13 @@ export const DateInputField = ({
             unit={'year'}
             minLength={4}
             maxLength={YEAR_MAX_LENGTH}
-            validationStatus={showErrorOutlineYear}
+            validationStatus={errorOutlineYear}
             readOnly={readOnly}
             disabled={disabled}
             onKeyPress={handleKeyPress}
-            {...yearProps}
             inputRef={yearRef}
             {...hookFormRemainingPropsYear}
+            {...yearProps}
           />
         </DateInputGroup>
       </Fieldset>

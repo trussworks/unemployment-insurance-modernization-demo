@@ -9,7 +9,6 @@ import TextField from 'components/form/fields/TextField/TextField'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
 import { ImportedField } from 'components/ImportedInputBox/ImportedField/ImportedField'
 import { ImportedInputBox } from 'components/ImportedInputBox/ImportedInputBox'
-import i18n from 'i18n/i18n'
 import { ChangeEventHandler } from 'react'
 import {
   FormProvider,
@@ -17,7 +16,7 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form'
-import { isValidDate } from 'utils/date'
+import { yupDate } from 'utils/validations/date'
 import * as yup from 'yup'
 
 const formLibraryPreferenceOptions = ['formik', 'reactHookForm'] as const
@@ -26,27 +25,7 @@ type FormLibraryPreferenceOption = (typeof formLibraryPreferenceOptions)[number]
 const schema = yup
   .object({
     doYouLikeForms: yup.boolean().required(),
-    whenDidYouStartLikingForms: yup.object({
-      month: yup
-        .number()
-        .test({
-          name: 'isValidDate',
-          message: i18n.t('components:dateInput.error.invalid'),
-          test: (value, context) => {
-            if (value) {
-              return isValidDate({
-                month: value,
-                day: context.parent.day,
-                year: context.parent.year,
-              })
-            }
-            return true
-          },
-        })
-        .required(),
-      day: yup.number().required(),
-      year: yup.number().required(),
-    }),
+    whenDidYouStartLikingForms: yupDate(),
     formLibraryPreference: yup
       .string()
       .oneOf([...formLibraryPreferenceOptions])
