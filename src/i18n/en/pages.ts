@@ -22,7 +22,7 @@ export default {
         errors: {
           required: 'You must give the name of your employer',
           maxLength:
-            'Please shorten your employer’s name to 40 characters or less (including spaces). For example you may say “DOL” instead of “Department of Labor”, or “Intl” instead of “International”',
+            'Please shorten your employer’s name to 64 characters or less (including spaces). For example you may say “DOL” instead of “Department of Labor”, or “Intl” instead of “International”',
         },
       },
       is_full_time: {
@@ -47,6 +47,15 @@ export default {
       employer_phone: {
         label: 'Employer phone number',
       },
+      is_employer_phone_accurate: {
+        label: 'Was the above phone number of the location where you worked?',
+        errors: {
+          required: "Please check that the employer's phone number is right",
+        },
+      },
+      work_location_phone: {
+        label: 'Work location phone number (optional)',
+      },
     },
     business_interests: {
       section_title: 'Your business interests',
@@ -67,89 +76,48 @@ export default {
       },
     },
     separation: {
-      heading: 'Change in employment',
-      info_alert: {
-        description:
-          'If you were treated unfairly, harassed, or discriminated against on the job, please also visit the <0>EEOC website</0> for help.',
-        website: 'https://www.eeoc.gov/youth/filing-complaint',
-      },
+      section_title: 'Change in employment',
       reason: {
         label: 'Why did your job end or your hours change?',
-        required: 'Change in employment reason is required',
-      },
-      option: {
-        required: 'Please select a separation option',
-      },
-      separation_circumstance_details: {
-        required_label: 'Please share more details below',
-        optional_label: 'Please share more details below <i>(optional)</i>',
         errors: {
-          max_length:
-            'Your separation circumstance details must be at most 255 characters',
-          required: 'More detail about the separation reason is required',
+          required: 'Change in employment reason is required',
         },
-      },
-      expect_to_be_recalled: {
-        label: 'Do you expect to be recalled by this employer?',
-        errors: {
-          required: 'You must say whether you expect to be recalled',
-        },
-      },
-      definite_recall: {
-        label: 'Do you have a definite date of recall?',
-        errors: {
-          required: 'You must say whether you have a definite date of recall',
-          minDate: 'The date of recall must be after you last day of work',
-        },
-      },
-      definite_recall_date: {
-        label: 'Definite date of recall',
-        errors: {
-          required: 'You must provide the definite recall date',
-          minDate: 'Recall date must be after last day of employment',
-        },
-      },
-      is_seasonal_work: {
-        label: 'Is your work seasonal?',
-        errors: {
-          required: 'You must say whether your work was seasonal',
-        },
-      },
-      reasons: {
-        laid_off: {
-          label: 'Laid off',
-          description:
-            'Your job ended due to your work location closing or moving, lack of work, downsizing, reorganization, or your contract ending.',
-        },
-        fired_discharged_suspended: {
-          label: 'Fired, discharged, or suspended',
-          description:
-            'This employer ended your job, suspended you, or forced you to resign for a reason other than lack of work or assignment ending.',
-        },
-        still_employed: {
-          label: 'Still employed',
-          description:
-            "You're still working for this employer, but you may have fewer hours or be on a leave/break.",
-        },
-        quit_or_retired: {
-          label: 'Quit, resigned, or retired',
-          description:
-            'You left your job entirely by your own decision (this does not include forced resignation)',
-        },
-        strike_or_lock_out_by_employer: {
-          label: 'Strike or lock out by employer',
-          description:
-            'During a labor dispute, you chose to stop work or this employer stopped work.',
-        },
-        unsatisfactory_work_performance: {
-          label: 'Unsatisfactory work performance',
-          description:
-            'This employer ended your job due to performance, such as not meeting a quota',
-        },
-        federal_or_state_shutdown: {
-          label: 'Strike or lock out by employer',
-          description:
-            'During a labor dispute, you decided to stop work or this employer stopped work.',
+        options: {
+          laid_off: {
+            label: 'Laid off',
+            description:
+              'Your job ended due to your work location closing or moving, lack of work, downsizing, reorganization, or your contract ending.',
+          },
+          fired_discharged_suspended: {
+            label: 'Fired, discharged, or suspended',
+            description:
+              'This employer ended your job, suspended you, or forced you to resign for a reason other than lack of work or assignment ending.',
+          },
+          still_employed: {
+            label: 'Still employed',
+            description:
+              "You're still working for this employer, but you may have fewer hours or be on a leave/break.",
+          },
+          quit_or_retired: {
+            label: 'Quit, resigned, or retired',
+            description:
+              'You left your job entirely by your own decision (this does not include forced resignation)',
+          },
+          strike_or_lock_out_by_employer: {
+            label: 'Strike or lock out by employer',
+            description:
+              'During a labor dispute, you chose to stop work or this employer stopped work.',
+          },
+          unsatisfactory_work_performance: {
+            label: 'Unsatisfactory work performance',
+            description:
+              'This employer ended your job due to performance, such as not meeting a quota',
+          },
+          federal_or_state_shutdown: {
+            label: 'Strike or lock out by employer',
+            description:
+              'During a labor dispute, you decided to stop work or this employer stopped work.',
+          },
         },
       },
     },

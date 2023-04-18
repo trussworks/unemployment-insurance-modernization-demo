@@ -15,7 +15,10 @@ export const yupAddress = () =>
       )
       .required(i18n_components.t('address.city.errors.required')),
     state: string()
-      .oneOf(Object.keys(statesAndTerritories))
+      .oneOf(
+        Object.keys(statesAndTerritories),
+        i18n_components.t('address.state.errors.required')
+      )
       .required(i18n_components.t('address.state.errors.required')),
     zipcode: string()
       .matches(

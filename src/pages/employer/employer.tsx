@@ -58,7 +58,6 @@ export type EmployerValues = {
   is_full_time: YesNoInput
   separation_circumstance: ChangeInEmploymentOption | UntouchedRadioValue
 
-  separation_circumstance_details: string
   employment_start_date: string
   employment_last_date: string
 
@@ -85,7 +84,6 @@ const defaultValues: EmployerValues = {
 
   // Change in Employment
   separation_circumstance: UNTOUCHED_RADIO_VALUE,
-  separation_circumstance_details: '',
   employment_start_date: '',
   employment_last_date: '',
 }
@@ -104,7 +102,8 @@ export const Employer = () => {
   const schema = object().shape({
     employer_name: string()
       .trim()
-      .min(1, 'Please enter at least one letter or number'),
+      .max(64, t('your_employer.employer_name.errors.maxLength'))
+      .required(t('your_employer.employer_name.errors.required')),
 
     employer_address: yupAddress(),
     employer_phone: yupPhone,
@@ -117,6 +116,13 @@ export const Employer = () => {
     is_owner: boolean()
       .nullable()
       .required(t('business_interests.is_owner.errors.required')),
+    is_employer_phone_accurate: boolean()
+      .nullable()
+      .required(t('your_employer.is_employer_phone_accurate.errors.required')),
+    separation_circumstance: string()
+      .oneOf([...changeInEmploymentOptions])
+      .nullable()
+      .required(t('separation.reason.errors.required')),
   })
 
   const hookFormMethods = useForm<EmployerValues>({
@@ -129,20 +135,8 @@ export const Employer = () => {
     console.log(data)
   }
 
-  // const handleEmployerPhoneChange: ChangeEventHandler<
-  //   HTMLInputElement
-  // > = async (e) => {
-  //   if (e.target.value === '') {
-  //     await clearField(
-  //       `is_employer_phone_accurate`,
-  //       EMPLOYER_SKELETON.is_employer_phone_accurate
-  //     )
-  //     await clearField(
-  //       `work_location_phone.number`,
-  //       EMPLOYER_SKELETON.work_location_phone.number
-  //     )
-  //   }
-  // }
+  const phone_is_accurate = hookFormMethods.watch('is_employer_phone_accurate')
+
   return (
     <PageLayout heading={t('header')}>
       <FormProvider {...hookFormMethods}>
@@ -173,6 +167,17 @@ export const Employer = () => {
               label={t('your_employer.employer_phone.label')}
               showSMS={false}
             />
+            <YesNoQuestion
+              question={t('your_employer.is_employer_phone_accurate.label')}
+              name={`is_employer_phone_accurate`}
+            />
+            {phone_is_accurate === false && (
+              <PhoneNumberField
+                name={`work_location_phone`}
+                label={t('your_employer.work_location_phone.label')}
+                showSMS={false}
+              />
+            )}
             <h4>{t('business_interests.section_title')}</h4>
 
             <YesNoQuestion
@@ -183,15 +188,16 @@ export const Employer = () => {
               name={`is_owner`}
               question={t('business_interests.is_owner.label')}
             />
+            <h4>{t('separation.section_title')}</h4>
             <RadioField
               name={`separation_circumstance`}
               legend={t('separation.reason.label')}
               tile={true}
               options={changeInEmploymentOptions.map((option) => {
                 return {
-                  label: t(`separation.reasons.${option}.label`),
+                  label: t(`separation.reason.options.${option}.label`),
                   labelDescription: t(
-                    `separation.reasons.${option}.description`
+                    `separation.reason.options.${option}.description`
                   ),
                   value: option,
                 }
@@ -199,6 +205,15 @@ export const Employer = () => {
             />
           </div>
 
+          {/* <DateInputField
+        name={`employment_start_date`}
+        legend={t('employment_start_date.label')}
+      />
+      <DateInputField
+        name={`employment_last_date`}
+        legend={t('employment_last_date.label')}
+       
+      /> */}
           <Button type="submit">{tCommon('continue')}</Button>
         </form>
       </FormProvider>
