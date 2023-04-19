@@ -1,10 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button } from '@trussworks/react-uswds'
 import Address from 'components/form/fields/Address/Address'
+import { PhoneNumberField } from 'components/form/fields/PhoneNumberField/PhoneNumberField'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import TextField from 'components/form/fields/TextField/TextField'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
-import { PhoneNumberField } from 'components/form/PhoneNumberField/PhoneNumberField'
 import { PageLayout } from 'components/PageLayout/PageLayout'
 import {
   UNTOUCHED_RADIO_VALUE,
@@ -14,16 +14,8 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { PhoneInput, YesNoInput } from 'types/input'
 import { yupAddress } from 'validations/address'
-import {
-  yupPhone,
-  // yupPhoneOptional
-} from 'validations/phone'
-import {
-  boolean,
-  // mixed,
-  object,
-  string,
-} from 'yup'
+import { yupPhone } from 'validations/phone'
+import { boolean, object, string } from 'yup'
 
 export type EmployerAddressInput = {
   address: string
@@ -114,7 +106,7 @@ export const Employer = () => {
       .required(t('your_employer.employer_name.errors.required')),
 
     employer_address: yupAddress(),
-    employer_phone: yupPhone,
+    employer_phone: yupPhone(true),
     is_full_time: string().required(
       t('your_employer.is_full_time.errors.required')
     ),
@@ -127,10 +119,7 @@ export const Employer = () => {
     is_employer_phone_accurate: boolean()
       .nullable()
       .required(t('your_employer.is_employer_phone_accurate.errors.required')),
-    // work_location_phone: mixed().when('is_employer_phone_accurate', {
-    //   is: false,
-    //   then: yupPhoneOptional,
-    // }),
+    work_location_phone: yupPhone(false),
     separation_circumstance: string()
       .oneOf([...changeInEmploymentOptions])
       .nullable()

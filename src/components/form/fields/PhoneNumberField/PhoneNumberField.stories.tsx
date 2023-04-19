@@ -3,7 +3,7 @@ import { Meta, StoryFn } from '@storybook/react'
 import { noop } from 'helpers/noop/noop'
 import { FormProvider, useForm } from 'react-hook-form'
 import { PhoneInput } from 'types/input'
-import { yupPhoneWithSMS } from 'validations/phone'
+import { yupPhone } from 'validations/phone'
 import * as yup from 'yup'
 
 import { PhoneNumberField } from './PhoneNumberField'
@@ -17,11 +17,13 @@ const Template: StoryFn<typeof PhoneNumberField> = (args) => {
   const initialValues = {
     [args.name]: {
       number: '',
-      sms: false,
+      sms: true,
     },
   }
 
-  const validationSchema = yup.object().shape({ [args.name]: yupPhoneWithSMS })
+  const validationSchema = yup
+    .object()
+    .shape({ [args.name]: yupPhone(true, true) })
   const hookFormMethods = useForm<PhoneInput>({
     defaultValues: initialValues,
     resolver: yupResolver(validationSchema),

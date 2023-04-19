@@ -1,8 +1,8 @@
 import { ChangeEventHandler, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import TextField from '../fields/TextField/TextField'
-import { YesNoQuestion } from '../fields/YesNoQuestion/YesNoQuestion'
+import TextField from '../TextField/TextField'
+import { YesNoQuestion } from '../YesNoQuestion/YesNoQuestion'
 
 type PhoneNumberFieldProps = {
   id?: string
