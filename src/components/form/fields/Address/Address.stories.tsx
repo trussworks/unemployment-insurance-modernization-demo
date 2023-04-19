@@ -21,7 +21,6 @@ const Template: StoryFn<typeof Address> = (args) => {
     address: {
       address1: '',
       address2: '',
-      address3: undefined,
       city: '',
       state: '',
       zipcode: '',
@@ -32,7 +31,6 @@ const Template: StoryFn<typeof Address> = (args) => {
     address: yup.object().shape({
       address1: yup.string().required(tCommon('validation.required')),
       address2: yup.string().optional(),
-      address3: yup.string().optional(),
       city: yup.string().required(tCommon('validation.required')),
       state: yup.string().required(tCommon('validation.required')),
 

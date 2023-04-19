@@ -145,7 +145,6 @@ export default {
       employer_address: {
         address: { label: 'Employer street address' },
         address2: { label: 'Employer street address 2 (optional)' },
-        address3: { label: 'Employer street address 3 (optional)' },
         city: { label: 'City' },
         state: { label: 'State' },
         zipcode: { label: 'ZIP' },

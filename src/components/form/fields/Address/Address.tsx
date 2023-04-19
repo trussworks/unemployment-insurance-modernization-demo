@@ -9,7 +9,6 @@ import styles from './Address.module.scss'
 export interface IAddressLabels {
   address: string
   address2?: string
-  address3?: string
   city: string
   state: string
   zipcode: string
@@ -19,7 +18,6 @@ export interface IAddressProps {
   labels?: IAddressLabels
   basename: string
   optAddress2?: boolean
-  optAddress3?: boolean
   stateSlice?: StateAbbrev[]
   onChange?: ChangeEventHandler<HTMLInputElement | HTMLSelectElement>
 }
@@ -29,14 +27,12 @@ export const Address = ({
   basename,
   stateSlice,
   optAddress2,
-  optAddress3,
   onChange,
 }: IAddressProps) => {
   const { t } = useTranslation('common')
   const defaultLabels: IAddressLabels = {
     address: t('address.address.label'),
     address2: t('address.address2.label'),
-    address3: t('address.address3.label'),
     city: t('address.city.label'),
     state: t('address.state.label'),
     zipcode: t('address.zipcode.label'),
@@ -57,15 +53,6 @@ export const Address = ({
           label={labels ? labels.address2 : defaultLabels.address2}
           type="text"
           data-testid={`${basename}.address2`}
-          onChange={onChange}
-        />
-      )}
-      {optAddress3 && (
-        <TextField
-          name={`${basename}.address3`}
-          label={labels ? labels.address3 : defaultLabels.address3}
-          type="text"
-          data-testid={`${basename}.address3`}
           onChange={onChange}
         />
       )}

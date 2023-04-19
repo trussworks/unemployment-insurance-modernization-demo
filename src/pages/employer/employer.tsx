@@ -20,7 +20,6 @@ import { boolean, object, string } from 'yup'
 export type EmployerAddressInput = {
   address: string
   address2: string
-  address3: string
   city: string
   state: string
   zipcode: string
@@ -40,7 +39,6 @@ export type ChangeInEmploymentOption =
 const EMPLOYER_ADDRESS_SKELETON: EmployerAddressInput = {
   address: '',
   address2: '',
-  address3: '',
   city: '',
   state: '',
   zipcode: '',
@@ -94,7 +92,6 @@ export const Employer = () => {
   const myLabels = {
     address: t('your_employer.employer_address.address.label'),
     address2: t('your_employer.employer_address.address2.label'),
-    address3: t('your_employer.employer_address.address3.label'),
     city: t('your_employer.employer_address.city.label'),
     state: t('your_employer.employer_address.state.label'),
     zipcode: t('your_employer.employer_address.zipcode.label'),

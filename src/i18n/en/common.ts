@@ -32,7 +32,6 @@ const common = {
     },
 
     address2: { label: 'Address 2 (optional)' },
-    address3: { label: 'Address 3 (optional)' },
     city: {
       label: 'City',
       errors: {
