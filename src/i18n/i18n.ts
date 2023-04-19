@@ -13,6 +13,7 @@ void i18n
   .init({
     fallbackLng: 'en',
     ns: ['components', 'pages'],
+    defaultNS: 'common',
     resources,
   })
 
