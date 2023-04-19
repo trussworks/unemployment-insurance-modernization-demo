@@ -178,7 +178,7 @@ export const DateInputField = ({
         onInvalid={(e) => {
           e.preventDefault()
           e.stopPropagation()
-          trigger(`${name}`)
+          trigger(name)
         }}
       >
         {hint && (
