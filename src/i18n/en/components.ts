@@ -32,6 +32,9 @@ export default {
       },
     },
   },
+  dropdownField: {
+    select: '- Select -',
+  },
   header: {
     title: 'Unemployment Insurance Benefits',
     navMenu: {
@@ -55,6 +58,9 @@ export default {
     home: 'Home',
     govAria: 'U.S. government information and services',
     copyright: 'Copyright © 2023 {TODO_YOUR_STATE_OR_TERRITORY_HERE}',
+  },
+  importedInputBox: {
+    heading: 'The following information has been added to your application:',
   },
   yesNoQuestion: {
     yes: 'Yes',

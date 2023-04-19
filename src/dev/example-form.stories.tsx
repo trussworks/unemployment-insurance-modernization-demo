@@ -2,9 +2,14 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Meta, StoryObj } from '@storybook/react'
 import CheckboxField from 'components/form/fields/CheckboxField/CheckboxField'
 import { CheckboxGroupField } from 'components/form/fields/CheckboxGroupField/CheckboxGroupField'
+import DropdownField, {
+  EMPTY_DROPDOWN_OPTION,
+} from 'components/form/fields/DropdownField/DropdownField'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import TextField from 'components/form/fields/TextField/TextField'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
+import { ImportedField } from 'components/ImportedInputBox/ImportedField/ImportedField'
+import { ImportedInputBox } from 'components/ImportedInputBox/ImportedInputBox'
 import { ChangeEventHandler } from 'react'
 import {
   FormProvider,
@@ -38,6 +43,9 @@ const schema = yup
       .of(mixed().oneOf([...checkboxFieldGroupOptions]))
       .min(1, 'Select at least one')
       .required(),
+    bestBeverage: yup
+      .string()
+      .required('You must select your beverage of choice'),
   })
   .required()
 
@@ -47,6 +55,7 @@ type ExampleFieldValues = {
   whyIsFormikBad?: string
   subscribe?: boolean
   rhfIsEasy: CheckboxFieldGroupOption[]
+  bestBeverage: string
 }
 const defaultValues: ExampleFieldValues = {
   doYouLikeForms: undefined,
@@ -54,6 +63,7 @@ const defaultValues: ExampleFieldValues = {
   whyIsFormikBad: undefined,
   subscribe: true,
   rhfIsEasy: [],
+  bestBeverage: EMPTY_DROPDOWN_OPTION,
 }
 const ExampleForm = () => {
   const hookFormMethods = useForm<ExampleFieldValues>({
@@ -81,6 +91,10 @@ const ExampleForm = () => {
   return (
     <FormProvider {...hookFormMethods}>
       <form onSubmit={handleSubmit(onSubmit, onSubmitError)}>
+        <ImportedInputBox>
+          <ImportedField label="Profession">Software Engineer</ImportedField>
+          <ImportedField label="Hobbies">Entomology</ImportedField>
+        </ImportedInputBox>
         <YesNoQuestion name="doYouLikeForms" question="Do you like forms?" />
         <RadioField
           name="formLibraryPreference"
@@ -115,11 +129,23 @@ const ExampleForm = () => {
             },
           }))}
         />
+        <DropdownField
+          name="bestBeverage"
+          label="Which beverage is best while coding?"
+          startEmpty
+          options={[
+            { label: 'Water', value: 'water' },
+            { label: 'Kombucha', value: 'kombucha' },
+            { label: 'Coffee', value: 'coffee' },
+            { label: 'Tea', value: 'tea' },
+            { label: 'Soda', value: 'soda' },
+          ]}
+        />
         <CheckboxField
           name="subscribe"
           label="I want to subscribe to hear more about react-hook-form"
         />
-        <br></br>
+        <br />
         <button type="submit">Submit</button>
       </form>
     </FormProvider>
