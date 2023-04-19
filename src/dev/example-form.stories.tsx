@@ -117,7 +117,7 @@ const ExampleForm = () => {
         />
         <CheckboxField
           name="subscribe"
-          label="I want to subscribe to hear more about react-hook-form ."
+          label="I want to subscribe to hear more about react-hook-form"
         />
         <br></br>
         <button type="submit">Submit</button>
