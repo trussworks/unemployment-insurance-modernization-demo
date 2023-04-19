@@ -1,16 +1,16 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { ClaimReview } from './claim'
+import { ClaimStatus } from './claim-status'
 
 const meta = {
-  title: 'Pages/Claim',
-  component: ClaimReview,
-} satisfies Meta<typeof ClaimReview>
+  title: 'Pages/Claim Status',
+  component: ClaimStatus,
+} satisfies Meta<typeof ClaimStatus>
 
 export default meta
-type Story = StoryObj<typeof ClaimReview>
+type Story = StoryObj<typeof ClaimStatus>
 
-export const ClaimReviewPage: Story = {
+export const ClaimStatusPage: Story = {
   args: {
     benefitsPaidAmount: 0,
     benefitsRemainingAmount: 600,

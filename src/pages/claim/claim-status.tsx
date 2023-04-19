@@ -4,15 +4,19 @@ import { ReactNode } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { formatDate, formatTimestamp } from 'utils/date'
 
-import styles from './claim.module.scss'
+import styles from './claim-status.module.scss'
 
-type ClaimStatProps = {
+type ClaimStatusFigureProps = {
   header: string
   context?: ReactNode
   stat: string
 }
 
-const ClaimStat = ({ header, context, stat }: ClaimStatProps) => (
+const ClaimStatusFigure = ({
+  header,
+  context,
+  stat,
+}: ClaimStatusFigureProps) => (
   <>
     <h2 className={styles.mainStatLabel}>{header}</h2>
     {context && <p className="margin-top-0">{context}</p>}
@@ -26,7 +30,7 @@ type AccountUpdate = {
   timestamp: Date
 }
 
-type ClaimReviewProps = {
+type ClaimStatusProps = {
   benefitsPaidAmount: number
   benefitsRemainingAmount: number
   nextPaymentAmount: number
@@ -35,15 +39,15 @@ type ClaimReviewProps = {
   accountUpdates: AccountUpdate[]
 }
 
-export const ClaimReview = ({
+export const ClaimStatus = ({
   benefitsPaidAmount,
   benefitsRemainingAmount,
   nextPaymentAmount,
   claimPeriodFrom,
   claimPeriodTo,
   accountUpdates = [],
-}: ClaimReviewProps) => {
-  const { t } = useTranslation('pages', { keyPrefix: 'claim' })
+}: ClaimStatusProps) => {
+  const { t } = useTranslation('pages', { keyPrefix: 'claimStatus' })
   return (
     <PageLayout heading={t('header')}>
       <Alert type="success" headingLevel={'h5'}>
@@ -51,15 +55,11 @@ export const ClaimReview = ({
       </Alert>
       <div className="margin-y-2">
         <p>{t('review')}</p>
-        <p>
-          <Trans t={t} i18nKey={'email'}>
-            <a href="/">contact us</a>
-          </Trans>
-        </p>
+        <p>{t('certify')}</p>
       </div>
       <Button type="button">{t('certifyButton')}</Button>
       <div>
-        <ClaimStat
+        <ClaimStatusFigure
           header={t('potentialBenefits.header')}
           context={
             <Trans t={t} i18nKey={'potentialBenefits.context'}>
@@ -68,11 +68,11 @@ export const ClaimReview = ({
           }
           stat={`$${benefitsRemainingAmount}`}
         />
-        <ClaimStat
+        <ClaimStatusFigure
           header={t('potentialNextPayment.header')}
           stat={`$${nextPaymentAmount}`}
         />
-        <ClaimStat
+        <ClaimStatusFigure
           header={t('claimPeriod.header')}
           stat={`${formatDate(claimPeriodFrom)} - ${
             claimPeriodTo ? formatDate(claimPeriodTo) : 'TBD'

@@ -1,12 +1,12 @@
 export default {
-  claim: {
+  claimStatus: {
     header: "We're reviewing your claim",
     success: 'Application submitted',
     certifyButton: 'Certify for benefits',
     review:
       "We are reviewing your application information to make sure you're eligible for benefits payments.",
-    email:
-      "In the meantime, you should receive an email for identity verification from ID.me. Do not certify for benefits online or by phone while waiting for this email, or it will delay your payments. If you don't receive an email or call from us by [15 days from now], please <0>contact us</0>.",
+    certify:
+      "You'll need to certify each week starting [17 days from submit date] to receive benefits, and you should receive each payment within a week of certifying. Once you've found a job and are no longer unemployed, please submit one more weekly certification so we can update your account.",
     potentialBenefits: {
       header: 'Potential benefits remaining',
       context: '(<0></0> paid so far)',
