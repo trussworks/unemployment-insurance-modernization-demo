@@ -2,6 +2,7 @@ import { Alert, Button } from '@trussworks/react-uswds'
 import { PageLayout } from 'components/PageLayout/PageLayout'
 import { ReactNode } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
+import { formatDate, formatTimestamp } from 'utils/date'
 
 import styles from './claim.module.scss'
 
@@ -42,13 +43,6 @@ export const ClaimReview = ({
 }: ClaimReviewProps) => {
   const { t } = useTranslation('pages', { keyPrefix: 'claim' })
 
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-us', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    })
-  }
   const [claimPeriodFrom, claimPeriodTo] = claimPeriod
 
   return (
@@ -75,25 +69,25 @@ export const ClaimReview = ({
           }
           stat={`$${benefitsRemainingAmount}`}
         />
-
         <ClaimStat
           label={t('potentialNextPaymentLabel')}
           stat={`$${nextPaymentAmount}`}
         />
-
         <ClaimStat
           label={t('claimPeriodLabel')}
           stat={`${formatDate(claimPeriodFrom)} - ${formatDate(claimPeriodTo)}`}
         />
-
-        <h2 className="font-heading-2xl">Recent activity</h2>
+        <h2 className="font-heading-2xl margin-bottom-0">Recent activity</h2>
         <ul>
           {accountUpdates.length > 0 &&
             accountUpdates.map((update, index) => (
               <li key={index}>
-                <Trans t={t} i18nkey={`accountUpdate.${update.type}`}>
+                <Trans t={t} i18nKey={`accountUpdate.${update.type}`}>
                   {update.userID}
                 </Trans>
+                <span className="text-base display-block">
+                  {formatTimestamp(update.timestamp)}
+                </span>
               </li>
             ))}
         </ul>
