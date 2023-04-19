@@ -30,7 +30,8 @@ type ClaimReviewProps = {
   benefitsPaidAmount: number
   benefitsRemainingAmount: number
   nextPaymentAmount: number
-  claimPeriod: [Date, Date]
+  claimPeriodFrom: Date
+  claimPeriodTo?: Date
   accountUpdates: AccountUpdate[]
 }
 
@@ -38,13 +39,11 @@ export const ClaimReview = ({
   benefitsPaidAmount,
   benefitsRemainingAmount,
   nextPaymentAmount,
-  claimPeriod,
+  claimPeriodFrom,
+  claimPeriodTo,
   accountUpdates = [],
 }: ClaimReviewProps) => {
   const { t } = useTranslation('pages', { keyPrefix: 'claim' })
-
-  const [claimPeriodFrom, claimPeriodTo] = claimPeriod
-
   return (
     <PageLayout heading={t('header')}>
       <Alert type="success" headingLevel={'h5'}>
@@ -75,7 +74,9 @@ export const ClaimReview = ({
         />
         <ClaimStat
           header={t('claimPeriod.header')}
-          stat={`${formatDate(claimPeriodFrom)} - ${formatDate(claimPeriodTo)}`}
+          stat={`${formatDate(claimPeriodFrom)} - ${
+            claimPeriodTo ? formatDate(claimPeriodTo) : 'TBD'
+          }`}
         />
         <h2 className="font-heading-2xl margin-bottom-0">Recent activity</h2>
         <ul>

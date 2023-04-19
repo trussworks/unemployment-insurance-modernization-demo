@@ -15,7 +15,8 @@ export const ClaimReviewPage: Story = {
     benefitsPaidAmount: 0,
     benefitsRemainingAmount: 600,
     nextPaymentAmount: 300,
-    claimPeriod: [new Date('2022-01-11'), new Date('2023-01-11')],
+    claimPeriodFrom: new Date('2022-01-11'),
+    claimPeriodTo: new Date('2023-01-11'),
     accountUpdates: [
       {
         type: 'submission',
