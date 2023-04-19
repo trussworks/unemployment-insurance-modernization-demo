@@ -68,17 +68,6 @@ export default {
   dropdownField: {
     select: '- Select -',
   },
-  header: {
-    title: 'Unemployment Insurance Benefits',
-    navMenu: {
-      button: 'Menu',
-      items: {
-        home: 'Home',
-        claim: 'My claim',
-        logOut: 'Log out',
-      },
-    },
-  },
   footer: {
     returnTop: 'Return to top',
     identifierAria: 'Agency identifier',
@@ -92,12 +81,29 @@ export default {
     govAria: 'U.S. government information and services',
     copyright: 'Copyright © 2023 {TODO_YOUR_STATE_OR_TERRITORY_HERE}',
   },
+  header: {
+    title: 'Unemployment Insurance Benefits',
+    navMenu: {
+      button: 'Menu',
+      items: {
+        home: 'Home',
+        claim: 'My claim',
+        logOut: 'Log out',
+      },
+    },
+  },
   importedInputBox: {
     heading: 'The following information has been added to your application:',
   },
   yesNoQuestion: {
     yes: 'Yes',
     no: 'No',
+  },
+  dateInput: {
+    day: 'Day',
+    month: 'Month',
+    year: 'Year',
+    error: { invalid: 'Date is invalid' },
   },
   phoneNumberField: {
     phone_number: {

@@ -1,5 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Meta, StoryObj } from '@storybook/react'
+import CheckboxField from 'components/form/fields/CheckboxField/CheckboxField'
+import { CheckboxGroupField } from 'components/form/fields/CheckboxGroupField/CheckboxGroupField'
+import { DateInputField } from 'components/form/fields/DateInputField/DateInputField'
 import DropdownField from 'components/form/fields/DropdownField/DropdownField'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import TextField from 'components/form/fields/TextField/TextField'
@@ -15,14 +18,20 @@ import {
   useForm,
 } from 'react-hook-form'
 import { YesNoInput } from 'types/input'
+import { yupDate } from 'utils/validations/date'
 import * as yup from 'yup'
+import { mixed } from 'yup'
 
 const formLibraryPreferenceOptions = ['formik', 'reactHookForm'] as const
 type FormLibraryPreferenceOption = (typeof formLibraryPreferenceOptions)[number]
 
+const checkboxFieldGroupOptions = ['option1', 'option2', 'option3'] as const
+type CheckboxFieldGroupOption = (typeof checkboxFieldGroupOptions)[number]
+const tempMapping = ['making coffee', 'clearing data', 'not using formik'] //pull from i18 file instead
 const schema = yup
   .object({
     doYouLikeForms: yup.boolean().required(),
+    whenDidYouStartLikingForms: yupDate(),
     formLibraryPreference: yup
       .string()
       .oneOf([...formLibraryPreferenceOptions])
@@ -31,6 +40,12 @@ const schema = yup
       is: 'reactHookForm',
       then: (schema) => schema.required(),
     }),
+    subscribe: yup.boolean().required(),
+    rhfIsEasy: yup
+      .array()
+      .of(mixed().oneOf([...checkboxFieldGroupOptions]))
+      .min(1, 'Select at least one')
+      .required(),
     bestBeverage: yup
       .string()
       .required('You must select your beverage of choice'),
@@ -41,12 +56,16 @@ type ExampleFieldValues = {
   doYouLikeForms?: YesNoInput
   formLibraryPreference?: FormLibraryPreferenceOption
   whyIsFormikBad?: string
+  subscribe?: boolean
+  rhfIsEasy: CheckboxFieldGroupOption[]
   bestBeverage: string
 }
 const defaultValues: ExampleFieldValues = {
   doYouLikeForms: undefined,
   formLibraryPreference: undefined,
   whyIsFormikBad: undefined,
+  subscribe: true,
+  rhfIsEasy: [],
   bestBeverage: EMPTY_DROPDOWN_OPTION,
 }
 const ExampleForm = () => {
@@ -80,6 +99,10 @@ const ExampleForm = () => {
           <ImportedField label="Hobbies">Entomology</ImportedField>
         </ImportedInputBox>
         <YesNoQuestion name="doYouLikeForms" question="Do you like forms?" />
+        <DateInputField
+          name="whenDidYouStartLikingForms"
+          legend="What exact day did you start liking forms?"
+        />
         <RadioField
           name="formLibraryPreference"
           legend="Which form Library is better?"
@@ -102,7 +125,17 @@ const ExampleForm = () => {
             <br />
           </>
         )}
-
+        <CheckboxGroupField
+          legend="react-hook-form makes which of the following easier"
+          name="rhfIsEasy"
+          options={checkboxFieldGroupOptions.map((option, index) => ({
+            label: tempMapping.at(index),
+            value: option,
+            checkboxProps: {
+              tile: true,
+            },
+          }))}
+        />
         <DropdownField
           name="bestBeverage"
           label="Which beverage is best while coding?"
@@ -115,8 +148,11 @@ const ExampleForm = () => {
             { label: 'Soda', value: 'soda' },
           ]}
         />
+        <CheckboxField
+          name="subscribe"
+          label="I want to subscribe to hear more about react-hook-form"
+        />
         <br />
-
         <button type="submit">Submit</button>
       </form>
     </FormProvider>
