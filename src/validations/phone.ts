@@ -1,5 +1,6 @@
-import { i18n_components } from 'i18n/i18n'
+import i18n from 'i18n/i18n'
 import { boolean, object, string } from 'yup'
+const tPhone = i18n.getFixedT(null, 'components', 'phoneNumberField')
 
 export const yupPhone = (
   phoneIsRequired: boolean,
@@ -9,21 +10,17 @@ export const yupPhone = (
     .transform((number) => (!number ? undefined : number))
     .matches(
       /^[(]?\d{3}[)]?[-\s.]?\d{3}[-\s.]?\d{4}$/,
-      i18n_components.t('phoneNumberField.phone_number.errors.matches')
+      tPhone('phone_number.errors.matches')
     )
     .min(10)
     .max(13)
-  let smsSchema = boolean().nullable()
+  let smsSchema = boolean()
 
   if (phoneIsRequired) {
-    phoneSchema = phoneSchema.required(
-      i18n_components.t('phoneNumberField.phone_number.errors.required')
-    )
+    phoneSchema = phoneSchema.required(tPhone('phone_number.errors.required'))
   }
   if (smsIsRequired) {
-    smsSchema = smsSchema.required(
-      i18n_components.t('phoneNumberField.sms.errors.required')
-    )
+    smsSchema = smsSchema.required(tPhone('sms.errors.required'))
   }
 
   return object().shape({

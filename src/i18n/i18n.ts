@@ -18,7 +18,3 @@ void i18n
   })
 
 export default i18n
-
-export const i18n_components = i18n.cloneInstance({
-  defaultNS: 'components',
-})
