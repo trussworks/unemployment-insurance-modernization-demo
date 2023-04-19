@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Meta, StoryObj } from '@storybook/react'
+import { DateInputField } from 'components/form/fields/DateInputField/DateInputField'
 import CheckboxField from 'components/form/fields/CheckboxField/CheckboxField'
 import { CheckboxGroupField } from 'components/form/fields/CheckboxGroupField/CheckboxGroupField'
 import DropdownField, {
@@ -17,6 +18,7 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form'
+import { yupDate } from 'utils/validations/date'
 import * as yup from 'yup'
 import { mixed } from 'yup'
 
@@ -29,6 +31,7 @@ const tempMapping = ['making coffee', 'clearing data', 'not using formik'] //pul
 const schema = yup
   .object({
     doYouLikeForms: yup.boolean().required(),
+    whenDidYouStartLikingForms: yupDate(),
     formLibraryPreference: yup
       .string()
       .oneOf([...formLibraryPreferenceOptions])
@@ -96,6 +99,10 @@ const ExampleForm = () => {
           <ImportedField label="Hobbies">Entomology</ImportedField>
         </ImportedInputBox>
         <YesNoQuestion name="doYouLikeForms" question="Do you like forms?" />
+        <DateInputField
+          name="whenDidYouStartLikingForms"
+          legend="What exact day did you start liking forms?"
+        />
         <RadioField
           name="formLibraryPreference"
           legend="Which form Library is better?"
