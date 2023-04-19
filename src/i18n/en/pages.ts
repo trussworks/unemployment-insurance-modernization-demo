@@ -48,7 +48,8 @@ export default {
         label: 'Employer phone number',
       },
       is_employer_phone_accurate: {
-        label: 'Was the above phone number of the location where you worked?',
+        label:
+          'Is the phone number of your physical workplace the same as the number entered above?',
         errors: {
           required: "Please check that the employer's phone number is right",
         },

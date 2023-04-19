@@ -14,8 +14,16 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { PhoneInput, YesNoInput } from 'types/input'
 import { yupAddress } from 'validations/address'
-import { yupPhone, yupPhoneOptional } from 'validations/phone'
-import { boolean, mixed, object, string } from 'yup'
+import {
+  yupPhone,
+  // yupPhoneOptional
+} from 'validations/phone'
+import {
+  boolean,
+  // mixed,
+  object,
+  string,
+} from 'yup'
 
 export type EmployerAddressInput = {
   address: string
@@ -119,10 +127,10 @@ export const Employer = () => {
     is_employer_phone_accurate: boolean()
       .nullable()
       .required(t('your_employer.is_employer_phone_accurate.errors.required')),
-    work_location_phone: mixed().when('is_employer_phone_accurate', {
-      is: false,
-      then: yupPhoneOptional,
-    }),
+    // work_location_phone: mixed().when('is_employer_phone_accurate', {
+    //   is: false,
+    //   then: yupPhoneOptional,
+    // }),
     separation_circumstance: string()
       .oneOf([...changeInEmploymentOptions])
       .nullable()
