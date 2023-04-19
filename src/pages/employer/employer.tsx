@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button } from '@trussworks/react-uswds'
 import Address from 'components/form/fields/Address/Address'
+import { DateInputField } from 'components/form/fields/DateInputField/DateInputField'
 import { PhoneNumberField } from 'components/form/fields/PhoneNumberField/PhoneNumberField'
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import TextField from 'components/form/fields/TextField/TextField'
@@ -10,12 +11,16 @@ import {
   UNTOUCHED_RADIO_VALUE,
   UntouchedRadioValue,
 } from 'constants/formOptions'
+import i18n from 'i18n/i18n'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
 import { PhoneInput, YesNoInput } from 'types/input'
+import { yupDate } from 'utils/validations/date'
 import { yupAddress } from 'validations/address'
 import { yupPhone } from 'validations/phone'
 import { boolean, object, string } from 'yup'
+
+const tEmployer = i18n.getFixedT(null, 'pages', 'employer')
+const tCommon = i18n.getFixedT(null, 'common', 'button_text')
 
 export type EmployerAddressInput = {
   address: string
@@ -87,40 +92,46 @@ const defaultValues: EmployerValues = {
 }
 
 export const Employer = () => {
-  const { t } = useTranslation('pages', { keyPrefix: 'employer' })
-  const { t: tCommon } = useTranslation('common', { keyPrefix: 'button_text' })
   const myLabels = {
-    address: t('your_employer.employer_address.address.label'),
-    address2: t('your_employer.employer_address.address2.label'),
-    city: t('your_employer.employer_address.city.label'),
-    state: t('your_employer.employer_address.state.label'),
-    zipcode: t('your_employer.employer_address.zipcode.label'),
+    address: tEmployer('your_employer.employer_address.address.label'),
+    address2: tEmployer('your_employer.employer_address.address2.label'),
+    city: tEmployer('your_employer.employer_address.city.label'),
+    state: tEmployer('your_employer.employer_address.state.label'),
+    zipcode: tEmployer('your_employer.employer_address.zipcode.label'),
   }
   const schema = object().shape({
     employer_name: string()
       .trim()
-      .max(64, t('your_employer.employer_name.errors.maxLength'))
-      .required(t('your_employer.employer_name.errors.required')),
+      .max(64, tEmployer('your_employer.employer_name.errors.maxLength'))
+      .required(tEmployer('your_employer.employer_name.errors.required')),
 
     employer_address: yupAddress(),
     employer_phone: yupPhone(true),
     is_full_time: string().required(
-      t('your_employer.is_full_time.errors.required')
+      tEmployer('your_employer.is_full_time.errors.required')
     ),
     self_employed: boolean()
       .nullable()
-      .required(t('business_interests.self_employed.errors.required')),
+      .required(tEmployer('business_interests.self_employed.errors.required')),
     is_owner: boolean()
       .nullable()
-      .required(t('business_interests.is_owner.errors.required')),
+      .required(tEmployer('business_interests.is_owner.errors.required')),
     is_employer_phone_accurate: boolean()
       .nullable()
-      .required(t('your_employer.is_employer_phone_accurate.errors.required')),
+      .required(
+        tEmployer('your_employer.is_employer_phone_accurate.errors.required')
+      ),
     work_location_phone: yupPhone(false),
     separation_circumstance: string()
       .oneOf([...changeInEmploymentOptions])
       .nullable()
-      .required(t('separation.reason.errors.required')),
+      .required(tEmployer('separation.reason.errors.required')),
+    employment_start_date: yupDate().required(
+      tEmployer('separation.employment_start_date.errors.required')
+    ),
+    employment_last_date: yupDate().required(
+      tEmployer('separation.employment_last_date.errors.required')
+    ),
   })
 
   const hookFormMethods = useForm<EmployerValues>({
@@ -136,23 +147,27 @@ export const Employer = () => {
   const phone_is_accurate = hookFormMethods.watch('is_employer_phone_accurate')
 
   return (
-    <PageLayout heading={t('header')}>
+    <PageLayout heading={tEmployer('header')}>
       <FormProvider {...hookFormMethods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="margin-bottom-1">
-            <h4>{t('your_employer.section_title')}</h4>
+            <h4>{tEmployer('your_employer.section_title')}</h4>
             <TextField
               name={'employer_name'}
-              label={t('your_employer.employer_name.label')}
-              hint={t('your_employer.employer_name.hint')}
+              label={tEmployer('your_employer.employer_name.label')}
+              hint={tEmployer('your_employer.employer_name.hint')}
               type="text"
-              data-testid={t('your_employer.employer_name')}
+              data-testid={tEmployer('your_employer.employer_name')}
             />
             <YesNoQuestion
               name={`is_full_time`}
-              question={t('your_employer.is_full_time.label')}
-              yesLabel={t('your_employer.is_full_time.options.full_time')}
-              noLabel={t('your_employer.is_full_time.options.part_time')}
+              question={tEmployer('your_employer.is_full_time.label')}
+              yesLabel={tEmployer(
+                'your_employer.is_full_time.options.full_time'
+              )}
+              noLabel={tEmployer(
+                'your_employer.is_full_time.options.part_time'
+              )}
               isStacked
             />
             <Address
@@ -162,56 +177,56 @@ export const Employer = () => {
             />
             <PhoneNumberField
               name="employer_phone"
-              label={t('your_employer.employer_phone.label')}
+              label={tEmployer('your_employer.employer_phone.label')}
               showSMS={false}
             />
             <YesNoQuestion
-              question={t('your_employer.is_employer_phone_accurate.label')}
+              question={tEmployer(
+                'your_employer.is_employer_phone_accurate.label'
+              )}
               name={`is_employer_phone_accurate`}
             />
             {phone_is_accurate === false && (
               <PhoneNumberField
                 name={`work_location_phone`}
-                label={t('your_employer.work_location_phone.label')}
+                label={tEmployer('your_employer.work_location_phone.label')}
                 showSMS={false}
               />
             )}
-            <h4>{t('business_interests.section_title')}</h4>
+            <h4>{tEmployer('business_interests.section_title')}</h4>
 
             <YesNoQuestion
               name={`self_employed`}
-              question={t('business_interests.self_employed.label')}
+              question={tEmployer('business_interests.self_employed.label')}
             />
             <YesNoQuestion
               name={`is_owner`}
-              question={t('business_interests.is_owner.label')}
+              question={tEmployer('business_interests.is_owner.label')}
             />
-            <h4>{t('separation.section_title')}</h4>
+            <h4>{tEmployer('separation.section_title')}</h4>
             <RadioField
               name={`separation_circumstance`}
-              legend={t('separation.reason.label')}
+              legend={tEmployer('separation.reason.label')}
               tile={true}
               options={changeInEmploymentOptions.map((option) => {
                 return {
-                  label: t(`separation.reason.options.${option}.label`),
-                  labelDescription: t(
+                  label: tEmployer(`separation.reason.options.${option}.label`),
+                  labelDescription: tEmployer(
                     `separation.reason.options.${option}.description`
                   ),
                   value: option,
                 }
               })}
             />
+            <DateInputField
+              name={`employment_start_date`}
+              legend={tEmployer('separation.employment_start_date.label')}
+            />
+            <DateInputField
+              name={`employment_last_date`}
+              legend={tEmployer('separation.employment_last_date.label')}
+            />
           </div>
-
-          {/* <DateInputField
-        name={`employment_start_date`}
-        legend={t('employment_start_date.label')}
-      />
-      <DateInputField
-        name={`employment_last_date`}
-        legend={t('employment_last_date.label')}
-       
-      /> */}
           <Button type="submit">{tCommon('continue')}</Button>
         </form>
       </FormProvider>

@@ -226,6 +226,20 @@ export default {
           },
         },
       },
+      employment_start_date: {
+        label: 'Start date for this employer',
+        errors: {
+          required: 'Start date is required',
+          maxDate: "Start date can't be in the future",
+        },
+      },
+      employment_last_date: {
+        label: 'Last day of work for this employer',
+        errors: {
+          required: 'Last day of work is required',
+          minDate: "Last day can't be before employment start date",
+        },
+      },
     },
   },
 }

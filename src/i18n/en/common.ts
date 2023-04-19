@@ -56,6 +56,7 @@ const common = {
   },
   validation: {
     required: 'This field is required',
+    notZipCode: 'This is not a valid zip code',
   },
 }
 
