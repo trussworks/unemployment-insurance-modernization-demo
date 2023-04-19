@@ -65,9 +65,9 @@ export const YesNoQuestion = ({
         onInvalid={(e) => e.preventDefault()}
       >
         {hint && (
-          <span className="usa-hint" id={`${id || name}.hint`}>
+          <div className="usa-hint" id={`${id || name}.hint`}>
             {hint}
-          </span>
+          </div>
         )}
         {invalid && <ErrorMessage>{error?.message}</ErrorMessage>}
         <Radio
