@@ -53,7 +53,7 @@ const defaultValues: ExampleFieldValues = {
   formLibraryPreference: undefined,
   whyIsFormikBad: undefined,
   subscribe: true,
-  rhfIsEasy: ['option1'],
+  rhfIsEasy: [],
 }
 const ExampleForm = () => {
   const hookFormMethods = useForm<ExampleFieldValues>({
