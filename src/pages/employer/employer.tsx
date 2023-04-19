@@ -6,6 +6,7 @@ import { PhoneNumberField } from 'components/form/fields/PhoneNumberField/PhoneN
 import { RadioField } from 'components/form/fields/RadioField/RadioField'
 import TextField from 'components/form/fields/TextField/TextField'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
+import { SectionHeading } from 'components/form/SectionHeading/SectionHeading'
 import { PageLayout } from 'components/PageLayout/PageLayout'
 import {
   UNTOUCHED_RADIO_VALUE,
@@ -151,7 +152,9 @@ export const Employer = () => {
       <FormProvider {...hookFormMethods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="margin-bottom-1">
-            <h4>{tEmployer('your_employer.section_title')}</h4>
+            <SectionHeading>
+              {tEmployer('your_employer.section_title')}
+            </SectionHeading>
             <TextField
               name={'employer_name'}
               label={tEmployer('your_employer.employer_name.label')}
@@ -193,8 +196,9 @@ export const Employer = () => {
                 showSMS={false}
               />
             )}
-            <h4>{tEmployer('business_interests.section_title')}</h4>
-
+            <SectionHeading>
+              {tEmployer('business_interests.section_title')}
+            </SectionHeading>
             <YesNoQuestion
               name={`self_employed`}
               question={tEmployer('business_interests.self_employed.label')}
@@ -203,7 +207,9 @@ export const Employer = () => {
               name={`is_owner`}
               question={tEmployer('business_interests.is_owner.label')}
             />
-            <h4>{tEmployer('separation.section_title')}</h4>
+            <SectionHeading>
+              {tEmployer('separation.section_title')}
+            </SectionHeading>
             <RadioField
               name={`separation_circumstance`}
               legend={tEmployer('separation.reason.label')}
