@@ -2,20 +2,12 @@ import { Checkbox, ErrorMessage, FormGroup } from '@trussworks/react-uswds'
 import React, { ChangeEventHandler } from 'react'
 import { useController } from 'react-hook-form'
 
-type CheckboxFieldProps = {
-  showsErrors?: boolean
-  formGroupClassName?: string
-}
-
 export const CheckboxField = ({
   name,
   id,
   onChange,
-  showsErrors = true,
-  formGroupClassName,
   ...inputProps
-}: CheckboxFieldProps &
-  Optional<React.ComponentProps<typeof Checkbox>, 'id'>) => {
+}: Optional<React.ComponentProps<typeof Checkbox>, 'id'>) => {
   const {
     field: {
       onChange: hookFormOnChange,
@@ -35,14 +27,15 @@ export const CheckboxField = ({
   }
 
   return (
-    <FormGroup className={formGroupClassName} error={invalid && showsErrors}>
-      {invalid && showsErrors && <ErrorMessage>{error?.message}</ErrorMessage>}
+    <FormGroup error={invalid}>
+      {invalid && <ErrorMessage>{error?.message}</ErrorMessage>}
       <Checkbox
         name={name}
         id={id || name}
         onChange={handleChange}
         onInvalid={(e) => e.preventDefault()}
         inputRef={ref}
+        checked={_value}
         {...inputProps}
         {...hookFormRemainingProps}
       />

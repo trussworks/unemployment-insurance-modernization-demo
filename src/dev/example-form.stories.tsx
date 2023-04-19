@@ -32,7 +32,7 @@ const schema = yup
       is: 'reactHookForm',
       then: (schema) => schema.required(),
     }),
-    exampleSingleCheckbox: yup.boolean().required(),
+    subscribe: yup.boolean().required(),
     rhfIsEasy: yup
       .array()
       .of(mixed().oneOf([...checkboxFieldGroupOptions]))
@@ -45,12 +45,14 @@ type ExampleFieldValues = {
   doYouLikeForms?: boolean
   formLibraryPreference?: FormLibraryPreferenceOption
   whyIsFormikBad?: string
+  subscribe?: boolean
   rhfIsEasy: CheckboxFieldGroupOption[]
 }
 const defaultValues: ExampleFieldValues = {
   doYouLikeForms: undefined,
   formLibraryPreference: undefined,
   whyIsFormikBad: undefined,
+  subscribe: true,
   rhfIsEasy: ['option1'],
 }
 const ExampleForm = () => {
@@ -114,8 +116,8 @@ const ExampleForm = () => {
           }))}
         />
         <CheckboxField
-          name="exampleSingleCheckbox"
-          label="I have reached the end of this example form."
+          name="subscribe"
+          label="I want to subscribe to hear more about react-hook-form ."
         />
         <br></br>
         <button type="submit">Submit</button>
