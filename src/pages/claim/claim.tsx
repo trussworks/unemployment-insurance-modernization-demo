@@ -7,14 +7,14 @@ import { formatDate, formatTimestamp } from 'utils/date'
 import styles from './claim.module.scss'
 
 type ClaimStatProps = {
-  label: string
+  header: string
   context?: ReactNode
   stat: string
 }
 
-const ClaimStat = ({ label, context, stat }: ClaimStatProps) => (
+const ClaimStat = ({ header, context, stat }: ClaimStatProps) => (
   <>
-    <h2 className={styles.mainStatLabel}>{label}</h2>
+    <h2 className={styles.mainStatLabel}>{header}</h2>
     {context && <p className="margin-top-0">{context}</p>}
     <span className={styles.mainStat}>{stat}</span>
   </>
@@ -51,9 +51,9 @@ export const ClaimReview = ({
         {t('success')}
       </Alert>
       <div className="margin-y-2">
-        <p>{t('reviewText')}</p>
+        <p>{t('review')}</p>
         <p>
-          <Trans t={t} i18nKey={'emailFollowUpText'}>
+          <Trans t={t} i18nKey={'email'}>
             <a href="/">contact us</a>
           </Trans>
         </p>
@@ -61,20 +61,20 @@ export const ClaimReview = ({
       <Button type="button">{t('certifyButton')}</Button>
       <div>
         <ClaimStat
-          label={t('potentialBenefitsLabel')}
+          header={t('potentialBenefits.header')}
           context={
-            <Trans t={t} i18nKey={'paidSoFarText'}>
+            <Trans t={t} i18nKey={'potentialBenefits.context'}>
               {benefitsPaidAmount.toString()}
             </Trans>
           }
           stat={`$${benefitsRemainingAmount}`}
         />
         <ClaimStat
-          label={t('potentialNextPaymentLabel')}
+          header={t('potentialNextPayment.header')}
           stat={`$${nextPaymentAmount}`}
         />
         <ClaimStat
-          label={t('claimPeriodLabel')}
+          header={t('claimPeriod.header')}
           stat={`${formatDate(claimPeriodFrom)} - ${formatDate(claimPeriodTo)}`}
         />
         <h2 className="font-heading-2xl margin-bottom-0">Recent activity</h2>

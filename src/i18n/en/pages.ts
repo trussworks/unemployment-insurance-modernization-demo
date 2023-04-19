@@ -3,14 +3,20 @@ export default {
     header: "We're reviewing your claim",
     success: 'Application submitted',
     certifyButton: 'Certify for benefits',
-    reviewText:
+    review:
       "We are reviewing your application information to make sure you're eligible for benefits payments.",
-    emailFollowUpText:
+    email:
       "In the meantime, you should receive an email for identity verification from ID.me. Do not certify for benefits online or by phone while waiting for this email, or it will delay your payments. If you don't receive an email or call from us by [15 days from now], please <0>contact us</0>.",
-    potentialBenefitsLabel: 'Potential benefits remaining',
-    paidSoFarText: '(<0></0> paid so far)',
-    potentialNextPaymentLabel: 'Potential next payment',
-    claimPeriodLabel: 'Claim period',
+    potentialBenefits: {
+      header: 'Potential benefits remaining',
+      context: '(<0></0> paid so far)',
+    },
+    potentialNextPayment: {
+      header: 'Potential next payment',
+    },
+    claimPeriod: {
+      header: 'Claim period',
+    },
     accountUpdate: {
       submission: 'Submitted as #<0></0>',
     },
