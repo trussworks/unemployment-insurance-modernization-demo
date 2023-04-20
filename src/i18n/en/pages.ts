@@ -6,7 +6,7 @@ export default {
     review:
       "We are reviewing your application information to make sure you're eligible for benefits payments.",
     certify:
-      "You'll need to certify each week starting [17 days from submit date] to receive benefits, and you should receive each payment within a week of certifying. Once you've found a job and are no longer unemployed, please submit one more weekly certification so we can update your account.",
+      "You’ll need to certify each week to continue receiving benefits. Each time you certify, you should receive payment within a week.",
     potentialBenefits: {
       header: 'Potential benefits remaining',
       context: '(<0></0> paid so far)',
