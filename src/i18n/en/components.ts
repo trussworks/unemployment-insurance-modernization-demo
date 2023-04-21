@@ -1,4 +1,36 @@
 export default {
+  address: {
+    address: {
+      label: 'Address',
+      errors: {
+        required: 'Address is required',
+        maxLength: 'Address must be at most 64 characters',
+      },
+    },
+
+    address2: { label: 'Address 2 (optional)' },
+    city: {
+      label: 'City',
+      errors: {
+        required: 'City is required',
+        noNumbers: 'Do not use numbers',
+        maxLength: 'City must be at most 64 characters',
+      },
+    },
+    state: {
+      label: 'State',
+      errors: {
+        required: 'State is required',
+      },
+    },
+    zipcode: {
+      label: 'ZIP',
+      errors: {
+        required: 'ZIP Code is required',
+        format: 'ZIP Code must be five digits or in 12345-1234 format',
+      },
+    },
+  },
   banner: {
     header: {
       flagImg: {
@@ -71,5 +103,20 @@ export default {
     month: 'Month',
     year: 'Year',
     error: { invalid: 'Date is invalid' },
+  },
+  phoneNumberField: {
+    phone_number: {
+      errors: {
+        matches: 'Please enter a phone number like (555) 555-1234',
+        required: 'Phone number is required',
+      },
+    },
+    sms: {
+      label: 'Can we send text messages to this number?',
+      help_text: 'Your mobile plan’s message and data rates may apply.',
+      errors: {
+        required: 'Please say if we can send text messages to this number',
+      },
+    },
   },
 }
