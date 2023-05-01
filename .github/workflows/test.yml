@@ -1,0 +1,23 @@
+name: Test and Lint
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-unit-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.15.0]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: yarn install
+      - run: yarn test
