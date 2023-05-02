@@ -23,7 +23,7 @@ interface IYesNoQuestionProps {
 export const YES = 'yes'
 export const NO = 'no'
 export const convertValueToBoolean = (value: string): boolean | undefined => {
-  return value === '' ? undefined : value === 'yes'
+  return value === '' ? undefined : value === YES
 }
 export const YesNoQuestion = ({
   id: idProp,
