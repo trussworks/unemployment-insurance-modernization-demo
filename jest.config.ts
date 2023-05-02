@@ -9,6 +9,7 @@ const config: Config = {
     '!**/*.stories.*',
   ],
   coverageDirectory: 'coverage/jest',
+  clearMocks: true,
   moduleDirectories: ['node_modules', '<rootDir>'],
   transform: {
     '\\.[jt]sx?$': 'babel-jest',

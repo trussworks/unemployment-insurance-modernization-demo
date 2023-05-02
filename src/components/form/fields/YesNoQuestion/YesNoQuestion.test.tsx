@@ -1,4 +1,5 @@
 import { render, screen, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
 import { ComponentProps } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -48,5 +49,23 @@ describe('YesNoQuestion', () => {
     expect(label).toHaveTextContent(QUESTION)
     expect(yesAnswer).toBeInTheDocument()
     expect(noAnswer).toBeInTheDocument()
+  })
+
+  it('Takes a custom onChange handler', async () => {
+    const user = userEvent.setup()
+
+    const handleChange = jest.fn()
+
+    const { yesAnswer, noAnswer } = renderYesNoQuestion({
+      onChange: handleChange,
+    })
+
+    await user.click(yesAnswer)
+
+    expect(handleChange).toHaveBeenCalledTimes(1)
+
+    await user.click(noAnswer)
+
+    expect(handleChange).toHaveBeenCalledTimes(2)
   })
 })
