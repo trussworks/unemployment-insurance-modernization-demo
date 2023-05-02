@@ -50,10 +50,10 @@ describe('YesNoQuestion', () => {
     const yesNoQuestion = screen.getByRole('group', { name: QUESTION })
     const label = within(yesNoQuestion).getByText(QUESTION)
     const yesAnswer = within(yesNoQuestion).getByRole('radio', {
-      name: props?.yesLabel || 'yes',
+      name: props?.yesLabel || 'Yes',
     })
     const noAnswer = within(yesNoQuestion).getByRole('radio', {
-      name: props?.noLabel || 'no',
+      name: props?.noLabel || 'No',
     })
     const hint = within(yesNoQuestion).queryByTestId('yes-no-hint')
     const submitButton = screen.getByRole('button', { name: 'Submit' })

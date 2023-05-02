@@ -18,6 +18,7 @@ const config: Config = {
     '\\.(css|scss)$': 'identity-obj-proxy',
   },
   testEnvironment: 'jsdom',
+  setupFiles: ['<rootDir>/i18n/i18n.ts'],
   setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
 }
 
