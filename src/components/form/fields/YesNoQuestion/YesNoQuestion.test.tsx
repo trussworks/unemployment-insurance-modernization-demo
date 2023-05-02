@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { render, screen, waitFor, within } from '@testing-library/react'
+import { act, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Button, Form } from '@trussworks/react-uswds'
 import {
@@ -129,12 +129,12 @@ describe('YesNoQuestion', () => {
     expect(noAnswer).not.toBeChecked()
     expect(yesAnswer).not.toBeChecked()
 
-    await user.click(yesAnswer)
+    await act(() => user.click(yesAnswer))
 
     expect(yesAnswer).toBeChecked()
     expect(noAnswer).not.toBeChecked()
 
-    await user.click(noAnswer)
+    await act(() => user.click(noAnswer))
 
     expect(yesAnswer).not.toBeChecked()
     expect(noAnswer).toBeChecked()
@@ -149,11 +149,11 @@ describe('YesNoQuestion', () => {
       onChange: handleChange,
     })
 
-    await user.click(yesAnswer)
+    await act(() => user.click(yesAnswer))
 
     expect(handleChange).toHaveBeenCalledTimes(1)
 
-    await user.click(noAnswer)
+    await act(() => user.click(noAnswer))
 
     expect(handleChange).toHaveBeenCalledTimes(2)
   })
@@ -166,23 +166,23 @@ describe('YesNoQuestion', () => {
 
     expect(queryForErrorMessage()).not.toBeInTheDocument()
 
-    await user.click(submitButton)
+    await act(() => user.click(submitButton))
 
     await waitFor(() => {
       expect(queryForErrorMessage()).toBeInTheDocument()
       expect(yesNoQuestion).toHaveClass('errorLegend')
     })
   })
+})
 
-  describe('convertValueToBoolean', () => {
-    it.each([
-      [YES, true],
-      [NO, false],
-      ['', undefined],
-    ])('converts values properly', (value, expected) => {
-      const result = convertValueToBoolean(value)
+describe('convertValueToBoolean', () => {
+  it.each([
+    [YES, true],
+    [NO, false],
+    ['', undefined],
+  ])('converts values properly', (value, expected) => {
+    const result = convertValueToBoolean(value)
 
-      expect(result).toEqual(expected)
-    })
+    expect(result).toEqual(expected)
   })
 })
