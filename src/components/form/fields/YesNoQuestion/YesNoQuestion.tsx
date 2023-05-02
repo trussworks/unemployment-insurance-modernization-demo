@@ -62,7 +62,6 @@ export const YesNoQuestion = ({
         className={classnames(styles.fieldset, {
           [styles.errorLegend]: invalid,
         })}
-        onInvalid={(e) => e.preventDefault()}
       >
         {hint && (
           <div className="usa-hint" id={`${id || name}.hint`}>

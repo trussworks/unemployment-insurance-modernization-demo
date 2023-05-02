@@ -51,6 +51,13 @@ describe('YesNoQuestion', () => {
     expect(noAnswer).toBeInTheDocument()
   })
 
+  it('Can render stacked', () => {
+    const { yesAnswer, noAnswer } = renderYesNoQuestion({ isStacked: true })
+
+    expect(yesAnswer.closest('div')).toHaveClass('stacked')
+    expect(noAnswer.closest('div')).toHaveClass('stacked')
+  })
+
   it('Takes a custom onChange handler', async () => {
     const user = userEvent.setup()
 
