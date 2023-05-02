@@ -55,7 +55,9 @@ describe('YesNoQuestion', () => {
     expect(label).toBeInTheDocument()
     expect(label).toHaveTextContent(QUESTION)
     expect(yesAnswer).toBeInTheDocument()
+    expect(noAnswer).not.toBeChecked()
     expect(noAnswer).toBeInTheDocument()
+    expect(yesAnswer).not.toBeChecked()
     expect(hint).not.toBeInTheDocument()
   })
 
@@ -73,6 +75,25 @@ describe('YesNoQuestion', () => {
 
     expect(hint).toBeInTheDocument()
     expect(hint).toHaveTextContent(hintText)
+  })
+
+  it('allows the user to select an answer', async () => {
+    const user = userEvent.setup()
+
+    const { yesAnswer, noAnswer } = renderYesNoQuestion()
+
+    expect(noAnswer).not.toBeChecked()
+    expect(yesAnswer).not.toBeChecked()
+
+    await user.click(yesAnswer)
+
+    expect(yesAnswer).toBeChecked()
+    expect(noAnswer).not.toBeChecked()
+
+    await user.click(noAnswer)
+
+    expect(yesAnswer).not.toBeChecked()
+    expect(noAnswer).toBeChecked()
   })
 
   it('Takes a custom onChange handler', async () => {
