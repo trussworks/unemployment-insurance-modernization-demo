@@ -41,7 +41,7 @@ export const YesNoQuestion = ({
     field: {
       onChange: hookFormOnChange,
       ref,
-      value: _,
+      value: hookFormValue,
       ...hookFormRemainingProps
     },
     fieldState: { invalid, error },
@@ -75,6 +75,7 @@ export const YesNoQuestion = ({
           id={`${id}.${YES}`}
           label={yesLabel || t('yes')}
           value={YES}
+          checked={hookFormValue === true}
           onChange={handleChange}
           className={isStacked ? styles.stacked : styles.inline}
           inputRef={ref}
@@ -86,6 +87,7 @@ export const YesNoQuestion = ({
           id={`${id}.${NO}`}
           label={noLabel || t('no')}
           value={NO}
+          checked={hookFormValue === false}
           onChange={handleChange}
           className={isStacked ? styles.stacked : styles.inline}
           {...hookFormRemainingProps}

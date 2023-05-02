@@ -20,7 +20,7 @@ describe('YesNoQuestion', () => {
 
   const renderYesNoQuestion = (
     props?: Omit<ComponentProps<typeof YesNoQuestion>, 'name' | 'question'>,
-    defaultValue: boolean | undefined = undefined
+    initialValue: boolean | undefined = undefined
   ) => {
     const WrappedInput = () => {
       const schema = object({
@@ -28,7 +28,7 @@ describe('YesNoQuestion', () => {
       })
       const hookFormMethods = useForm({
         defaultValues: {
-          [NAME]: defaultValue,
+          [NAME]: initialValue,
         },
         resolver: yupResolver(schema),
       })
@@ -101,6 +101,13 @@ describe('YesNoQuestion', () => {
     expect(noAnswer).not.toBeChecked()
     expect(hint).not.toBeInTheDocument()
     expect(errorMessage).not.toBeInTheDocument()
+  })
+
+  it('Renders with an initial value', () => {
+    const { yesAnswer, noAnswer } = renderYesNoQuestion({}, true)
+
+    expect(yesAnswer).toBeChecked()
+    expect(noAnswer).not.toBeChecked()
   })
 
   it('Renders with custom yes/no labels', () => {
