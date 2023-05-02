@@ -37,18 +37,21 @@ describe('YesNoQuestion', () => {
     const noAnswer = within(yesNoQuestion).getByRole('radio', {
       name: props?.noLabel || 'no',
     })
+    const hint = within(yesNoQuestion).queryByTestId('yes-no-hint')
 
-    return { yesNoQuestion, label, yesAnswer, noAnswer }
+    return { yesNoQuestion, label, yesAnswer, noAnswer, hint }
   }
 
   it('Renders without error', () => {
-    const { yesNoQuestion, label, yesAnswer, noAnswer } = renderYesNoQuestion()
+    const { yesNoQuestion, label, yesAnswer, noAnswer, hint } =
+      renderYesNoQuestion()
 
     expect(yesNoQuestion).toBeInTheDocument()
     expect(label).toBeInTheDocument()
     expect(label).toHaveTextContent(QUESTION)
     expect(yesAnswer).toBeInTheDocument()
     expect(noAnswer).toBeInTheDocument()
+    expect(hint).not.toBeInTheDocument()
   })
 
   it('Can render stacked', () => {
@@ -56,6 +59,15 @@ describe('YesNoQuestion', () => {
 
     expect(yesAnswer.closest('div')).toHaveClass('stacked')
     expect(noAnswer.closest('div')).toHaveClass('stacked')
+  })
+
+  it('Can render with a hint', () => {
+    const hintText = 'yes means yes and no means no'
+
+    const { hint } = renderYesNoQuestion({ hint: hintText })
+
+    expect(hint).toBeInTheDocument()
+    expect(hint).toHaveTextContent(hintText)
   })
 
   it('Takes a custom onChange handler', async () => {

@@ -64,7 +64,11 @@ export const YesNoQuestion = ({
         })}
       >
         {hint && (
-          <div className="usa-hint" id={`${id || name}.hint`}>
+          <div
+            className="usa-hint"
+            id={`${id || name}.hint`}
+            data-testid="yes-no-hint"
+          >
             {hint}
           </div>
         )}
