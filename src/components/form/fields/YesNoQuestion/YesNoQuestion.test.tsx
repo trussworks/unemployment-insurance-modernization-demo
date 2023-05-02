@@ -1,6 +1,11 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { YesNoQuestion } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
+import {
+  convertValueToBoolean,
+  NO,
+  YES,
+  YesNoQuestion,
+} from 'components/form/fields/YesNoQuestion/YesNoQuestion'
 import { ComponentProps } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -86,5 +91,17 @@ describe('YesNoQuestion', () => {
     await user.click(noAnswer)
 
     expect(handleChange).toHaveBeenCalledTimes(2)
+  })
+
+  describe('convertValueToBoolean', () => {
+    it.each([
+      [YES, true],
+      [NO, false],
+      ['', undefined],
+    ])('converts values properly', (value, expected) => {
+      const result = convertValueToBoolean(value)
+
+      expect(result).toEqual(expected)
+    })
   })
 })

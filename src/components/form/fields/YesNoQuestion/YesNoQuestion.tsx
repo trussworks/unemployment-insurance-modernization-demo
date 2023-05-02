@@ -20,6 +20,11 @@ interface IYesNoQuestionProps {
   isStacked?: boolean
 }
 
+export const YES = 'yes'
+export const NO = 'no'
+export const convertValueToBoolean = (value: string): boolean | undefined => {
+  return value === '' ? undefined : value === 'yes'
+}
 export const YesNoQuestion = ({
   id: idProp,
   name,
@@ -41,10 +46,6 @@ export const YesNoQuestion = ({
     },
     fieldState: { invalid, error },
   } = useController({ name })
-
-  const convertValueToBoolean = (value: string): boolean | undefined => {
-    return value === '' ? undefined : value === 'yes'
-  }
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     hookFormOnChange(convertValueToBoolean(e.target.value))
@@ -78,7 +79,7 @@ export const YesNoQuestion = ({
           id={`${id}.yes`}
           data-testid={`${id}.yes`}
           label={yesLabel || t('yes')}
-          value="yes"
+          value={YES}
           onChange={handleChange}
           className={isStacked ? styles.stacked : styles.inline}
           inputRef={ref}
@@ -90,7 +91,7 @@ export const YesNoQuestion = ({
           id={`${id}.no`}
           data-testid={`${id}.no`}
           label={noLabel || t('no')}
-          value="no"
+          value={NO}
           onChange={handleChange}
           className={isStacked ? styles.stacked : styles.inline}
           {...hookFormRemainingProps}
