@@ -47,13 +47,18 @@ describe('YesNoQuestion', () => {
 
     render(<WrappedInput />)
 
+    const yesLabelText = props?.yesLabel || 'Yes'
+    const noLabelText = props?.noLabel || 'No'
+
     const yesNoQuestion = screen.getByRole('group', { name: QUESTION })
     const label = within(yesNoQuestion).getByText(QUESTION)
+    const yesAnswerLabel = within(yesNoQuestion).getByText(yesLabelText)
     const yesAnswer = within(yesNoQuestion).getByRole('radio', {
-      name: props?.yesLabel || 'Yes',
+      name: yesLabelText,
     })
+    const noAnswerLabel = within(yesNoQuestion).getByText(noLabelText)
     const noAnswer = within(yesNoQuestion).getByRole('radio', {
-      name: props?.noLabel || 'No',
+      name: noLabelText,
     })
     const hint = within(yesNoQuestion).queryByTestId('yes-no-hint')
     const submitButton = screen.getByRole('button', { name: 'Submit' })
@@ -64,7 +69,9 @@ describe('YesNoQuestion', () => {
     return {
       yesNoQuestion,
       label,
+      yesAnswerLabel,
       yesAnswer,
+      noAnswerLabel,
       noAnswer,
       hint,
       submitButton,
@@ -76,7 +83,9 @@ describe('YesNoQuestion', () => {
     const {
       yesNoQuestion,
       label,
+      yesAnswerLabel,
       yesAnswer,
+      noAnswerLabel,
       noAnswer,
       hint,
       queryForErrorMessage,
@@ -86,10 +95,25 @@ describe('YesNoQuestion', () => {
 
     expect(yesNoQuestion).toBeInTheDocument()
     expect(label).toHaveTextContent(QUESTION)
+    expect(yesAnswerLabel).toHaveTextContent('Yes')
     expect(yesAnswer).not.toBeChecked()
+    expect(noAnswerLabel).toHaveTextContent('No')
     expect(noAnswer).not.toBeChecked()
     expect(hint).not.toBeInTheDocument()
     expect(errorMessage).not.toBeInTheDocument()
+  })
+
+  it('Renders with custom yes/no labels', () => {
+    const yesLabel = 'Affirmative'
+    const noLabel = 'Negative'
+
+    const { yesAnswerLabel, noAnswerLabel } = renderYesNoQuestion({
+      yesLabel,
+      noLabel,
+    })
+
+    expect(yesAnswerLabel).toHaveTextContent(yesLabel)
+    expect(noAnswerLabel).toHaveTextContent(noLabel)
   })
 
   it('Can render stacked', () => {
