@@ -65,19 +65,14 @@ export const YesNoQuestion = ({
         })}
       >
         {hint && (
-          <div
-            className="usa-hint"
-            id={`${id || name}.hint`}
-            data-testid="yes-no-hint"
-          >
+          <div className="usa-hint" id={`${id}.hint`} data-testid="yes-no-hint">
             {hint}
           </div>
         )}
         {invalid && <ErrorMessage>{error?.message}</ErrorMessage>}
         <Radio
-          key={`${id}.yes`}
-          id={`${id}.yes`}
-          data-testid={`${id}.yes`}
+          key={`${id}.${YES}`}
+          id={`${id}.${YES}`}
           label={yesLabel || t('yes')}
           value={YES}
           onChange={handleChange}
@@ -87,9 +82,8 @@ export const YesNoQuestion = ({
           {...inputProps}
         />
         <Radio
-          key={`${id}.no`}
-          id={`${id}.no`}
-          data-testid={`${id}.no`}
+          key={`${id}.${NO}`}
+          id={`${id}.${NO}`}
           label={noLabel || t('no')}
           value={NO}
           onChange={handleChange}

@@ -1,33 +1,46 @@
-import { render, screen, within } from '@testing-library/react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { Button, Form } from '@trussworks/react-uswds'
 import {
   convertValueToBoolean,
   NO,
   YES,
   YesNoQuestion,
 } from 'components/form/fields/YesNoQuestion/YesNoQuestion'
+import { noop } from 'helpers/noop/noop'
 import { ComponentProps } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { boolean, object } from 'yup'
 
 describe('YesNoQuestion', () => {
   const NAME = 'question'
   const QUESTION = 'What is the answer?'
+  const ERROR_MESSAGE = 'This field is required.'
 
   const renderYesNoQuestion = (
     props?: Omit<ComponentProps<typeof YesNoQuestion>, 'name' | 'question'>,
     defaultValue: boolean | undefined = undefined
   ) => {
-    console.log(props)
-    console.log(defaultValue)
     const WrappedInput = () => {
+      const schema = object({
+        [NAME]: boolean().required(ERROR_MESSAGE),
+      })
       const hookFormMethods = useForm({
         defaultValues: {
           [NAME]: defaultValue,
         },
+        resolver: yupResolver(schema),
       })
+
+      const { handleSubmit } = hookFormMethods
+
       return (
         <FormProvider {...hookFormMethods}>
-          <YesNoQuestion name="question" question={QUESTION} {...props} />
+          <Form onSubmit={handleSubmit(noop)}>
+            <YesNoQuestion name={NAME} question={QUESTION} {...props} />
+            <Button type="submit">Submit</Button>
+          </Form>
         </FormProvider>
       )
     }
@@ -43,22 +56,40 @@ describe('YesNoQuestion', () => {
       name: props?.noLabel || 'no',
     })
     const hint = within(yesNoQuestion).queryByTestId('yes-no-hint')
+    const submitButton = screen.getByRole('button', { name: 'Submit' })
 
-    return { yesNoQuestion, label, yesAnswer, noAnswer, hint }
+    const queryForErrorMessage = () =>
+      within(yesNoQuestion).queryByText(ERROR_MESSAGE)
+
+    return {
+      yesNoQuestion,
+      label,
+      yesAnswer,
+      noAnswer,
+      hint,
+      submitButton,
+      queryForErrorMessage,
+    }
   }
 
   it('Renders without error', () => {
-    const { yesNoQuestion, label, yesAnswer, noAnswer, hint } =
-      renderYesNoQuestion()
+    const {
+      yesNoQuestion,
+      label,
+      yesAnswer,
+      noAnswer,
+      hint,
+      queryForErrorMessage,
+    } = renderYesNoQuestion()
+
+    const errorMessage = queryForErrorMessage()
 
     expect(yesNoQuestion).toBeInTheDocument()
-    expect(label).toBeInTheDocument()
     expect(label).toHaveTextContent(QUESTION)
-    expect(yesAnswer).toBeInTheDocument()
-    expect(noAnswer).not.toBeChecked()
-    expect(noAnswer).toBeInTheDocument()
     expect(yesAnswer).not.toBeChecked()
+    expect(noAnswer).not.toBeChecked()
     expect(hint).not.toBeInTheDocument()
+    expect(errorMessage).not.toBeInTheDocument()
   })
 
   it('Can render stacked', () => {
@@ -75,6 +106,19 @@ describe('YesNoQuestion', () => {
 
     expect(hint).toBeInTheDocument()
     expect(hint).toHaveTextContent(hintText)
+  })
+
+  it('Can have a custom Id', () => {
+    const hintText = 'yes means yes and no means no'
+
+    const { yesAnswer, noAnswer, hint } = renderYesNoQuestion({
+      id: 'custom-id',
+      hint: hintText,
+    })
+
+    expect(yesAnswer).toHaveAttribute('id', 'custom-id.yes')
+    expect(noAnswer).toHaveAttribute('id', 'custom-id.no')
+    expect(hint).toHaveAttribute('id', 'custom-id.hint')
   })
 
   it('allows the user to select an answer', async () => {
@@ -112,6 +156,22 @@ describe('YesNoQuestion', () => {
     await user.click(noAnswer)
 
     expect(handleChange).toHaveBeenCalledTimes(2)
+  })
+
+  it('renders an error message and styles when invalid', async () => {
+    const user = userEvent.setup()
+
+    const { yesNoQuestion, submitButton, queryForErrorMessage } =
+      renderYesNoQuestion()
+
+    expect(queryForErrorMessage()).not.toBeInTheDocument()
+
+    await user.click(submitButton)
+
+    await waitFor(() => {
+      expect(queryForErrorMessage()).toBeInTheDocument()
+      expect(yesNoQuestion).toHaveClass('errorLegend')
+    })
   })
 
   describe('convertValueToBoolean', () => {
