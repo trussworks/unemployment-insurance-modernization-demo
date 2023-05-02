@@ -2,7 +2,6 @@ import type { Config } from 'jest'
 
 const config: Config = {
   rootDir: 'src',
-  collectCoverage: true,
   collectCoverageFrom: [
     '<rootDir>/**/*.{js,jsx,ts,tsx}',
     '!<rootDir>/i18n/**',
