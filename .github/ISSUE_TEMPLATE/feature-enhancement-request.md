@@ -14,7 +14,7 @@ We write story-style feature requests for the most concise way to capture releva
 e.g.
 
 - As a claimant
-- I want to be able to see the details of my benefits,
+- I want to be able to see the details of my benefits
 - so that I am able to plan for my current and future payouts 
 -->
 
