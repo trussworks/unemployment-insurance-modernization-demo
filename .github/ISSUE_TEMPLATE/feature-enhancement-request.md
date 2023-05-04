@@ -1,7 +1,7 @@
 ---
 name: Feature/enhancement request
 about: Suggest an idea for this project
-title: 'feat: '
+title: '🚀 [FEATURE]: '
 labels: enhancement
 assignees: ''
 
@@ -23,6 +23,6 @@ e.g.
 - so that <!-- why-->
 
 
-### Additional context (Optional)
+### Anything else?
 
 <!-- Add any other documentation, links, etc here that provide more context -->
