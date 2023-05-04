@@ -1,8 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Meta, StoryObj } from '@storybook/react'
-import { DateInputField } from 'components/form/fields/DateInputField/DateInputField'
 import CheckboxField from 'components/form/fields/CheckboxField/CheckboxField'
 import { CheckboxGroupField } from 'components/form/fields/CheckboxGroupField/CheckboxGroupField'
+import { DateInputField } from 'components/form/fields/DateInputField/DateInputField'
 import DropdownField, {
   EMPTY_DROPDOWN_OPTION,
 } from 'components/form/fields/DropdownField/DropdownField'

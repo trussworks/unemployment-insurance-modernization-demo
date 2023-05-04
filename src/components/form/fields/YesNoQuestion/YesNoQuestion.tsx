@@ -20,6 +20,11 @@ interface IYesNoQuestionProps {
   isStacked?: boolean
 }
 
+export const YES = 'yes'
+export const NO = 'no'
+export const convertValueToBoolean = (value: string): boolean | undefined => {
+  return value === '' ? undefined : value === YES
+}
 export const YesNoQuestion = ({
   id: idProp,
   name,
@@ -36,15 +41,11 @@ export const YesNoQuestion = ({
     field: {
       onChange: hookFormOnChange,
       ref,
-      value: _,
+      value: hookFormValue,
       ...hookFormRemainingProps
     },
     fieldState: { invalid, error },
   } = useController({ name })
-
-  const convertValueToBoolean = (value: string): boolean | undefined => {
-    return value === '' ? undefined : value === 'yes'
-  }
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     hookFormOnChange(convertValueToBoolean(e.target.value))
@@ -62,20 +63,19 @@ export const YesNoQuestion = ({
         className={classnames(styles.fieldset, {
           [styles.errorLegend]: invalid,
         })}
-        onInvalid={(e) => e.preventDefault()}
       >
         {hint && (
-          <div className="usa-hint" id={`${id || name}.hint`}>
+          <div className="usa-hint" id={`${id}.hint`} data-testid="yes-no-hint">
             {hint}
           </div>
         )}
         {invalid && <ErrorMessage>{error?.message}</ErrorMessage>}
         <Radio
-          key={`${id}.yes`}
-          id={`${id}.yes`}
-          data-testid={`${id}.yes`}
+          key={`${id}.${YES}`}
+          id={`${id}.${YES}`}
           label={yesLabel || t('yes')}
-          value="yes"
+          value={YES}
+          checked={hookFormValue === true}
           onChange={handleChange}
           className={isStacked ? styles.stacked : styles.inline}
           inputRef={ref}
@@ -83,11 +83,11 @@ export const YesNoQuestion = ({
           {...inputProps}
         />
         <Radio
-          key={`${id}.no`}
-          id={`${id}.no`}
-          data-testid={`${id}.no`}
+          key={`${id}.${NO}`}
+          id={`${id}.${NO}`}
           label={noLabel || t('no')}
-          value="no"
+          value={NO}
+          checked={hookFormValue === false}
           onChange={handleChange}
           className={isStacked ? styles.stacked : styles.inline}
           {...hookFormRemainingProps}
