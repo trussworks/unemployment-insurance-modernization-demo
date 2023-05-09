@@ -8,17 +8,6 @@
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"]
     },
     {
-      "groupName": "Storybook",
-      "groupSlug": "storybook",
-      "matchPackagePrefixes": ["@storybook/"],
-      "matchPackageNames": ["eslint-plugin-storybook"]
-    },
-    {
-      "groupName": "Testing Library",
-      "groupSlug": "testing-library",
-      "matchPackagePrefixes": ["@testing-library/"]
-    },
-    {
       "groupName": "React",
       "groupSlug": "react",
       "matchPackageNames": ["react", "react-dom"]
