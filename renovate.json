@@ -4,20 +4,16 @@
   "labels": ["dependencies"],
   "packageRules": [
     {
-      "automerge": true,
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"]
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch",
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
     },
     {
       "groupName": "React",
       "groupSlug": "react",
       "matchPackageNames": ["react", "react-dom"]
-    },
-    {
-      "groupName": "all non-major dependencies",
-      "groupSlug": "all-minor-patch",
-      "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
     }
   ],
   "separateMinorPatch": false
