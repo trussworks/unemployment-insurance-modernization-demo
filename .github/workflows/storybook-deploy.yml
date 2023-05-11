@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   workflow_run:
     workflows:
-      - "Test and Lint"
+      - 'Test and Lint'
     branches:
       - main
     types:
