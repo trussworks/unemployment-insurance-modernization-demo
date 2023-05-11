@@ -1,0 +1,58 @@
+name: Deploy Storybook to GitHub Pages
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - "Test and Lint"
+    branches:
+      - main
+    types:
+      - completed
+
+concurrency:
+  group: storybook-deploy
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
+
+      - name: Setup Node
+        uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8
+        with:
+          node-version-file: '.tool-versions'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install-ci
+
+      - name: Build storybook
+        run: yarn build-storybook
+
+      - name: Upload storybook
+        run: actions/upload-pages-artifact@64bcae551a7b18bcb9a09042ddf1960979799187
+        with:
+          path: ./storybook-static
+
+  deploy:
+    needs: build
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.pages_deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy storybook
+        id: pages_deployment
+        uses: actions/deploy-pages@af48cf94a42f2c634308b1c9dc0151830b6f190a

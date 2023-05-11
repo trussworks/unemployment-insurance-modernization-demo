@@ -61,6 +61,7 @@
     "yup": "^1.0.2"
   },
   "scripts": {
+    "install-ci": "yarn --frozen-lockfile",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky install",
