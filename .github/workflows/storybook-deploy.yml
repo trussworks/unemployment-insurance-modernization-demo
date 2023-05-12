@@ -1,6 +1,10 @@
 name: Deploy Storybook to GitHub Pages
 
 on:
+  pull_request:
+    types:
+      - opened
+
   workflow_dispatch:
   workflow_run:
     workflows:
@@ -16,6 +20,8 @@ concurrency:
 
 jobs:
   build:
+    if:  startsWith(github.head_ref, 'bl-storybook')
+
     runs-on: ubuntu-latest
 
     steps:
