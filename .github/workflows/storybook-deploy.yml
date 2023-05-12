@@ -1,6 +1,9 @@
 name: Deploy Storybook to GitHub Pages
 
 on:
+  push:
+    branches:
+      - bl-storybook-deploy-fixes
   pull_request:
     types:
       - opened
