@@ -14,11 +14,13 @@ jobs:
         node-version: [18.15.0]
 
     steps:
-      - uses: actions/checkout@f095bcc56b7c2baf48f3ac70d6d6782f4f553222
+      - uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8
         with:
           node-version: ${{ matrix.node }}
           cache: 'yarn'
-      - run: yarn install
-      - run: yarn test --coverage
+      - name: Install dependencies
+        run: yarn install-ci
+      - name: Run unit tests
+        run: yarn test --coverage
