@@ -23,6 +23,7 @@ const config: Config = {
   },
   moduleNameMapper: {
     '\\.(css|scss)$': 'identity-obj-proxy',
+    '\\.(png|svg)$': '<rootDir>/__mocks__/imageFileMock.ts',
   },
   testEnvironment: 'jsdom',
   setupFiles: ['<rootDir>/i18n/i18n.ts'],
