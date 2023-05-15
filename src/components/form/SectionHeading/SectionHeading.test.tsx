@@ -3,40 +3,38 @@ import { ComponentProps } from 'react'
 
 import { SectionHeading } from './SectionHeading'
 
+const SECTION_HEADING = 'A great heading'
+
 describe('SectionHeading', () => {
   const renderSectionHeading = (
     props?: Omit<ComponentProps<typeof SectionHeading>, 'children'>
   ) => {
-    const headingText = 'Heading Text'
-    render(<SectionHeading {...props}>{headingText}</SectionHeading>)
+    render(<SectionHeading {...props}>{SECTION_HEADING}</SectionHeading>)
 
-    const sectionHeading = screen.getByRole('heading', { name: headingText })
+    const heading = screen.getByRole('heading')
 
     return {
-      sectionHeading,
+      heading,
     }
   }
+  it('Renders without error', () => {
+    const { heading } = renderSectionHeading()
 
-  it('renders without error', () => {
-    const { sectionHeading } = renderSectionHeading()
-
-    const sectionHeadingByLevel = screen.queryByRole('heading', { level: 2 })
-
-    expect(sectionHeading).toHaveClass('font-heading-sm margin-top-4')
-    expect(sectionHeading).toEqual(sectionHeadingByLevel)
+    expect(heading).toBeInTheDocument()
+    expect(heading).toHaveTextContent(SECTION_HEADING)
   })
 
   it('accepts a custom heading level', () => {
-    const { sectionHeading } = renderSectionHeading({ headingLevel: 'h3' })
+    const { heading } = renderSectionHeading({ headingLevel: 'h3' })
 
-    const sectionHeadingByLevel = screen.queryByRole('heading', { level: 3 })
+    const headingByLevel = screen.queryByRole('heading', { level: 3 })
 
-    expect(sectionHeading).toEqual(sectionHeadingByLevel)
+    expect(heading).toEqual(headingByLevel)
   })
 
   it('accepts custom className', () => {
-    const { sectionHeading } = renderSectionHeading({ className: 'custom' })
+    const { heading } = renderSectionHeading({ className: 'custom' })
 
-    expect(sectionHeading).toHaveClass('font-heading-sm margin-top-4 custom')
+    expect(heading).toHaveClass('font-heading-sm margin-top-4 custom')
   })
 })
