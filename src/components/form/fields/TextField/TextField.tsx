@@ -92,9 +92,15 @@ export const TextField = ({
       >
         {label}
       </Label>
-      <div className="usa-hint" id={`${textInputProps.name}-hint`}>
-        {hint}
-      </div>
+      {hint && (
+        <div
+          className="usa-hint"
+          id={`${textInputProps.name}-hint`}
+          data-testid="text-field-hint"
+        >
+          {hint}
+        </div>
+      )}
       {invalid && (
         <ErrorMessage className={errorClassName}>{error?.message}</ErrorMessage>
       )}
