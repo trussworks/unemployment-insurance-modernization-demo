@@ -79,7 +79,7 @@ describe('YesNoQuestion', () => {
     }
   }
 
-  it('Renders without error', () => {
+  it('renders without error', () => {
     const {
       yesNoQuestion,
       label,
@@ -103,14 +103,14 @@ describe('YesNoQuestion', () => {
     expect(errorMessage).not.toBeInTheDocument()
   })
 
-  it('Renders with an initial value', () => {
+  it('renders with an initial value', () => {
     const { yesAnswer, noAnswer } = renderYesNoQuestion({}, true)
 
     expect(yesAnswer).toBeChecked()
     expect(noAnswer).not.toBeChecked()
   })
 
-  it('Renders with custom yes/no labels', () => {
+  it('renders with custom yes/no labels', () => {
     const yesLabel = 'Affirmative'
     const noLabel = 'Negative'
 
@@ -123,14 +123,14 @@ describe('YesNoQuestion', () => {
     expect(noAnswerLabel).toHaveTextContent(noLabel)
   })
 
-  it('Can render stacked', () => {
+  it('can render stacked', () => {
     const { yesAnswer, noAnswer } = renderYesNoQuestion({ isStacked: true })
 
     expect(yesAnswer.closest('div')).toHaveClass('stacked')
     expect(noAnswer.closest('div')).toHaveClass('stacked')
   })
 
-  it('Can render with a hint', () => {
+  it('can render with a hint', () => {
     const hintText = 'yes means yes and no means no'
 
     const { hint } = renderYesNoQuestion({ hint: hintText })
@@ -139,7 +139,7 @@ describe('YesNoQuestion', () => {
     expect(hint).toHaveTextContent(hintText)
   })
 
-  it('Can have a custom Id', () => {
+  it('can have a custom Id', () => {
     const hintText = 'yes means yes and no means no'
 
     const { yesAnswer, noAnswer, hint } = renderYesNoQuestion({
@@ -171,7 +171,7 @@ describe('YesNoQuestion', () => {
     expect(noAnswer).toBeChecked()
   })
 
-  it('Takes a custom onChange handler', async () => {
+  it('takes a custom onChange handler', async () => {
     const user = userEvent.setup()
 
     const handleChange = jest.fn()
