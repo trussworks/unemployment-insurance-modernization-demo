@@ -6,6 +6,7 @@ const config: Config = {
     '<rootDir>/**/*.{js,jsx,ts,tsx}',
     '!<rootDir>/i18n/**',
     '!**/*.stories.*',
+    '!<rootDir>/coverage/**',
   ],
   coverageDirectory: 'coverage/jest',
   coverageThreshold: {
