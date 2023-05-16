@@ -1,12 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { act, render, screen, within } from '@testing-library/react'
+import { act, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Button, Form } from '@trussworks/react-uswds'
+import { noop } from 'helpers/noop/noop'
 import { ComponentProps } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { boolean, object } from 'yup'
+import { object, string } from 'yup'
 
-import { noop } from '../../../../helpers/noop/noop'
 import TextField from './TextField'
 
 describe('TextField', () => {
@@ -17,13 +17,14 @@ describe('TextField', () => {
 
   const renderTextField = (
     props?: Omit<ComponentProps<typeof TextField>, 'name' | 'label' | 'type'>,
-    initialValue: boolean | undefined = undefined
+    initialValue: string | undefined = undefined
   ) => {
     const WrappedInput = () => {
       const schema = object({
-        [NAME]: boolean().required(ERROR_MESSAGE),
+        [NAME]: string().required(ERROR_MESSAGE),
       })
       const hookFormMethods = useForm({
+        shouldFocusError: false,
         defaultValues: {
           [NAME]: initialValue,
         },
@@ -58,6 +59,7 @@ describe('TextField', () => {
 
     const queryForErrorMessage = () =>
       within(formGroup).queryByText(ERROR_MESSAGE)
+    const submitButton = screen.getByRole('button', { name: 'Submit' })
 
     return {
       formGroup,
@@ -67,6 +69,7 @@ describe('TextField', () => {
       inputGroup,
       prefix,
       suffix,
+      submitButton,
       queryForErrorMessage,
     }
   }
@@ -94,6 +97,12 @@ describe('TextField', () => {
     expect(inputGroup).not.toBeInTheDocument()
     expect(prefix).not.toBeInTheDocument()
     expect(suffix).not.toBeInTheDocument()
+  })
+
+  it('renders with an initial value', () => {
+    const { textInput } = renderTextField({}, 'initialValue')
+
+    expect(textInput).toHaveValue('initialValue')
   })
 
   it('allows a custom label class to be passed in', () => {
@@ -179,5 +188,20 @@ describe('TextField', () => {
     await act(() => user.tab())
 
     expect(onBlur).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders an error message and styles when invalid', async () => {
+    const user = userEvent.setup()
+
+    const { textInput, submitButton, queryForErrorMessage } = renderTextField()
+
+    expect(queryForErrorMessage()).not.toBeInTheDocument()
+
+    await act(() => user.click(submitButton))
+
+    await waitFor(() => {
+      expect(queryForErrorMessage()).toBeInTheDocument()
+      expect(textInput).toHaveClass('usa-input--error')
+    })
   })
 })

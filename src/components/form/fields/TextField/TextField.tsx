@@ -44,7 +44,7 @@ export const TextField = ({
       onChange: hookFormOnChange,
       onBlur: hookFormOnBlur,
       ref,
-      value: textValue,
+      value,
       ...hookFormRemainingProps
     },
     fieldState: { invalid, error },
@@ -71,10 +71,9 @@ export const TextField = ({
   const textInput = (
     <TextInput
       id={id}
-      value={textValue || ''}
+      value={value || ''}
       validationStatus={showErrorOutline ? 'error' : undefined}
       onFocus={() => setFocused(true)}
-      onInvalid={(e) => e.preventDefault()}
       onChange={handleChange}
       onBlur={handleBlur}
       inputRef={ref}
