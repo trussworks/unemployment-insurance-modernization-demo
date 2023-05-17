@@ -30,7 +30,7 @@ type AccountUpdate = {
   timestamp: Date
 }
 
-type ClaimStatusProps = {
+export type ClaimStatusProps = {
   benefitsPaidAmount: number
   benefitsRemainingAmount: number
   nextPaymentAmount: number
