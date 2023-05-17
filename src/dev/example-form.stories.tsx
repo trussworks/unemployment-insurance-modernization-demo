@@ -18,7 +18,7 @@ import {
   SubmitHandler,
   useForm,
 } from 'react-hook-form'
-import { yupDate } from 'utils/validations/date'
+import { yupDate } from 'utils/validations/date/date'
 import * as yup from 'yup'
 import { mixed } from 'yup'
 
@@ -31,7 +31,7 @@ const tempMapping = ['making coffee', 'clearing data', 'not using formik'] //pul
 const schema = yup
   .object({
     doYouLikeForms: yup.boolean().required(),
-    whenDidYouStartLikingForms: yupDate(),
+    whenDidYouStartLikingForms: yupDate,
     formLibraryPreference: yup
       .string()
       .oneOf([...formLibraryPreferenceOptions])
