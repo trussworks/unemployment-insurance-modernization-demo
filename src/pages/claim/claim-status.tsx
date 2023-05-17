@@ -2,7 +2,7 @@ import { Alert, Button } from '@trussworks/react-uswds'
 import { PageLayout } from 'components/PageLayout/PageLayout'
 import { ReactNode } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { formatDate, formatTimestamp } from 'utils/date'
+import { formatDate, formatTimestamp } from 'utils/format/date/date'
 
 import styles from './claim-status.module.scss'
 
