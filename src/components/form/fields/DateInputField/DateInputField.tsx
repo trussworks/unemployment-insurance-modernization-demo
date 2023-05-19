@@ -182,7 +182,11 @@ export const DateInputField = ({
         }}
       >
         {hint && (
-          <span className="usa-hint" id={`${id}.hint`}>
+          <span
+            className="usa-hint"
+            id={`${id}.hint`}
+            data-testid="date-input-hint"
+          >
             {hint}
           </span>
         )}

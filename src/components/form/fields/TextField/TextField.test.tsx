@@ -45,11 +45,10 @@ describe('TextField', () => {
 
     render(<WrappedInput />)
 
-    const formGroup = screen.getByTestId('formGroup')
-    const label = within(formGroup).getByText(LABEL)
-    const textInput = within(formGroup).getByRole('textbox', { name: LABEL })
-    const hint = within(formGroup).queryByTestId('text-field-hint')
-    const inputGroup = within(formGroup).queryByTestId('text-field-input-group')
+    const label = screen.getByText(LABEL)
+    const textInput = screen.getByRole('textbox', { name: LABEL })
+    const hint = screen.queryByTestId('text-field-hint')
+    const inputGroup = screen.queryByTestId('text-field-input-group')
     const prefix = inputGroup
       ? within(inputGroup).queryByTestId('InputPrefix')
       : null
@@ -57,12 +56,10 @@ describe('TextField', () => {
       ? within(inputGroup).queryByTestId('InputSuffix')
       : null
 
-    const queryForErrorMessage = () =>
-      within(formGroup).queryByText(ERROR_MESSAGE)
+    const queryForErrorMessage = () => screen.queryByText(ERROR_MESSAGE)
     const submitButton = screen.getByRole('button', { name: 'Submit' })
 
     return {
-      formGroup,
       label,
       hint,
       textInput,
