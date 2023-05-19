@@ -17,7 +17,7 @@ describe('TextField', () => {
 
   const renderTextField = (
     props?: Omit<ComponentProps<typeof TextField>, 'name' | 'label' | 'type'>,
-    initialValue: string | undefined = undefined
+    initialValue?: string
   ) => {
     const WrappedInput = () => {
       const schema = object({

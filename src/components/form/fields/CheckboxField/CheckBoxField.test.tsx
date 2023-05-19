@@ -21,7 +21,7 @@ describe('CheckBoxField', () => {
 
   const renderCheckBoxField = (
     props: ComponentProps<typeof CheckboxField>,
-    initialValue: boolean | undefined = undefined
+    initialValue?: boolean
   ) => {
     const WrappedInput = () => {
       const schema = object({

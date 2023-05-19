@@ -20,7 +20,7 @@ describe('YesNoQuestion', () => {
 
   const renderYesNoQuestion = (
     props?: Omit<ComponentProps<typeof YesNoQuestion>, 'name' | 'question'>,
-    initialValue: boolean | undefined = undefined
+    initialValue?: boolean
   ) => {
     const WrappedInput = () => {
       const schema = object({
