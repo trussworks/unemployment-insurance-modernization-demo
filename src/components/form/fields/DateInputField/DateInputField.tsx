@@ -43,6 +43,7 @@ type DateFieldProps = {
   yearProps?: DateInputProps
   legend?: ReactNode
   legendStyle?: LegendStyle
+  onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
 const MONTH_MAX_LENGTH = 2
@@ -61,6 +62,7 @@ export const DateInputField = ({
   yearProps,
   legend,
   legendStyle,
+  onChange,
 }: DateFieldProps) => {
   const { t } = useTranslation('components', { keyPrefix: 'dateInput' })
   const [focused, setFocused] = useState<null | 'month' | 'day' | 'year'>(null)
@@ -133,18 +135,27 @@ export const DateInputField = ({
     e.target.value !== ''
       ? hookFormOnChangeMonth(e)
       : hookFormOnChangeMonth(undefined)
+    if (onChange) {
+      onChange(e)
+    }
   }
 
   const handleChangeDay: ChangeEventHandler<HTMLInputElement> = (e) => {
     e.target.value !== ''
       ? hookFormOnChangeDay(e)
       : hookFormOnChangeDay(undefined)
+    if (onChange) {
+      onChange(e)
+    }
   }
 
   const handleChangeYear: ChangeEventHandler<HTMLInputElement> = (e) => {
     e.target.value !== ''
       ? hookFormOnChangeYear(e)
       : hookFormOnChangeYear(undefined)
+    if (onChange) {
+      onChange(e)
+    }
   }
 
   const handleBlurMonth: FocusEventHandler<HTMLInputElement> = () => {

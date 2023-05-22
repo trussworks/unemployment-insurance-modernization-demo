@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { render, screen, within } from '@testing-library/react'
+import { act, render, screen, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { Button, Form } from '@trussworks/react-uswds'
 import { noop } from 'helpers/noop/noop'
 import { ComponentProps } from 'react'
@@ -101,13 +102,63 @@ describe('DateInputField', () => {
 
     expect(dateInputField).toBeInTheDocument()
     expect(legend).toHaveTextContent(LEGEND)
-    expect(monthInput).toBeInTheDocument()
-    expect(dayInput).toBeInTheDocument()
-    expect(yearInput).toBeInTheDocument()
+    expect(monthInput).toHaveValue('')
+    expect(dayInput).toHaveValue('')
+    expect(yearInput).toHaveValue('')
     expect(hint).not.toBeInTheDocument()
     expect(queryForMonthRequiredErrorMessage()).not.toBeInTheDocument()
     expect(queryForDayRequiredErrorMessage()).not.toBeInTheDocument()
     expect(queryForYearRequiredErrorMessage()).not.toBeInTheDocument()
     expect(queryForDateInvalidErrorMessage()).not.toBeInTheDocument()
+  })
+
+  it('renders with a hint', () => {
+    const hintText = 'this is an important date'
+
+    const { hint } = renderDateInputField({ hint: hintText })
+
+    expect(hint).toBeInTheDocument()
+    expect(hint).toHaveTextContent(hintText)
+  })
+
+  it.todo('takes an initial value')
+
+  it('allows user input', async () => {
+    const user = userEvent.setup()
+
+    const { monthInput, dayInput, yearInput } = renderDateInputField()
+
+    await act(() => user.type(monthInput, '08'))
+
+    expect(monthInput).toHaveValue('08')
+
+    await act(() => user.type(dayInput, '18'))
+
+    expect(dayInput).toHaveValue('18')
+
+    await act(() => user.type(yearInput, '1920'))
+
+    expect(yearInput).toHaveValue('1920')
+  })
+
+  it('takes a custom onChange handler', async () => {
+    const user = userEvent.setup()
+    const handleChange = jest.fn()
+
+    const { monthInput, dayInput, yearInput } = renderDateInputField({
+      onChange: handleChange,
+    })
+
+    await act(() => user.type(monthInput, '08'))
+
+    expect(handleChange).toHaveBeenCalledTimes(2)
+
+    await act(() => user.type(dayInput, '18'))
+
+    expect(handleChange).toHaveBeenCalledTimes(4)
+
+    await act(() => user.type(yearInput, '1920'))
+
+    expect(handleChange).toHaveBeenCalledTimes(8)
   })
 })
