@@ -110,4 +110,12 @@ describe('DateInputField', () => {
     expect(queryForYearRequiredErrorMessage()).not.toBeInTheDocument()
     expect(queryForDateInvalidErrorMessage()).not.toBeInTheDocument()
   })
+
+  it('renders with a hint', () => {
+    const hintText = 'this is an important date'
+    const { hint } = renderDateInputField({ hint: hintText })
+
+    expect(hint).toBeInTheDocument()
+    expect(hint).toHaveTextContent(hintText)
+  })
 })
