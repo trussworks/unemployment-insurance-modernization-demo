@@ -5,6 +5,7 @@ const config: Config = {
   collectCoverageFrom: [
     '<rootDir>/**/*.{js,jsx,ts,tsx}',
     '!<rootDir>/i18n/**',
+    '!<rootDir>/types/**',
     '!**/*.stories.*',
     '!<rootDir>/coverage/**',
   ],
