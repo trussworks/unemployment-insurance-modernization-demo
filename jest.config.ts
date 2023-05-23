@@ -12,10 +12,10 @@ const config: Config = {
   coverageDirectory: 'coverage/jest',
   coverageThreshold: {
     global: {
-      statements: 90,
-      branches: 90,
-      functions: 90,
-      lines: 90,
+      statements: 97,
+      branches: 92,
+      functions: 97,
+      lines: 97,
     },
   },
   clearMocks: true,
