@@ -47,7 +47,6 @@ describe('CheckBoxGroupField', () => {
       })
 
       const { handleSubmit } = hookFormMethods
-
       return (
         <FormProvider {...hookFormMethods}>
           <Form onSubmit={handleSubmit(noop)}>
@@ -97,6 +96,26 @@ describe('CheckBoxGroupField', () => {
       checkbox3,
       checkbox3Label,
     } = renderCheckBoxGroupField()
+
+    expect(question).toBeInTheDocument()
+    expect(question).toHaveTextContent(QUESTION)
+    expect(checkbox1).toBeInTheDocument()
+    expect(checkbox1Label).toHaveTextContent(OPTIONS[0].label)
+    expect(checkbox2).toBeInTheDocument()
+    expect(checkbox2Label).toHaveTextContent(OPTIONS[1].label)
+    expect(checkbox3).toBeInTheDocument()
+    expect(checkbox3Label).toHaveTextContent(OPTIONS[2].label)
+  })
+  it('Renders custom value without error', () => {
+    const {
+      question,
+      checkbox1,
+      checkbox1Label,
+      checkbox2,
+      checkbox2Label,
+      checkbox3,
+      checkbox3Label,
+    } = renderCheckBoxGroupField('kiwi')
 
     expect(question).toBeInTheDocument()
     expect(question).toHaveTextContent(QUESTION)

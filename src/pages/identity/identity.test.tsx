@@ -67,6 +67,7 @@ describe('Identity page', () => {
     const yesPermanentResidentRadio = within(
       workAuthorizationRadio
     ).getByLabelText(WORK_YES_PERMANENT_RESIDENT)
+
     const queryForImmigrationHeading = () =>
       screen.queryByText(IMMIGRATION_HEADING)
 
@@ -92,6 +93,8 @@ describe('Identity page', () => {
       screen.queryByLabelText(COUNTRY_OF_ORIGIN)
 
     const queryModalHeading = () => screen.queryByText(MODAL_HEADER)
+    const queryContinueButton = () =>
+      screen.queryByRole('button', { name: 'Continue' })
     const nextButton = screen.getByRole('button', { name: 'Next' })
     const queryForErrorMessage = (message: string) =>
       screen.queryByText(message)
@@ -116,6 +119,7 @@ describe('Identity page', () => {
       queryReEnterUSCISTextInput,
       queryCountryOfOrigin,
       queryModalHeading,
+      queryContinueButton,
       nextButton,
       queryForErrorMessage,
     }
@@ -237,15 +241,32 @@ describe('Identity page', () => {
 
     expect(queryUSCISTextInput()).toBeInTheDocument()
     expect(queryReEnterUSCISTextInput()).toBeInTheDocument()
+
+    const numberInput = screen.getByRole('textbox', {
+      name: USCIS_TEXT_LABEL,
+    })
+    const reEnterNumberInput = screen.getByRole('textbox', {
+      name: RE_ENTER_USCIS_TEXT_LABEL,
+    })
+
+    await act(() => user.type(numberInput, '1111111'))
+    await act(() => user.type(reEnterNumberInput, '1111111'))
+
+    const USCISNoNumberRadio = within(
+      screen.getByRole('group', { name: USCIS_NUMBER_NAME })
+    ).getByLabelText('No')
+
+    await act(() => user.click(USCISNoNumberRadio))
   })
 
-  // TODO: address react uswds error
-  it.skip('Opens USCIS number help modal', async () => {
+  it('Opens USCIS number help modal', async () => {
     const user = userEvent.setup()
 
-    const { yesPermanentResidentRadio, queryModalHeading } = renderIdentityPage(
-      {}
-    )
+    const {
+      yesPermanentResidentRadio,
+      queryModalHeading,
+      queryContinueButton,
+    } = renderIdentityPage({})
 
     await act(() => user.click(yesPermanentResidentRadio))
 
@@ -253,6 +274,13 @@ describe('Identity page', () => {
 
     await act(() => user.click(button))
     expect(queryModalHeading()).toBeInTheDocument()
+
+    const continueButton = queryContinueButton()
+    expect(continueButton).toBeInTheDocument()
+
+    await act(() =>
+      user.click(screen.getByRole('button', { name: 'Continue' }))
+    )
   })
 
   it('Shows required messages if no input given', async () => {
