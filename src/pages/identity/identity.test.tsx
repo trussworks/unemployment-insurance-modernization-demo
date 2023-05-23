@@ -275,12 +275,15 @@ describe('Identity page', () => {
     await act(() => user.click(button))
     expect(queryModalHeading()).toBeInTheDocument()
 
+    const jsdomOpen = window.open
+    window.open = () => null
     const continueButton = queryContinueButton()
     expect(continueButton).toBeInTheDocument()
 
     await act(() =>
       user.click(screen.getByRole('button', { name: 'Continue' }))
     )
+    window.open = jsdomOpen
   })
 
   it('Shows required messages if no input given', async () => {
