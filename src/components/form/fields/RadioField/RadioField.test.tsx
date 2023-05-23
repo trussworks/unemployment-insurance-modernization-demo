@@ -175,7 +175,7 @@ describe('RadioField', () => {
     const hintText = 'This is my hint'
 
     const { hint } = renderRadioField({ hint: hintText })
-    screen.debug()
+
     expect(hint(hintText)).toBeInTheDocument()
     expect(hint(hintText)).toHaveTextContent(hintText)
   })
