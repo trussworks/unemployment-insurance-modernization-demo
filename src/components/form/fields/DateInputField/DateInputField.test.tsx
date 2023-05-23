@@ -1,5 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { act, render, screen, within } from '@testing-library/react'
+import {
+  act,
+  createEvent,
+  fireEvent,
+  render,
+  screen,
+  within,
+} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Button, Form } from '@trussworks/react-uswds'
 import { noop } from 'helpers/noop/noop'
@@ -71,6 +78,7 @@ describe('DateInputField', () => {
       within(dateInputField).queryByText(YEAR_REQUIRED_ERROR_MESSAGE)
     const queryForDateInvalidErrorMessage = () =>
       within(dateInputField).queryByText(DATE_INVALID_ERROR_MESSAGE)
+    const submitButton = screen.getByRole('button', { name: 'Submit' })
 
     return {
       dateInputField,
@@ -83,6 +91,7 @@ describe('DateInputField', () => {
       queryForDayRequiredErrorMessage,
       queryForYearRequiredErrorMessage,
       queryForDateInvalidErrorMessage,
+      submitButton,
     }
   }
 
@@ -112,6 +121,29 @@ describe('DateInputField', () => {
     expect(queryForDateInvalidErrorMessage()).not.toBeInTheDocument()
   })
 
+  it('sets focus on month when entire field invalid', async () => {
+    const user = userEvent.setup()
+    const { monthInput, submitButton } = renderDateInputField()
+    await act(() => user.click(submitButton))
+    expect(monthInput).toHaveFocus()
+  })
+
+  it('renders invalid event properly', async () => {
+    const { monthInput, dayInput, yearInput } = renderDateInputField()
+    const invalidMonthEvent = createEvent.invalid(monthInput)
+    await act(() => fireEvent(monthInput, invalidMonthEvent))
+    expect(invalidMonthEvent.defaultPrevented).toBeTruthy()
+
+    const invalidDayEvent = createEvent.invalid(dayInput)
+    await act(() => fireEvent(dayInput, invalidDayEvent))
+    screen.debug()
+    expect(invalidDayEvent.defaultPrevented).toBeTruthy()
+
+    const invalidYearEvent = createEvent.invalid(yearInput)
+    await act(() => fireEvent(yearInput, invalidYearEvent))
+    expect(invalidYearEvent.defaultPrevented).toBeTruthy()
+  })
+
   it('renders with a hint', () => {
     const hintText = 'this is an important date'
 
@@ -126,7 +158,8 @@ describe('DateInputField', () => {
   it('allows user input', async () => {
     const user = userEvent.setup()
 
-    const { monthInput, dayInput, yearInput } = renderDateInputField()
+    const { monthInput, dayInput, yearInput, submitButton } =
+      renderDateInputField()
 
     await act(() => user.type(monthInput, '08'))
 
@@ -139,6 +172,22 @@ describe('DateInputField', () => {
     await act(() => user.type(yearInput, '1920'))
 
     expect(yearInput).toHaveValue('1920')
+
+    await act(() => user.click(submitButton))
+
+    expect(submitButton).toHaveFocus()
+  })
+
+  it('prevents non numeric entry', async () => {
+    const user = userEvent.setup()
+
+    const { monthInput } = renderDateInputField()
+
+    await act(() => {
+      user.type(monthInput, 'xx')
+    })
+
+    expect(monthInput).toHaveValue('')
   })
 
   it('takes a custom onChange handler', async () => {
