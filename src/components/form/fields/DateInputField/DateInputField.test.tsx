@@ -136,7 +136,6 @@ describe('DateInputField', () => {
 
     const invalidDayEvent = createEvent.invalid(dayInput)
     await act(() => fireEvent(dayInput, invalidDayEvent))
-    screen.debug()
     expect(invalidDayEvent.defaultPrevented).toBeTruthy()
 
     const invalidYearEvent = createEvent.invalid(yearInput)
