@@ -44,7 +44,7 @@ export const TextField = ({
       onChange: hookFormOnChange,
       onBlur: hookFormOnBlur,
       ref,
-      value: textValue,
+      value,
       ...hookFormRemainingProps
     },
     fieldState: { invalid, error },
@@ -66,14 +66,14 @@ export const TextField = ({
     }
   }
 
+  const id = textInputProps.id || textInputProps.name
+
   const textInput = (
     <TextInput
-      data-testid={textInputProps.id}
-      value={textValue || ''}
+      id={id}
+      value={value || ''}
       validationStatus={showErrorOutline ? 'error' : undefined}
       onFocus={() => setFocused(true)}
-      id={textInputProps.id || textInputProps.name}
-      onInvalid={(e) => e.preventDefault()}
       onChange={handleChange}
       onBlur={handleBlur}
       inputRef={ref}
@@ -88,13 +88,19 @@ export const TextField = ({
         className={labelClassName}
         hint={labelHint}
         error={invalid}
-        htmlFor={textInputProps.id || textInputProps.name}
+        htmlFor={id}
       >
         {label}
       </Label>
-      <div className="usa-hint" id={`${textInputProps.name}-hint`}>
-        {hint}
-      </div>
+      {hint && (
+        <div
+          className="usa-hint"
+          id={`${id}.hint`}
+          data-testid="text-field-hint"
+        >
+          {hint}
+        </div>
+      )}
       {invalid && (
         <ErrorMessage className={errorClassName}>{error?.message}</ErrorMessage>
       )}
@@ -104,7 +110,7 @@ export const TextField = ({
             'usa-input-group--error': showErrorOutline,
             'is-focused': focused,
           })}
-          data-testid={`${textInputProps.name}-input-group`}
+          data-testid="text-field-input-group"
         >
           {inputPrefix && <InputPrefix>{inputPrefix}</InputPrefix>}
           {textInput}

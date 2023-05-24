@@ -33,12 +33,7 @@ export const CustomBanner = () => {
     <Banner>
       <BannerHeader
         isOpen={isOpen}
-        flagImg={
-          <BannerFlag
-            src={flagImg}
-            alt={t('header.flagImg.alt') || undefined}
-          />
-        }
+        flagImg={<BannerFlag src={flagImg} alt={t('header.flagImg.alt')} />}
         headerText={t('header.text')}
         headerActionText={t('header.actionText')}
       >

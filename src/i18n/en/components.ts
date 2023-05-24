@@ -67,9 +67,26 @@ export default {
     no: 'No',
   },
   dateInput: {
-    day: 'Day',
-    month: 'Month',
-    year: 'Year',
-    error: { invalid: 'Date is invalid' },
+    day: {
+      label: 'Day',
+      errors: {
+        required: 'Day is required',
+      },
+    },
+    month: {
+      label: 'Month',
+      errors: {
+        required: 'Month is required',
+      },
+    },
+    year: {
+      label: 'Year',
+      errors: {
+        required: 'Year is required',
+      },
+    },
+    errors: {
+      invalid: 'Date is invalid',
+    },
   },
 }

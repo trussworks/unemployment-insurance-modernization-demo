@@ -79,5 +79,8 @@
     "src/**/*.{css,scss}": [
       "prettier --write"
     ]
+  },
+  "resolutions": {
+    "nwsapi": "2.2.2"
   }
 }

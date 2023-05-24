@@ -21,7 +21,8 @@
         "varsIgnorePattern": "^_"
       }
     ],
-    "no-undef": "off"
+    "no-undef": "off",
+    "react/prop-types": "off"
   },
   "env": {
     "browser": true,

@@ -43,6 +43,7 @@ type DateFieldProps = {
   yearProps?: DateInputProps
   legend?: ReactNode
   legendStyle?: LegendStyle
+  onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
 const MONTH_MAX_LENGTH = 2
@@ -61,6 +62,7 @@ export const DateInputField = ({
   yearProps,
   legend,
   legendStyle,
+  onChange,
 }: DateFieldProps) => {
   const { t } = useTranslation('components', { keyPrefix: 'dateInput' })
   const [focused, setFocused] = useState<null | 'month' | 'day' | 'year'>(null)
@@ -133,18 +135,27 @@ export const DateInputField = ({
     e.target.value !== ''
       ? hookFormOnChangeMonth(e)
       : hookFormOnChangeMonth(undefined)
+    if (onChange) {
+      onChange(e)
+    }
   }
 
   const handleChangeDay: ChangeEventHandler<HTMLInputElement> = (e) => {
     e.target.value !== ''
       ? hookFormOnChangeDay(e)
       : hookFormOnChangeDay(undefined)
+    if (onChange) {
+      onChange(e)
+    }
   }
 
   const handleChangeYear: ChangeEventHandler<HTMLInputElement> = (e) => {
     e.target.value !== ''
       ? hookFormOnChangeYear(e)
       : hookFormOnChangeYear(undefined)
+    if (onChange) {
+      onChange(e)
+    }
   }
 
   const handleBlurMonth: FocusEventHandler<HTMLInputElement> = () => {
@@ -182,7 +193,11 @@ export const DateInputField = ({
         }}
       >
         {hint && (
-          <span className="usa-hint" id={`${id}.hint`}>
+          <span
+            className="usa-hint"
+            id={`${id}.hint`}
+            data-testid="date-input-hint"
+          >
             {hint}
           </span>
         )}
@@ -205,7 +220,7 @@ export const DateInputField = ({
             onBlur={handleBlurMonth}
             onChange={handleChangeMonth}
             value={monthValue || ''}
-            label={t('month')}
+            label={t('month.label')}
             unit={'month'}
             minLength={1}
             maxLength={MONTH_MAX_LENGTH}
@@ -222,7 +237,7 @@ export const DateInputField = ({
             onBlur={handleBlurDay}
             onChange={handleChangeDay}
             value={dayValue || ''}
-            label={t('day')}
+            label={t('day.label')}
             unit={'day'}
             minLength={1}
             maxLength={DAY_MAX_LENGTH}
@@ -240,7 +255,7 @@ export const DateInputField = ({
             onBlur={handleBlurYear}
             onChange={handleChangeYear}
             value={yearValue || ''}
-            label={t('year')}
+            label={t('year.label')}
             unit={'year'}
             minLength={4}
             maxLength={YEAR_MAX_LENGTH}
