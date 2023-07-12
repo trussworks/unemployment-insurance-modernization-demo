@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Tell us about something that isn't working quite right
-title: "\U0001F41B [BUG]: "
+title: "🐛 [BUG]: "
 labels: bug
 assignees: ''
 
