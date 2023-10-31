@@ -35,4 +35,4 @@ Feel free to add as many as relevant.
 
 ### Resources
 
-<!-- Add documentation, links, etc here that provide sources or additional context -->
+<!-- Add documentation, links, etc. here that provide sources or additional context -->
