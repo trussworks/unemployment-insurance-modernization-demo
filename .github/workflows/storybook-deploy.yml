@@ -55,4 +55,4 @@ jobs:
     steps:
       - name: Deploy storybook
         id: pages_deployment
-        uses: actions/deploy-pages@de14547edc9944350dc0481aa5b7afb08e75f254 # v2
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5
