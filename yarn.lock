@@ -4979,10 +4979,10 @@ cosmiconfig@^7.0.1:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
-countries-list@^2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/countries-list/-/countries-list-2.6.1.tgz#d479757ac873b1e596ccea0a925962d20396c0cb"
-  integrity sha512-jXM1Nv3U56dPQ1DsUSsEaGmLHburo4fnB7m+1yhWDUVvx5gXCd1ok/y3gXCjXzhqyawG+igcPYcAl4qjkvopaQ==
+countries-list@^3.0.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/countries-list/-/countries-list-3.3.0.tgz#d670694c41b1aea693f37e86099ddb7fd514e071"
+  integrity sha512-XRUjS+dcZuNh/fg3+mka3bXgcg4TbQZ1gaK5IJqO6qulerBANl1bmrd20P2dgmPkBpP+5FnejiSF1gd7bgAg+g==
 
 create-jest@^29.7.0:
   version "29.7.0"
