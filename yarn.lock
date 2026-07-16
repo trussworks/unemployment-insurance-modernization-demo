@@ -3354,10 +3354,10 @@
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"
   integrity sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==
 
-"@trussworks/react-uswds@^4.2.0":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@trussworks/react-uswds/-/react-uswds-4.2.1.tgz#827378157cad3fa3f53ff8b92e67799e9682fa32"
-  integrity sha512-fp+0dNQkmEHlNyaKDKAPb7RbQKRuAEY8IWZc+mEpXcwwlEFK1TLjpxEaw1yyC3xOsP2KZmjiKN6n3k1DbW5TSw==
+"@trussworks/react-uswds@^11.0.0":
+  version "11.2.0"
+  resolved "https://registry.yarnpkg.com/@trussworks/react-uswds/-/react-uswds-11.2.0.tgz#0d49a400806970b0cfa96583d01b2062993459f0"
+  integrity sha512-tg8/oq4FgikF/7bsUN1cwYGfSetBDYlDCrkr6dXSxxC2o/PRr03tschKxiJ8Aa9XvE131LF95FtqzZlGy4kP5Q==
 
 "@tsconfig/node10@^1.0.7":
   version "1.0.11"
