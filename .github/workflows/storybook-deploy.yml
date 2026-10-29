@@ -16,6 +16,7 @@ concurrency:
 
 jobs:
   build:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
 
     steps:
@@ -27,6 +28,9 @@ jobs:
         with:
           node-version-file: '.tool-versions'
           cache: 'yarn'
+
+      - name: Verify Node version
+        run: test "$(node --version)" = "v$(awk '$1 == "nodejs" {print $2}' .tool-versions)"
 
       - name: Install dependencies
         run: yarn install-ci
